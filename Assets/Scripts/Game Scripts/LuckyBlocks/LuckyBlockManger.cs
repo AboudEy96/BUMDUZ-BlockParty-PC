@@ -12,7 +12,7 @@ public abstract class LuckyBlockManager : MonoBehaviour
     {
         if (other.CompareTag("Player") && gameObject.CompareTag("LuckyBlock"))
         {
-            Debug.Log("Player touched a Lucky Block!");
+       //     Debug.Log("Player touched a Lucky Block!");
             onTouch(gameObject, other.gameObject);
         }
     }

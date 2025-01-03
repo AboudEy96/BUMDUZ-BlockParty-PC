@@ -7,7 +7,6 @@ public class CameraFollow : MonoBehaviour
     public float rotationSpeed = 100f; // sentivity
 
     private float currentYaw = 0f;
-
     void LateUpdate()
     {
         if (target == null) return;

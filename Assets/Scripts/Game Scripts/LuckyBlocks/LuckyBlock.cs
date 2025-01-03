@@ -33,7 +33,7 @@ public class LuckyBlock : LuckyBlockManager
 
     public override void giveReward(GameObject pl) 
     {
-        if (pl.CompareTag("Player"))
+        if (pl.CompareTag("Player") && rewards.Count != 0)
         {
             Random random = new Random();
             int ranNext = random.Next(0, rewards.Count-1);
