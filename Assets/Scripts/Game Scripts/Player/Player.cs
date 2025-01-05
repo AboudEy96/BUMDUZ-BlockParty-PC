@@ -1,21 +1,22 @@
 ﻿using System;
 using UnityEngine;
 
-public abstract class Player : MonoBehaviour
+public class Player : MonoBehaviour
 { 
     // MOVE FORCES
     private float moveSpeed = 5.0f;
     private float rotationSpeed = 10.0f;
     
     // JUMP FORCES
-    private float jumpForce = 2.0f;
+    private float jumpForce = 1.0f;
     private float gravity = -9.81f;
 
+    // GROUND THINGS
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-
-    [Header("Camera Settings")]
+    
+    // CAMERA TRANSFORM
     public Transform cameraTransform;
 
     private PlayerController characterController;
