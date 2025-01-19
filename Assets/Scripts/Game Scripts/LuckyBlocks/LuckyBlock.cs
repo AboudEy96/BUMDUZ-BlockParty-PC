@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = System.Random;
@@ -10,25 +12,11 @@ public class LuckyBlock : LuckyBlockManager
     // box [ speed , jump ] 
     // give reward to player
     public override void onTouch(GameObject theLB, GameObject pl)
-        
+
     {
         string lName = LayerMask.LayerToName(theLB.layer);
-
-        switch (lName)
-        {
-            case "LuckyYellow":
-                Destroy(theLB);
-                giveReward(pl);
-                break;
-            case "LuckyPurple":
-                Destroy(theLB);
-                giveReward(pl);
-                break;
-            default:
-                Destroy(theLB);
-                Debug.Log("Unknown Luckyblock.. please send this message to developers");
-                break;
-        }
+        Destroy(theLB);
+        giveReward(pl);
     }
 
     public override void giveReward(GameObject pl) 
@@ -37,10 +25,27 @@ public class LuckyBlock : LuckyBlockManager
         {
             Random random = new Random();
             int ranNext = random.Next(0, rewards.Count-1);
+            GameObject theReward = Instantiate(rewards[ranNext].gameObject);
+            theReward.transform.SetParent(pl.transform);
             Debug.Log(rewards[ranNext].gameObject.name);
+//            Invoke("removeReward", 10);
+            StartCoroutine(RemoveRewardAfterDelay(pl, theReward));
         }
     }
-    
+
+    private IEnumerator RemoveRewardAfterDelay(GameObject pl, GameObject reward)
+    {
+        yield return new WaitForSeconds(3); // Wait for 3 seconds before removing the reward
+        foreach (Transform child in pl.transform)
+        {
+            if (child.gameObject == reward.gameObject)
+            {
+                Destroy(child.gameObject);
+                Debug.Log("Reward removed: " + reward.name);
+                yield break; 
+            }
+        }
+    }
 }
 
 /*public class LuckyBlockPurple : LuckyBlockManager {

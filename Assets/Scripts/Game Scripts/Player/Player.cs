@@ -8,15 +8,14 @@ public class Player : MonoBehaviour
     private float rotationSpeed = 10.0f;
     
     // JUMP FORCES
-    private float jumpForce = 1.0f;
+    private float jumpForce = 2.0f;
     private float gravity = -9.81f;
 
-    // GROUND THINGS
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    
-    // CAMERA TRANSFORM
+
+    [Header("Camera Settings")]
     public Transform cameraTransform;
 
     private PlayerController characterController;
@@ -39,13 +38,25 @@ public class Player : MonoBehaviour
 
             if (Input.GetButtonDown("Jump"))
             {
-                characterController.Jump(jumpForce, gravity);
+                
+                characterController.Jump(hasEffect("JumpBoost") ? jumpForce + 2f: jumpForce, gravity);
             }
         }
 
         Vector3 moveDirection = characterController.CalculateMoveDirection(cameraTransform, Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         characterController.RotateTowards(moveDirection, rotationSpeed);
-        characterController.Move(moveDirection, moveSpeed);
+        characterController.Move(moveDirection, hasEffect("Speed") ? moveSpeed+2 : moveSpeed);
     }
-}
+    bool hasEffect(string childName)
+    {
+        foreach (Transform child in this.gameObject.transform)
+        {
+            if (child.name.StartsWith(childName))
+            {
+                return true; 
+            }
+        }
+        return false; 
+    }
 
+}

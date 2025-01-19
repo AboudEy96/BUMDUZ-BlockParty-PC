@@ -7,6 +7,7 @@ public abstract class LuckyBlockManager : MonoBehaviour
     public abstract void onTouch(GameObject _GM, GameObject _PL);
 
     public abstract void giveReward(GameObject pl);
+  //  public abstract void removeReward(GameObject pl, GameObject reward);
     public List<GameObject> rewards;
     private void OnTriggerEnter(Collider other)
     {

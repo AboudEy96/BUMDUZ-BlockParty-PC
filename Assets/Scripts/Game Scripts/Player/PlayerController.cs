@@ -4,20 +4,35 @@ public class PlayerController : IPlayerController
 {
     private Vector3 _velocity;
     private readonly CharacterController _controller;
-
+    private readonly Rigidbody _rb;
     public PlayerController(CharacterController controller)
     {
         _controller = controller;
+        if (_controller == null)
+        {
+            Debug.LogError("CharacterController is not assigned!");
+        }
     }
+
+    public PlayerController(Rigidbody rigidbody)
+    {
+        _rb = rigidbody;
+        if (_rb == null)
+        {
+            Debug.LogError("Rigidbody is not assigned!");
+        }
+    }
+
     public bool IsGrounded(Vector3 groundCheckPosition, float groundDistance, LayerMask groundMask)
     {
-        return Physics.CheckSphere(groundCheckPosition, groundDistance, groundMask) && _velocity.y < 0;
+        bool isGrounded = Physics.CheckSphere(groundCheckPosition, groundDistance, groundMask) && _velocity.y < 0;
+      //  Debug.Log($"Is Grounded: {isGrounded}");
+        return isGrounded;
     }
 
     public void ResetVerticalVelocity()
     {
         _velocity.y = -2f;
-        
     }
 
     public void Jump(float jumpHeight, float gravity)
@@ -31,6 +46,7 @@ public class PlayerController : IPlayerController
         direction.y = 0;
         return direction.normalized;
     }
+
     public void RotateTowards(Vector3 direction, float rotationSpeed)
     {
         if (direction.magnitude > 0.1f)
