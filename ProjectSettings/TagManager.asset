@@ -20,6 +20,7 @@ TagManager:
   - InvisiblePurple
   - Purple
   - LightPurple
+  - Orange
   layers:
   - Default
   - TransparentFX

@@ -7,19 +7,16 @@ using Random = System.Random;
 
 public class LuckyBlock : LuckyBlockManager
 {
-    
     // player 
     // box [ speed , jump ] 
     // give reward to player
-    public override void onTouch(GameObject theLB, GameObject pl)
-
+    public override void OnTouch(GameObject theLB, GameObject pl)
     {
         string lName = LayerMask.LayerToName(theLB.layer);
         Destroy(theLB);
-        giveReward(pl);
+        GiveReward(pl);
     }
-
-    public override void giveReward(GameObject pl) 
+    public override void GiveReward(GameObject pl) 
     {
         if (pl.CompareTag("Player") && rewards.Count != 0)
         {
@@ -32,10 +29,9 @@ public class LuckyBlock : LuckyBlockManager
             StartCoroutine(RemoveRewardAfterDelay(pl, theReward));
         }
     }
-
     private IEnumerator RemoveRewardAfterDelay(GameObject pl, GameObject reward)
     {
-        yield return new WaitForSeconds(3); // Wait for 3 seconds before removing the reward
+        yield return new WaitForSeconds(3); // Wait for 3 seconds [][][]
         foreach (Transform child in pl.transform)
         {
             if (child.gameObject == reward.gameObject)

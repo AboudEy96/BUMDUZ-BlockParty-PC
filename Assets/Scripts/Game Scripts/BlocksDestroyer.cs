@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,22 +14,28 @@ public class BlocksDestroyer : MonoBehaviour
     private string chosenTag;
     private List<Transform> allCubes = new List<Transform>();
     public static int score = 0;
+    public Transform theImages;
     private void Start()
     {
         map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
-        Invoke("selectRandomColor", 2f);
+        Invoke("SelectRandomColor", 2f);
     }
-
-    private void selectRandomColor()
+    private void ShowSelectedColor(Transform image, string tag) 
+    {
+        foreach (Transform color in image)
+        {
+            color.gameObject.SetActive(color.CompareTag(tag));
+        }
+    }
+    private void SelectRandomColor()
     {
         foreach (Transform child in map.transform) {
            if (child.gameObject.layer == LayerMask.NameToLayer("Cube"))
-           {
+           { 
                allCubes.Add(child);
            }
-            
         }
-
+        
         HashSet<string> tags = new HashSet<string>();
         foreach (Transform cube in allCubes)
         {
@@ -40,11 +47,12 @@ public class BlocksDestroyer : MonoBehaviour
 
         // اختيار تاق عشوائي
          chosenTag = tagArray[Random.Range(0, tagArray.Length)];
-Debug.Log(chosenTag + " has been chosen OTHER COLORS will be destroyed after 5 seconds!");
-Invoke("DestroyCubes", 5f);
+         ShowSelectedColor(theImages, chosenTag);
+         Debug.Log(chosenTag + " has been chosen OTHER COLORS will be destroyed after 5 seconds!");
+         Invoke("DestroyCubes", 5f);
     }
-
-private void DestroyCubes()
+    
+       private void DestroyCubes()
     {
         // تدمير المكعبات التي تحتوي على layer cube وليس لديها التاق الذي تم اختياره
         foreach (Transform cube in allCubes)
@@ -62,7 +70,6 @@ private void DestroyCubes()
 
 private void ActiveNextMap()
 {
-        
         _MapChanger.runNextMap();
         map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
         foreach (Transform allCube in allCubes)
@@ -79,7 +86,6 @@ private void ActiveNextMap()
         Debug.Log(_MapChanger.getMapName());
         score++;
         Debug.Log("Your score is " + score);
-        Invoke("selectRandomColor", 3f);
+        Invoke("SelectRandomColor", 3f);
     }
-    
 }
