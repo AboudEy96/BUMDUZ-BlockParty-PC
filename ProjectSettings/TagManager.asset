@@ -21,6 +21,7 @@ TagManager:
   - Purple
   - LightPurple
   - Orange
+  - Text
   layers:
   - Default
   - TransparentFX

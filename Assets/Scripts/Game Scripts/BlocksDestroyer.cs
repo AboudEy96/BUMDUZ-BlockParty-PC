@@ -6,8 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlocksDestroyer : MonoBehaviour
-{
+public class BlocksDestroyer : MonoBehaviour{
     
     public MapChanger _MapChanger;
     public GameObject map;
@@ -17,6 +16,7 @@ public class BlocksDestroyer : MonoBehaviour
     public Transform theImages;
     private void Start()
     {
+        Cursor.visible = false;
         map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
         Invoke("SelectRandomColor", 2f);
     }
@@ -24,6 +24,7 @@ public class BlocksDestroyer : MonoBehaviour
     {
         foreach (Transform color in image)
         {
+            if (color.CompareTag("Text")) continue;
             color.gameObject.SetActive(color.CompareTag(tag));
         }
     }

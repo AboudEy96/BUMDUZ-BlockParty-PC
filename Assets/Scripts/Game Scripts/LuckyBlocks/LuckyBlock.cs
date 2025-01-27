@@ -16,7 +16,7 @@ public class LuckyBlock : LuckyBlockManager
         Destroy(theLB);
         GiveReward(pl);
     }
-    public override void GiveReward(GameObject pl) 
+    public override void GiveReward(GameObject pl)
     {
         if (pl.CompareTag("Player") && rewards.Count != 0)
         {
