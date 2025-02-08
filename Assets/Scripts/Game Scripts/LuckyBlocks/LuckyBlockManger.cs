@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class LuckyBlockManager : MonoBehaviour
 {
-    public abstract void OnTouch(GameObject _GM, GameObject _PL);
-    public abstract void GiveReward(GameObject pl);
+    public virtual void OnTouch(GameObject _GM, GameObject _PL){}
+    public virtual void GiveReward(GameObject pl){}
   //  public abstract void removeReward(GameObject pl, GameObject reward);
     public List<GameObject> rewards;
+    public List<GameObject> luckyBlocks;
 
     private void OnTriggerEnter(Collider other)
     {
