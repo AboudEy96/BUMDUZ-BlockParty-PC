@@ -6,11 +6,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlocksDestroyer : MonoBehaviour{
-    
+public class BlocksDestroyer : MonoBehaviour
+{
+
     public MapChanger _MapChanger;
     public GameObject map;
-    private string chosenTag;
+    public static string chosenTag;
+    
     private List<Transform> allCubes = new List<Transform>();
     public static int score = 0;
     public Transform theImages;
