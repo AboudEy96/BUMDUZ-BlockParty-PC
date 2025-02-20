@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerBlockCheck : MonoBehaviour
 {
     public Transform lights;
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
             if (BlocksDestroyer.chosenTag == null)
             {
@@ -20,7 +20,11 @@ public class PlayerBlockCheck : MonoBehaviour
     {
         foreach (Transform l in lights)
         {
-            l.gameObject.SetActive(l.transform.name.Equals(name));
+            
+            if (l.transform.CompareTag("LightON"))
+            {
+                l.gameObject.SetActive(l.transform.name.Equals(name));
+            }
         }
     }
 }

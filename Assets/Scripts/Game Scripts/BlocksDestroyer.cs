@@ -26,7 +26,7 @@ public class BlocksDestroyer : MonoBehaviour
     {
         foreach (Transform color in image)
         {
-            if (color.CompareTag("Text")) continue;
+            if (color.CompareTag("Text") || color.CompareTag("LightON")) continue;
             color.gameObject.SetActive(color.CompareTag(tag));
         }
     }
