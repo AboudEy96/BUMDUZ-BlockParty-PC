@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapChanger : MonoBehaviour
 {
     public GameObject[] maps;
     private BlocksDestroyer _blocksDestroyer;
+    public Transform Scoreboard;
     private int currentMapIndex = 0;
+    //public Transform mapText;
     void Start()
     {
         ActiveMap(currentMapIndex);
@@ -26,6 +30,7 @@ public class MapChanger : MonoBehaviour
             {
                 
             }
+            showMapImageAndName(getMapName());
         }
     }
 
@@ -47,5 +52,24 @@ public class MapChanger : MonoBehaviour
     public GameObject GetGameObject()
     {
         return maps[currentMapIndex].gameObject;
+    }
+
+    public void showMapImageAndName(String nextMapName)
+    {
+        foreach (Transform obj in Scoreboard)
+        {
+            if (obj.gameObject.CompareTag("MapScoreboard"))
+            {
+                obj.gameObject.SetActive(obj.gameObject.name.Equals(nextMapName));
+            }
+        }
+        foreach (Transform obj in Scoreboard)
+        {
+            TMP_Text tmp = obj.GetComponent<TMP_Text>();
+            if (tmp != null)
+            {
+                tmp.text = nextMapName;
+            }
+        }
     }
 }

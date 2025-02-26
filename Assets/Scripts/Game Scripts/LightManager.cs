@@ -9,7 +9,7 @@ public class LightManager : MonoBehaviour
 
     void Start()
     {
-        // Cache the Light components
+        // Light components
         lightComponents = new Light[lights.Length];
         for (int i = 0; i < lights.Length; i++)
         {

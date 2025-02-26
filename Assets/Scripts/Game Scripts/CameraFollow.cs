@@ -19,39 +19,32 @@ public class CameraFollow : MonoBehaviour
         if (target == null) return;
         if (targetHead == null) return;
 
-        // قراءة إدخالات الفأرة
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        currentYaw += mouseX; // تحديث الزاوية الأفقية
+        currentYaw += mouseX;
 
         if (firstPerson)
         {
-            // تحديث الزاوية العمودية في المنظور الشخص الأول فقط
             currentPitch -= mouseY;
-            currentPitch = Mathf.Clamp(currentPitch, -pitchLimit, pitchLimit); // الحد من الدوران للأعلى والأسفل
+            currentPitch = Mathf.Clamp(currentPitch, -pitchLimit, pitchLimit);
         }
 
         if (firstPerson)
         {
-            // وضع First Person
             transform.position = targetHead.position;
 
-            // إضافة الاهتزاز
             transform.position += new Vector3(0, Mathf.Sin(Time.time * 5) * shakeAmount, 0);
             transform.position += new Vector3(Mathf.PerlinNoise(Time.time * 0.2f, 0) - 0.5f,
                 Mathf.PerlinNoise(0, Time.time * 0.2f) - 0.5f, 0) * shakeAmount;
 
-            // تدوير الكاميرا
             transform.rotation = Quaternion.Euler(currentPitch, currentYaw, 0f);
         }
         else
         {
-            // وضع Third Person
             Vector3 desiredPosition = target.position + Quaternion.Euler(0, currentYaw, 0) * offset;
             transform.position = desiredPosition;
 
-            // تدوير الكاميرا بحيث تنظر دائمًا إلى الهدف
             transform.LookAt(target);
         }
     }

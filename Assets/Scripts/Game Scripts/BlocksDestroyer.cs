@@ -57,7 +57,6 @@ public class BlocksDestroyer : MonoBehaviour
     
        private void DestroyCubes()
     {
-        // تدمير المكعبات التي تحتوي على layer cube وليس لديها التاق الذي تم اختياره
         foreach (Transform cube in allCubes)
         {
             if (cube.tag != chosenTag)

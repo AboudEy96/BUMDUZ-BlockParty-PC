@@ -24,6 +24,7 @@ TagManager:
   - Text
   - LightON
   - LightOFF
+  - MapScoreboard
   layers:
   - Default
   - TransparentFX
