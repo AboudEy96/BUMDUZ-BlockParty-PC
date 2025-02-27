@@ -26,7 +26,8 @@ public class LuckyBlock : LuckyBlockManager
             theReward.transform.SetParent(pl.transform);
             Debug.Log(rewards[ranNext].gameObject.name);
 //            Invoke("removeReward", 10);
-            StartCoroutine(RemoveRewardAfterDelay(pl, theReward));
+        //    StartCoroutine(RemoveRewardAfterDelay(pl, theReward));
+        Destroy(theReward, 7f);
         }
     }
     private IEnumerator RemoveRewardAfterDelay(GameObject pl, GameObject reward)
