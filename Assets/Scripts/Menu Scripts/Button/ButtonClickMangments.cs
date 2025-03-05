@@ -5,13 +5,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 
 public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 {
-     public List<Sprite> Images = new List<Sprite>();
-
+     public List<Sprite> images = new List<Sprite>();
+     public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
+
+     public void Awake()
+     {
+         ActiveButtons();
+     }
     public void Play(GameObject button)
     {
         string buttonScene = button.transform.name;
@@ -19,60 +25,31 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 
     }
 
-    public void Test(GameObject button)
+    public void Other(GameObject button)
     {
-        foreach (Sprite image in Images)
+        foreach (Sprite image in images)
         {
             if (button.name == image.name)
             {
-                image.GameObject().SetActive(true);
-
-                Image img= theImage.GetComponent<Image>();
+                Image img = theImage.GetComponent<Image>();
                 img.sprite = image;
-            } 
+                ActiveButtons();
+            }
         }
     }
-    
-    public void ChangeMode()
-    {
-            foreach (Sprite image in Images)
-            {
-                if (image.name == "ChangeMode")
-                {
-                    Debug.Log("ChangeMode");
-                    image.GameObject().SetActive(true);
-                }
-                else
-                {
-                    image.GameObject().SetActive(false);
-                }
-            }
-        
-    } 
 
-    public void Profile()
+    public string GetCurrentMode()
     {
-        
+        Image img = theImage.GetComponent<Image>();
+        return img.sprite.name;
     }
 
-    public void Character()
+    public void ActiveButtons()
     {
-        
-    }
-
-    public void Map()
-    {
-        
-    }
-
-    public void Shop()
-    {
-        
-    }
-
-    public void Settings()
-    {
-        
+        foreach (GameObject button in buttons)
+        {
+            button.SetActive(button.name.Contains(GetCurrentMode()));
+        }   
     }
 
 }
