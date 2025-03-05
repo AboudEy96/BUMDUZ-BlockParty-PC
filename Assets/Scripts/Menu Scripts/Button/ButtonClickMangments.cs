@@ -9,10 +9,9 @@ using Image = UnityEngine.UI.Image;
 
 public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 {
-     public List<Texture> Images = new List<Texture>();
-     public RawImage displayImage; 
+     public List<Sprite> Images = new List<Sprite>();
 
-
+     public Transform theImage;
     public void Play(GameObject button)
     {
         string buttonScene = button.transform.name;
@@ -22,19 +21,20 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 
     public void Test(GameObject button)
     {
-        foreach (Texture image in Images)
+        foreach (Sprite image in Images)
         {
             if (button.name == image.name)
             {
-                Debug.Log(image.name);
+                Image img= theImage.GetComponent<Image>();
+                img.sprite = image;
+                
             } 
         }
     }
-
-
+    
     public void ChangeMode()
     {
-            foreach (Texture image in Images)
+            foreach (Sprite image in Images)
             {
                 if (image.name == "ChangeMode")
                 {
