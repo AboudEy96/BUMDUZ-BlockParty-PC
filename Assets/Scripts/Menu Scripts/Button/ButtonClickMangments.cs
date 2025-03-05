@@ -26,7 +26,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         {
             if (button.name == image.name)
             {
-                Debug.Log(image.name);
+                image.GameObject().SetActive(true);
             } 
         }
     }

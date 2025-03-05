@@ -25,6 +25,8 @@ TagManager:
   - LightON
   - LightOFF
   - MapScoreboard
+  - Biege
+  - Light Biege
   layers:
   - Default
   - TransparentFX
