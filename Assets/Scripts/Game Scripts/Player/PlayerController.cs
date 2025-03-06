@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 public class PlayerController : IPlayerController
 {
     private Vector3 _velocity;
     private readonly CharacterController _controller;
     private readonly Rigidbody _rb;
+    private readonly PhotonView _photonView;
     public PlayerController(CharacterController controller)
     {
         _controller = controller;
@@ -13,7 +15,7 @@ public class PlayerController : IPlayerController
             Debug.LogError("CharacterController is not assigned!");
         }
     }
-
+    
     public PlayerController(Rigidbody rigidbody)
     {
         _rb = rigidbody;

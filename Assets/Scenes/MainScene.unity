@@ -201,13 +201,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 186427044}
-        m_TargetAssemblyTypeName: ButtonClickMangments, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 2
+      - m_Target: {fileID: 186427046}
+        m_TargetAssemblyTypeName: ConnectToServer, Assembly-CSharp
+        m_MethodName: ConnectUsingSettings
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 14295487}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -261,6 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 186427045}
   - component: {fileID: 186427044}
+  - component: {fileID: 186427046}
   m_Layer: 0
   m_Name: onButtonClickEvents
   m_TagString: Untagged
@@ -301,6 +302,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &186427046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186427043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44bc56444947434e8e82baa8b5bc1666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &596915024
 GameObject:
   m_ObjectHideFlags: 0

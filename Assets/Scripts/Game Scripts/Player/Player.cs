@@ -1,4 +1,5 @@
 ﻿using System;
+using Photon.Pun;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -20,14 +21,19 @@ public class Player : MonoBehaviour
 
     private PlayerController characterController;
 
+    PhotonView _photonView;
     private void Awake()
     {
         characterController = new PlayerController(GetComponent<CharacterController>());
+        _photonView = GetComponent<PhotonView>();
     }
 
     private void Update()
     {
-        HandleMovement();
+        if (_photonView.IsMine)
+        {
+            HandleMovement();
+        }
     }
 
     private void HandleMovement()
