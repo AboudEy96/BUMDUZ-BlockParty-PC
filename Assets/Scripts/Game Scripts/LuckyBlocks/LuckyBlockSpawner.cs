@@ -25,5 +25,7 @@ public class LuckyBlockSpawner : LuckyBlockManager
         Console.WriteLine($"Luckyblock Spanwed {theReward.transform.name}");
         Invoke("SpawnLuckyBlock", 25f);
     }
- 
+
+
+
 }

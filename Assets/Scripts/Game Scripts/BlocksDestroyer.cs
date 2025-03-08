@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using Photon.Pun;
 
-public class BlocksDestroyer : MonoBehaviour
+public class BlocksDestroyer : MonoBehaviourPunCallbacks
 {
-
     public MapChanger _MapChanger;
     public GameObject map;
     public static string chosenTag;
@@ -16,13 +13,18 @@ public class BlocksDestroyer : MonoBehaviour
     private List<Transform> allCubes = new List<Transform>();
     public static int score = 0;
     public Transform theImages;
+    private PhotonView _photonView;
+
     private void Start()
     {
-        Cursor.visible = false;
-        map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
-        Invoke("SelectRandomColor", 2f);
+        _photonView = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsMasterClient) // الهوست فقط هو من يختار اللون
+        {
+            Invoke("SelectRandomColor", 2f);
+        }
     }
-    private void ShowSelectedColor(Transform image, string tag) 
+
+    private void ShowSelectedColor(Transform image, string tag)
     {
         foreach (Transform color in image)
         {
@@ -30,64 +32,97 @@ public class BlocksDestroyer : MonoBehaviour
             color.gameObject.SetActive(color.CompareTag(tag));
         }
     }
+
+    [PunRPC]
+    private void SyncSelectedColor(string selectedTag)
+    {
+        chosenTag = selectedTag;
+        ShowSelectedColor(theImages, chosenTag);
+        Debug.Log($"Synchronized color selection: {chosenTag}");
+        Invoke("DestroyCubes", 5f);
+    }
+
     private void SelectRandomColor()
     {
-        foreach (Transform child in map.transform) {
-           if (child.gameObject.layer == LayerMask.NameToLayer("Cube"))
-           { 
-               allCubes.Add(child);
-           }
+        map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
+        allCubes.Clear();
+
+        foreach (Transform child in map.transform)
+        {
+            if (child.gameObject.layer == LayerMask.NameToLayer("Cube"))
+            {
+                allCubes.Add(child);
+            }
         }
-        
+
         HashSet<string> tags = new HashSet<string>();
         foreach (Transform cube in allCubes)
         {
             tags.Add(cube.tag);
         }
 
-        string[] tagArray = new string[tags.Count];
-        tags.CopyTo(tagArray);
+        string[] tagArray = tags.ToArray();
+        string selectedTag = tagArray[Random.Range(0, tagArray.Length)];
 
-        // اختيار تاق عشوائي
-         chosenTag = tagArray[Random.Range(0, tagArray.Length)];
-         ShowSelectedColor(theImages, chosenTag);
-         Debug.Log(chosenTag + " has been chosen OTHER COLORS will be destroyed after 5 seconds!");
-         Invoke("DestroyCubes", 5f);
+        // إرسال اللون لكل اللاعبين عبر RPC
+        _photonView.RPC("SyncSelectedColor", RpcTarget.AllBuffered, selectedTag);
     }
-    
-       private void DestroyCubes()
+
+    [PunRPC]
+    private void SyncDestroyCubes(string selectedTag)
     {
         foreach (Transform cube in allCubes)
         {
-            if (cube.tag != chosenTag)
+            if (cube.tag != selectedTag)
             {
-                cube.gameObject.SetActive(false);
+                cube.gameObject.SetActive(false); 
             }
         }
-        Debug.Log("DESTROYED OTHER COLORS OF" + chosenTag);
+        Debug.Log("Destroyed non-matching cubes on all clients");
         allCubes.Clear();
-
-        Invoke("ActiveNextMap", 5f);
+        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Invoke("ActiveNextMap", 3f);
+        }
     }
 
-private void ActiveNextMap()
-{
+    private void DestroyCubes()
+    {
+        if (PhotonNetwork.IsMasterClient) 
+        {
+            _photonView.RPC("SyncDestroyCubes", RpcTarget.All, chosenTag);
+        }
+    }
+
+
+
+    [PunRPC]
+    private void SyncNextMap()
+    {
         _MapChanger.runNextMap();
         map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
-        foreach (Transform allCube in allCubes)
-        {
-            allCube.gameObject.SetActive(true);
-        }
-        {
-            
-        }
+
         foreach (Transform mapCubes in map.transform)
         {
             mapCubes.gameObject.SetActive(true);
         }
-        Debug.Log(_MapChanger.getMapName());
+
+        Debug.Log($"Map changed to: {_MapChanger.getMapName()}");
         score++;
-        Debug.Log("Your score is " + score);
-        Invoke("SelectRandomColor", 3f);
+        Debug.Log($"Current score: {score}");
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Invoke("SelectRandomColor", 3f);
+        }
+    }
+
+    private void ActiveNextMap()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _photonView.RPC("SyncNextMap", RpcTarget.AllBuffered);
+        }
     }
 }

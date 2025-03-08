@@ -6,7 +6,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 {
     public InputField create;
     public InputField join;
-
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(create.text);
@@ -19,6 +18,8 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        ServerOnlinePlayers.addOnlinePlayer();
+        PhotonNetwork.LoadLevel("Game");
+            PhotonNetwork.LocalPlayer.NickName = $"Player-{PhotonNetwork.LocalPlayer.ActorNumber}";
     }
 }
