@@ -13,6 +13,7 @@ public class LuckyBlock : LuckyBlockManager
         string lName = LayerMask.LayerToName(theLB.layer);
         Destroy(theLB);
         GiveReward(pl);
+        
     }
     public override void GiveReward(GameObject pl)
     {
