@@ -7,6 +7,7 @@ public class PlayerController : IPlayerController
     private readonly CharacterController _controller;
     private readonly Rigidbody _rb;
     private readonly PhotonView _photonView;
+    public float speed;
     public PlayerController(CharacterController controller)
     {
         _controller = controller;
@@ -60,7 +61,8 @@ public class PlayerController : IPlayerController
 
     public void Move(Vector3 direction, float moveSpeed)
     {
-        _controller.Move(direction * moveSpeed * Time.deltaTime);
+        speed = moveSpeed;
+        _controller.Move(direction * speed * Time.deltaTime);
         ApplyGravity();
         _controller.Move(_velocity * Time.deltaTime);
     }
