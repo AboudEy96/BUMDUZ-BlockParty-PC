@@ -18,7 +18,7 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
-        if (PhotonNetwork.IsMasterClient) // الهوست فقط هو من يختار اللون
+        if (PhotonNetwork.IsMasterClient) 
         {
             Invoke("SelectRandomColor", 2f);
         }
@@ -39,8 +39,20 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         chosenTag = selectedTag;
         ShowSelectedColor(theImages, chosenTag);
         Debug.Log($"Synchronized color selection: {chosenTag}");
+
+        map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
+        allCubes.Clear();
+        foreach (Transform child in map.transform)
+        {
+            if (child.gameObject.layer == LayerMask.NameToLayer("Cube"))
+            {
+                allCubes.Add(child);
+            }
+        }
+
         Invoke("DestroyCubes", 5f);
     }
+
 
     private void SelectRandomColor()
     {
@@ -89,10 +101,12 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
 
     private void DestroyCubes()
     {
+        
         if (PhotonNetwork.IsMasterClient) 
         {
-            _photonView.RPC("SyncDestroyCubes", RpcTarget.All, chosenTag);
+            _photonView.RPC("SyncDestroyCubes", RpcTarget.AllBuffered, chosenTag);
         }
+        
     }
 
 
