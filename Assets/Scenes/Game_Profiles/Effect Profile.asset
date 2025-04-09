@@ -1350,7 +1350,7 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 6.28
+    value: 10
   zBias:
     overrideState: 1
     value: 0.000229
@@ -1381,7 +1381,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.58
+    value: 0.2
   threshold:
     overrideState: 1
     value: 1
