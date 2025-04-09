@@ -13,19 +13,18 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     public GameObject joinButton;
     public Transform listContainer;
     private Dictionary<string, int> roomList = new Dictionary<string, int>();
+    [PunRPC]
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(create.text); 
+        PhotonNetwork.CreateRoom(create.text);
         photonView.RPC("CreateRoomButton", RpcTarget.All, create.text);
     }
 
     [PunRPC]
     void CreateRoomButton(string roomName)
     {
-        Room room = new Room(roomName, 123, "Unknown");
-    //    PhotonNetwork.CreateRoom(room.GetRoomName());
         GameObject theButtonofRoom = PhotonView.Instantiate(joinButton, listContainer);
-        theButtonofRoom.transform.name = room.GetRoomName();
+        theButtonofRoom.transform.name = roomName;
     }
 
     public void JoinRoom()
