@@ -5,7 +5,9 @@ using Random = UnityEngine.Random;
 
 public class SpawnPlayers : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject PREFAB_PLAYER;
+    public Material PLAYER_SKIN;
+    private string playerName = CreateJoinRooms.playerNameInLobby;
     public int height;
     public int width;
     public int yAXIS;
@@ -15,6 +17,12 @@ public class SpawnPlayers : MonoBehaviour
         int x = Random.Range(-19, width);
         int z = Random.Range(-21, height);
         Vector3 location = new Vector3(x, yAXIS, z);
-        PhotonNetwork.Instantiate(player.name, location, Quaternion.identity);
+      //  PhotonNetwork.Instantiate(player.name, location, Quaternion.identity);
+      PlayerUser player = new PlayerUserBuilder(PREFAB_PLAYER)
+          .SetId(1)
+          .SetName(playerName)
+          .SetSkinMaterial(PLAYER_SKIN)
+          .Build(location);
+      
     }
 }

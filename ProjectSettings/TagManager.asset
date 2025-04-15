@@ -27,6 +27,7 @@ TagManager:
   - MapScoreboard
   - Biege
   - Light Biege
+  - Skin
   layers:
   - Default
   - TransparentFX
@@ -39,7 +40,7 @@ TagManager:
   - LuckyPurple
   - Void
   - PostProcessing
-  - 
+  - Skin
   - 
   - 
   - 
