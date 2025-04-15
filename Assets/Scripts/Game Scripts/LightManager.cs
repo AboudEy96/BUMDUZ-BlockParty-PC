@@ -19,7 +19,7 @@ public class LightManager : MonoBehaviour
         // Start fading lights
         foreach (Light light in lightComponents)
         {
-            StartCoroutine(FadeLight(light, 4.72f, 9f, 1)); // مثال: fade in من 0 إلى 15 على مدى 2 ثانية
+            StartCoroutine(FadeLight(light, 4.72f, 9f, 1)); 
         }
     }
 

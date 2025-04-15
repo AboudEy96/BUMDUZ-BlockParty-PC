@@ -11,6 +11,8 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 {
     public InputField create;
     public InputField join;
+    public InputField playerName;
+    public static string playerNameInLobby;
     public Canvas canvas;
     public GameObject joinButton;
     public Transform listContainer;
@@ -55,6 +57,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
+        
         PhotonNetwork.JoinRoom(join.text);
     }
 
@@ -67,6 +70,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         }
         ServerOnlinePlayers.addOnlinePlayer();
         PhotonNetwork.LoadLevel("Game");
+        playerNameInLobby = playerName.text;
         PhotonNetwork.LocalPlayer.NickName = $"Player-{PhotonNetwork.LocalPlayer.ActorNumber}";
     }
     

@@ -48,6 +48,7 @@ MonoBehaviour:
   - RPC_CreateRoomButton
   - CreateRoomButton
   - SyncMovement
+  - ChangeMaterial_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
