@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using UnityEditor.PackageManager;
+using UnityEngine;
 
 public abstract class EventManager : MonoBehaviour
 {
-    public virtual void OnPlayerDeath(GameObject player)
+    public virtual void OnPlayerDeath(PlayerUser player)
     {
         
     }
