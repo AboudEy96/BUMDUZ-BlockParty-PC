@@ -4,8 +4,9 @@ public class Events : EventManager
 {
     protected GameObject p;
     
-    public override void OnPlayerDeath(GameObject player)
+    public override void OnPlayerDeath(PlayerUser player)
     {
+        Debug.Log("Player Dead");
     }
 
     public override void OnPlayerHit(GameObject player)

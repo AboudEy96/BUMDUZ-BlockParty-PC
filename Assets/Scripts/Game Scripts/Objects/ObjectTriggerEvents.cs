@@ -13,14 +13,10 @@ public class ObjectTriggerEvents : Events
     
     private void OnTriggerEnter(Collider other)
     {
-        target = target != null ? target : GameObject.FindGameObjectWithTag("Player");
-        if (other.gameObject == target)
+        if (other.gameObject.CompareTag("Player"))
         {
-            target = p;
+            target = other.gameObject;
             onTriggerWithTarget?.Invoke();
         }
     }
-
-
-
 }
