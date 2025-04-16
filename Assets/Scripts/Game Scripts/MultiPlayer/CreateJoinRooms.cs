@@ -72,7 +72,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         ServerOnlinePlayers.addOnlinePlayer();
         PhotonNetwork.LoadLevel("Game");
         playerNameInLobby = playerName.text;
-        PhotonNetwork.LocalPlayer.NickName = $"Player-{PhotonNetwork.LocalPlayer.ActorNumber}";
+        PhotonNetwork.LocalPlayer.NickName = playerName.text;
     }
     
 }

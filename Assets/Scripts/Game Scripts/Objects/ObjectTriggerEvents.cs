@@ -15,6 +15,7 @@ public class ObjectTriggerEvents : Events
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            
             target = other.gameObject;
             onTriggerWithTarget?.Invoke();
         }
