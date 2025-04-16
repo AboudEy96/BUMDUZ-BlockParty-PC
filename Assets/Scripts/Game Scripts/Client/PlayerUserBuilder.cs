@@ -30,6 +30,7 @@ public class PlayerUserBuilder
     public PlayerUserBuilder SetSkinMaterial(Material skinMaterial)
     {
         _skinMaterial = skinMaterial;
+        
         return this;
 
     }
@@ -45,6 +46,8 @@ public class PlayerUserBuilder
     {
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, spawnPosition, Quaternion.identity);
         PlayerUser playerComponent = player.GetComponent<PlayerUser>();
+        SkinnedMeshRenderer sms = player.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+        sms.material = _skinMaterial;
         playerComponent.SetupPlayer(_name, _id, _skinMaterial, _playerPrefab);
         // change the material to _skinMaterial and show it to all players 
         

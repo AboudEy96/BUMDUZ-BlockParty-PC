@@ -23,6 +23,9 @@ public class SpawnPlayers : MonoBehaviour
           .SetName(playerName)
           .SetSkinMaterial(PLAYER_SKIN)
           .Build(location);
-      
+
+    //  SkinnedMeshRenderer sms = player.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+     // sms.materials[0] = PLAYER_SKIN;
+   //   sms.material = PLAYER_SKIN;
     }
 }
