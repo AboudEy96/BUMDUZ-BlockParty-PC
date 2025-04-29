@@ -1,31 +1,48 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BarMoving : MonoBehaviour
 {
-    private RectTransform _rectTransform;
-    public float loadSpeed = 0.5f;
+    public GameObject LoaderUI;
+    public Slider progressSlider;
 
-    public float currentProg = 0.0f;
-    private void Start()
+    public void LoadScene(int index)
     {
-        SetProgress(0f);
-        
+        StartCoroutine(LoadScene_Coroutine(index));
     }
 
-    private void Update()
+    public IEnumerator LoadScene_Coroutine(int index)
     {
-        if (currentProg < 1f)
+        progressSlider.value = 0;
+        LoaderUI.SetActive(true);
+
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Lobby");
+        asyncOperation.allowSceneActivation = false;
+
+        float progress = 0;
+
+        while (!asyncOperation.isDone)
         {
-            currentProg += Time.deltaTime * loadSpeed;
-            SetProgress(currentProg);
+            if (asyncOperation.progress < 0.9f)
+            {
+                progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
+                progressSlider.value = progress;
+            }
+            else
+            {
+                progress = Mathf.MoveTowards(progress, 1f, Time.deltaTime);
+                progressSlider.value = progress;
+
+                if (progress >= 1f)
+                {
+                    asyncOperation.allowSceneActivation = true;
+                }
+            }
+
+            yield return null;
         }
     }
-
-    public void SetProgress(float prog)
-    {
-        prog = Mathf.Clamp01(prog);
-        _rectTransform.localScale = new Vector3(prog, 1, 1);
-    }
-    
 }
