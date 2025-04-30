@@ -126,6 +126,7 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         score++;
         Debug.Log($"Current score: {score}");
 
+        ColorChangeEvent.SetUpColors(map.transform);
         if (PhotonNetwork.IsMasterClient)
         {
             Invoke("SelectRandomColor", 3f);

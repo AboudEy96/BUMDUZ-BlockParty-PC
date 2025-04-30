@@ -10,35 +10,65 @@ public class MapChanger : MonoBehaviour
     public GameObject[] maps;
     private BlocksDestroyer _blocksDestroyer;
     public Transform Scoreboard;
+    public List<int> availableMaps; // لتخزين الماب المتاحة
     private int currentMapIndex = 0;
-    //public Transform mapText;
+
     void Start()
     {
+        InitializeMaps();
         ActiveMap(currentMapIndex);
     }
 
+    // تهيئة الخرائط المتاحة
+    private void InitializeMaps()
+    {
+        availableMaps = new List<int>();
+        for (int i = 0; i < maps.Length; i++)
+        {
+            availableMaps.Add(i); // إضافة جميع الخرائط إلى القائمة
+        }
+    }
+
+    // تفعيل الخريطة بناءً على الفهرس
     public void ActiveMap(int index)
     {
         if (index >= 0 && index < maps.Length)
         {
             maps[index].SetActive(true);
-            foreach (GameObject otherMaps in maps)
+            foreach (GameObject otherMap in maps)
             {
-                if (otherMaps == maps[index]) continue;
-                otherMaps.SetActive(false);
-            }
-            {
-                
+                if (otherMap == maps[index]) continue;
+                otherMap.SetActive(false);
             }
             showMapImageAndName(getMapName());
         }
     }
 
+    // تشغيل الخريطة التالية بشكل عشوائي
     public void runNextMap()
     {
-            currentMapIndex = (currentMapIndex + 1) % maps.Length; // 3 + 1 % 3 = 0  
+        if (availableMaps.Count > 0)
+        {
+            // اختيار ماب عشوائي من الخرائط المتاحة
+            int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
+            currentMapIndex = availableMaps[randomIndex];
+            availableMaps.RemoveAt(randomIndex); // إزالة الخريطة المختارة من القائمة
+
             ActiveMap(currentMapIndex);
+        }
+        else
+        {
+            // إذا انتهت الخرائط المتاحة، إعادة تفعيل كل الخرائط
+            InitializeMaps();
+            // اختيار ماب عشوائي من الخرائط المتاحة
+            int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
+            currentMapIndex = availableMaps[randomIndex];
+            availableMaps.RemoveAt(randomIndex); // إزالة الخريطة المختارة من القائمة
+
+            ActiveMap(currentMapIndex);
+        }
     }
+
     public String getMapName()
     {
         return maps[currentMapIndex].name;
