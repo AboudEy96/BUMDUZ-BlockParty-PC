@@ -16,7 +16,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     public Canvas canvas;
     public GameObject joinButton;
     public Transform listContainer;
-
+    public Transform Content;
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(create.text); 
@@ -24,10 +24,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> updatedRoomList)
     {
-        foreach (Transform child in listContainer)
+   /*     foreach (Transform child in listContainer)
         {
             Destroy(child.gameObject);
-        }
+        }*/
 
         foreach (RoomInfo room in updatedRoomList)
         {
@@ -35,7 +35,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
                 continue;
 
             GameObject button = Instantiate(joinButton, listContainer);
-          button.transform.GetComponentInChildren<TextMeshProUGUI>().text = room.Name;
+       //    button.transform.GetComponentInChildren<TextMeshProUGUI>().text = room.Name;
             button.transform.name = room.Name;
             button.GetComponent<Button>().onClick.AddListener(() => {
                 PhotonNetwork.JoinRoom(room.Name); 
@@ -48,10 +48,11 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     void CreateRoomButton(string roomName)
     {
         Room room = new Room(roomName, 123, "Unknown");
-    //    PhotonNetwork.CreateRoom(room.GetRoomName());
-    //    GameObject theButtonofRoom = PhotonNetwork.Instantiate(joinButton.name, Vector3.zero, Quaternion.identity);
-      //  theButtonofRoom.transform.name = room.GetRoomName();
-       // theButtonofRoom.transform.SetParent(canvas.transform, false);
+        
+        PhotonNetwork.CreateRoom(room.GetRoomName());
+       GameObject theButtonofRoom = PhotonNetwork.Instantiate(joinButton.name, Vector3.zero, Quaternion.identity);
+       theButtonofRoom.transform.name = room.GetRoomName();
+        theButtonofRoom.transform.SetParent(Content, false);
         
     }
 

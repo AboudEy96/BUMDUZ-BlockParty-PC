@@ -1468,6 +1468,7 @@ GameObject:
   - component: {fileID: 5452625327683396468}
   - component: {fileID: 4178225543150642279}
   - component: {fileID: 2136726837297658687}
+  - component: {fileID: 5300161101063672509}
   m_Layer: 6
   m_Name: SkeletonPlayer
   m_TagString: Player
@@ -1558,6 +1559,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5452625327683396468}
+  - {fileID: 5300161101063672509}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1681,6 +1683,27 @@ MonoBehaviour:
     m_Bits: 8
   cameraTransform: {fileID: 0}
   animator: {fileID: 3121188415000186388}
+--- !u!114 &5300161101063672509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5679344427500541930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: Runing
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &5847213039511789024
 GameObject:
   m_ObjectHideFlags: 0
