@@ -1,34 +1,66 @@
-﻿using System;
+﻿using System.Collections;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerDeathEvent : MonoBehaviour
 {
-    public void OnVoidDeath(GameObject player)
-    {
-        Rigidbody rb = player.GetComponent<Rigidbody>(); // الحصول على الـ Rigidbody
-        if (rb != null)
-        {
-            // تأكد أن الـ Rigidbody ليس في وضع Kinematic
-            rb.isKinematic = false;
-            
-            // زيادة القوة للتأكد من الدفع بشكل أكبر
-            Vector3 pushUp = new Vector3(0, 100f, 0); // قوة أكبر للتأكد من الدفع بشكل واضح
-            rb.AddForce(pushUp, ForceMode.Impulse); // استخدام Impulse لتطبيق القوة بشكل مفاجئ
+    [Header("Effect Volume")]
+    public PostProcessVolume EFFECT;
 
-            // التأكد من إعدادات الفيزيائيات: تأكد أن الكتلة ليست ثقيلة جدًا، والـ drag ليس مرتفعًا
-            rb.mass = 1f; // ضبط الكتلة على 1 إذا كانت مرتفعة جدًا
-            rb.drag = 0f; // التأكد من أن الـ drag صفر
-            rb.angularDrag = 0f; // التأكد من أن الـ angular drag صفر
-        }
-        else
+    private ColorGrading colorGrading;
+
+    private void Start()
+    {
+        // نحاول ناخذ إعدادات ColorGrading من الـ Volume
+        if (!EFFECT.profile.TryGetSettings(out colorGrading))
         {
-            Debug.LogWarning("No Rigidbody found on player!");
+            Debug.LogError("ColorGrading not found in the PostProcessVolume!");
         }
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnVoidDeath(GameObject player)
     {
-    
+        StartCoroutine(ChangeGfxToBlack());
+        HidePlayer(player);
+    }
+
+    public void HidePlayer(GameObject player)
+    {
+        foreach (GameObject child in player.transform)
+        {
+            if (child.CompareTag("Skin"))
+            {
+                child.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            }   
+        }
+        
+    }
+
+    private IEnumerator ChangeGfxToBlack()
+    {
+        float elapsed = 0f;
+        float duration = 2f;
+        float startValue = colorGrading.saturation.value;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            colorGrading.saturation.value = Mathf.Lerp(startValue, -60f, t);
+            yield return null;
+        }
+
+        colorGrading.saturation.value = -60f;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Trigger detected with: " + other.gameObject.name);
+        if (other.CompareTag("Player"))
+        {
             OnVoidDeath(other.gameObject);
+        }
     }
 }
