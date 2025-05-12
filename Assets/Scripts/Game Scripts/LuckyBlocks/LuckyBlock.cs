@@ -13,7 +13,7 @@ public class LuckyBlock : LuckyBlockManager
         string lName = LayerMask.LayerToName(theLB.layer);
         Destroy(theLB);
         GiveReward(pl);
-        
+        // teleport to current color block 
     }
     public override void GiveReward(GameObject pl)
     {

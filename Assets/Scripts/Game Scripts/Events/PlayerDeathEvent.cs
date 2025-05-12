@@ -12,7 +12,7 @@ public class PlayerDeathEvent : MonoBehaviour
 
     private void Start()
     {
-        // نحاول ناخذ إعدادات ColorGrading من الـ Volume
+
         if (!EFFECT.profile.TryGetSettings(out colorGrading))
         {
             Debug.LogError("ColorGrading not found in the PostProcessVolume!");
@@ -27,7 +27,7 @@ public class PlayerDeathEvent : MonoBehaviour
 
     public void HidePlayer(GameObject player)
     {
-        foreach (GameObject child in player.transform)
+        foreach (Transform child in player.transform)
         {
             if (child.CompareTag("Skin"))
             {

@@ -10,6 +10,8 @@ public abstract class LuckyBlockManager : MonoBehaviour
     public List<GameObject> rewards;
     public List<GameObject> luckyBlocks;
 
+    
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && gameObject.CompareTag("LuckyBlock"))
