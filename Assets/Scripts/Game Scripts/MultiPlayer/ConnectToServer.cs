@@ -36,4 +36,9 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene("Lobby");
     }
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("Lobby"); 
+    }
+
 }

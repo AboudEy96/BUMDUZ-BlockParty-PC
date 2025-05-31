@@ -8,6 +8,7 @@ public class PlayerDeathEvent : MonoBehaviour
     [Header("Effect Volume")]
     public PostProcessVolume EFFECT;
 
+    [Header("Death Canvas")] public Canvas DeathScreen;
     private ColorGrading colorGrading;
 
     private void Start()
@@ -23,6 +24,7 @@ public class PlayerDeathEvent : MonoBehaviour
     {
         StartCoroutine(ChangeGfxToBlack());
         HidePlayer(player);
+        DeathScreen.gameObject.SetActive(true);
     }
 
     public void HidePlayer(GameObject player)
