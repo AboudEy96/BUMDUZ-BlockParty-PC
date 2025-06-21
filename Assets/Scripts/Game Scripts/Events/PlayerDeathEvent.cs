@@ -56,13 +56,17 @@ public class PlayerDeathEvent : MonoBehaviour
         colorGrading.saturation.value = -60f;
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger detected with: " + other.gameObject.name);
+    
         if (other.CompareTag("Player"))
         {
-            OnVoidDeath(other.gameObject);
+            PhotonView view = other.GetComponent<PhotonView>();
+            if (view != null && view.IsMine)
+            {
+                OnVoidDeath(other.gameObject);
+            }
         }
     }
 }

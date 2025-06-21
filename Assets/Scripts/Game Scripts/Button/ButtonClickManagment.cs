@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ButtonClickManagment : MonoBehaviour
+public class ButtonClickManagment : MonoBehaviourPunCallbacks
 {
     [Header("The Loading Images")]
     public List<Sprite> images = new List<Sprite>();
@@ -27,11 +28,16 @@ public class ButtonClickManagment : MonoBehaviour
     public IEnumerator MoveToLobby()
     {
         SendLoading();
-        yield return new WaitForSeconds(2.0f);
         PhotonNetwork.LeaveRoom();
+        yield return new WaitForSeconds(2.0f);
+
     }
     public void OnPlayButtonClicked()
     {
         StartCoroutine(MoveToLobby());
+    }
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 }

@@ -30,10 +30,10 @@ public class PlayerUserBuilder
     public PlayerUserBuilder SetSkinMaterial(Material skinMaterial)
     {
         _skinMaterial = skinMaterial;
-        
         return this;
 
     }
+    
 
     public PlayerUserBuilder SetPlayerPrefab(GameObject playerPrefab)
     {
