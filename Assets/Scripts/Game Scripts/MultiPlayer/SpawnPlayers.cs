@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class SpawnPlayers : MonoBehaviour
 {
-    public GameObject PREFAB_PLAYER;
+    public GameObject PREFAB_PLAYER = PlayerCharacterSingletoon.CHARACTER;
     public Material PLAYER_SKIN;
     private string playerName = CreateJoinRooms.playerNameInLobby;
     public int height;
