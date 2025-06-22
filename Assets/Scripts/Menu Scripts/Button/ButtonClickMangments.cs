@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -13,18 +14,31 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      public List<Sprite> images = new List<Sprite>();
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
-
+     private string currentMode;
+     [Header("The Menu of choose object")] public GameObject chooseModeObject;
      public void Awake()
      {
          ActiveButtons();
      }
     public void Play(GameObject button)
     {
-        string buttonScene = button.transform.name;
-        SceneManager.LoadScene(buttonScene);
+        string buttonName = button.transform.name;
+        switch (buttonName)
+        {
+            case "Singleplayer":
+                PhotonNetwork.Disconnect();
+                PhotonNetwork.OfflineMode = true;
 
+                PhotonNetwork.CreateRoom("OfflineRoom");
+                SceneManager.LoadScene("Game");
+                break;
+            default:
+                chooseModeObject.SetActive(true);
+                break;
+        }
+        
     }
-
+        
     public void Other(GameObject button)
     {
         foreach (Sprite image in images)
@@ -41,7 +55,8 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     public string GetCurrentMode()
     {
         Image img = theImage.GetComponent<Image>();
-        return img.sprite.name;
+        currentMode = img.sprite.name;
+        return currentMode;
     }
 
     public void ActiveButtons()
