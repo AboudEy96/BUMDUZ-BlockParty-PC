@@ -32,9 +32,17 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2.0f);
 
     }
+
     public void OnPlayButtonClicked()
     {
-        StartCoroutine(MoveToLobby());
+        if (!PhotonNetwork.OfflineMode)
+        {
+            StartCoroutine(MoveToLobby());
+        }
+        else
+        {
+            SceneManager.LoadScene("MainScene");
+        }
     }
     public override void OnLeftRoom()
     {
