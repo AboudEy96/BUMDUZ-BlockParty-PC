@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
         Vector3 moveDirection = characterController.CalculateMoveDirection(cameraTransform, Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         characterController.RotateTowards(moveDirection, rotationSpeed);
         characterController.Move(moveDirection, hasEffect("Speed") ? moveSpeed+2 : moveSpeed);
-        animator.SetBool("Runing", moveDirection.magnitude > 0.1f);
+        animator.SetBool("Run", moveDirection.magnitude > 0.1f);
         
     }
     bool hasEffect(string childName)
