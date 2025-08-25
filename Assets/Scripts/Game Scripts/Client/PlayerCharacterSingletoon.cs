@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCharacterSingletoon : MonoBehaviour
 {
     // -- Singletoon to save the player character and color --
+    [SerializeField]
     public static GameObject CHARACTER;
     public static Texture COLOR;
     public static Material MAT;
@@ -13,7 +14,6 @@ public class PlayerCharacterSingletoon : MonoBehaviour
     {
         MAT = CHARACTER.GetComponent<Renderer>().material;
         MAT.mainTexture = COLOR;
-        
     }
     
 }
