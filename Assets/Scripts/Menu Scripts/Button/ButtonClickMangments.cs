@@ -16,6 +16,11 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
      
+     
+     [Header("Main and Character Camera")]
+     public Camera characterCamera;
+     public Camera mainCamera;
+     [Header("Player Prefab and Material")]
      public GameObject PREFAB_PLAYER = PlayerCharacterSingletoon.CHARACTER;
      public Material PLAYER_SKIN;
     
@@ -44,6 +49,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         
     }
         
+    
     public void Other(GameObject button)
     {
         foreach (Sprite image in images)
@@ -52,6 +58,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
             {
                 Image img = theImage.GetComponent<Image>();
                 img.sprite = image;
+                ActiveCamera();
                 ActiveButtons();
                 ActiveCharacter();
             }
@@ -63,6 +70,15 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         Image img = theImage.GetComponent<Image>();
         currentMode = img.sprite.name;
         return currentMode;
+    }
+
+    public void ActiveCamera()
+    {
+        bool characterMode = GetCurrentMode().Equals("Character") ? true : false;
+        characterCamera.gameObject.SetActive(characterMode);
+        mainCamera.enabled = !characterMode;
+
+
     }
 
     public void ActiveButtons()
