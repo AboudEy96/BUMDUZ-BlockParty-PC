@@ -7,7 +7,7 @@ Shader "Custom/ToonShaderBrightOutlineSoft"
         _ShadeColor ("Shade Color", Color) = (0.6,0.6,0.6,1)
         _Threshold ("Shadow Threshold", Range(0,1)) = 0.5
         _LightIntensity ("Light Intensity", Range(0.5, 2)) = 1.2
-        _OutlineColor ("Outline Color", Color) = (0,0,0,0.5) // صار نصف شفاف
+        _OutlineColor ("Outline Color", Color) = (0,0,0,0.5) 
         _OutlineWidth ("Outline Width", Range(0.0, 0.05)) = 0.02
     }
 
@@ -37,27 +37,28 @@ Shader "Custom/ToonShaderBrightOutlineSoft"
             o.Alpha = c.a;
         }
 
-        inline half4 LightingToonRamp (SurfaceOutput s, half3 lightDir, half atten)
-        {
-            half NdotL = dot(s.Normal, lightDir);
+       inline half4 LightingToonRamp (SurfaceOutput s, half3 lightDir, half atten)
+{
+    half NdotL = saturate(dot(s.Normal, lightDir));
+    half diff = NdotL > _Threshold ? 1.0 : 0.6;
+            
+    half3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
-            half diff = NdotL > _Threshold ? 1.0 : 0.6;
+    half4 c;
+    c.rgb = s.Albedo * (diff * atten * _LightIntensity + ambient);
+    c.a = s.Alpha;
+    return c;
+}
 
-            half4 c;
-            c.rgb = s.Albedo * (diff * atten * _LightIntensity);
-            c.a = s.Alpha;
-            return c;
-        }
         ENDCG
-
-        // Outline Pass
+        
         Pass
         {
             Name "Outline"
             Cull Front
             ZWrite On
             ZTest LEqual
-            Blend SrcAlpha OneMinusSrcAlpha // دعم الشفافية
+            Blend SrcAlpha OneMinusSrcAlpha 
             ColorMask RGB
 
             CGPROGRAM
