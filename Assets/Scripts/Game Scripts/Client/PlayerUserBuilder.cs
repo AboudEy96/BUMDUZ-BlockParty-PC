@@ -1,13 +1,13 @@
-﻿using Photon.Pun;
+﻿using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerUserBuilder
 {
     private string _name;
     private int _id;
-    private Material _skinMaterial;
+    private string _skinMaterial;
     private GameObject _playerPrefab;
-
     public PlayerUserBuilder(GameObject prefab)
     {
         _playerPrefab = prefab;
@@ -27,7 +27,7 @@ public class PlayerUserBuilder
 
     }
 
-    public PlayerUserBuilder SetSkinMaterial(Material skinMaterial)
+    public PlayerUserBuilder SetSkinMaterial(string skinMaterial)
     {
         _skinMaterial = skinMaterial;
         return this;
@@ -41,13 +41,14 @@ public class PlayerUserBuilder
         return this;
 
     }
-
     public PlayerUser Build(Vector3 spawnPosition)
     {
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, spawnPosition, Quaternion.identity);
         PlayerUser playerComponent = player.GetComponent<PlayerUser>();
         SkinnedMeshRenderer sms = player.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-        sms.material = _skinMaterial;
+        
+        
+    //    sms.material = _skinMaterial;
         playerComponent.SetupPlayer(_name, _id, _skinMaterial, _playerPrefab);
         // change the material to _skinMaterial and show it to all players 
         

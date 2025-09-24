@@ -21,8 +21,8 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      public Camera characterCamera;
      public Camera mainCamera;
      [Header("Player Prefab and Material")]
-     public GameObject PREFAB_PLAYER = PlayerCharacterSingletoon.CHARACTER;
-     public Material PLAYER_SKIN;
+    // public GameObject PREFAB_PLAYER = PlayerCharacterSingletoon.Instance.CHARACTER;
+    // public Material PLAYER_SKIN = PlayerCharacterSingletoon.Instance.SKIN;
     
      private string currentMode;
      [Header("The Menu of choose object")] public GameObject chooseModeObject;
