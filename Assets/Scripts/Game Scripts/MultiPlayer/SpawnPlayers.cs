@@ -18,8 +18,8 @@ public class SpawnPlayers : MonoBehaviour
 
     private void Awake()
     {
-        PlayerPrefs.SetString("Skin", "PurpleBlue");
         PLAYER_SKIN = PlayerPrefs.GetString("Skin", "PurpleBlue");
+        Debug.Log(PlayerPrefs.GetString("Skin"));
     }
 
     void Start()
@@ -30,6 +30,18 @@ public class SpawnPlayers : MonoBehaviour
         Vector3 location = new Vector3(x, yAXIS, z);
         //  PhotonNetwork.Instantiate(player.name, location, Quaternion.identity);
 
+        
+        SkinnedMeshRenderer sms = PREFAB_PLAYER.GetComponentInChildren<SkinnedMeshRenderer>();
+        
+        foreach (var mat in _materialsSkins)
+        {
+            if (mat.name == PLAYER_SKIN)
+            {
+                sms.GetComponentInChildren<SkinnedMeshRenderer>().material = mat;
+                
+                break;
+            }
+        }
 
         PlayerUser player = new PlayerUserBuilder(PREFAB_PLAYER)
             .SetId(1)
@@ -37,16 +49,5 @@ public class SpawnPlayers : MonoBehaviour
             .SetSkinMaterial(PLAYER_SKIN)
             .Build(location);
 
-        SkinnedMeshRenderer sms = player.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-
-
-        foreach (var mat in _materialsSkins)
-        {
-            if (mat.name == PLAYER_SKIN)
-            {
-                sms.material = mat;
-                break;
-            }
-        }
     }
 }

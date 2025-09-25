@@ -21,6 +21,7 @@ public class ColorChangeEvent : MonoBehaviour
             {
                 Material material = cube.GetComponent<Renderer>().material;
                 string materialName = material.name.Replace("(Instance)", "").Trim();
+                
                 cube.tag = materialName; 
                     
             }
