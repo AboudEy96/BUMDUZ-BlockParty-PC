@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private float rotationSpeed = 10.0f;
     
     // JUMP FORCES
-    private float jumpForce = 2.0f;
+    private float jumpForce = 1.0f;
     private float gravity = -9.81f;
 
     private TextMeshPro playerName;

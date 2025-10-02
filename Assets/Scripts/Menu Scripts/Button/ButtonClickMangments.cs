@@ -15,7 +15,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      public List<Sprite> images = new List<Sprite>();
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
-     
+     public GameObject lightFade;
      
      [Header("Main and Character Camera")]
      public Camera characterCamera;
@@ -61,10 +61,15 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 ActiveCamera();
                 ActiveButtons();
                 ActiveCharacter();
+                HideShowFade();
             }
         }
     }
 
+    public void HideShowFade()
+    {
+        lightFade.SetActive(GetCurrentMode().Equals("Map"));
+    }
     public string GetCurrentMode()
     {
         Image img = theImage.GetComponent<Image>();
