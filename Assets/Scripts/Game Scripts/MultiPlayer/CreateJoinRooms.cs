@@ -92,7 +92,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
             string roomName = room.Name;
 
-            button.GetComponentInChildren<Text>().text = roomName; // إظهار الاسم على الزر
+            button.GetComponentInChildren<Text>().text = roomName; 
 
             button.GetComponent<Button>().onClick.AddListener(() =>
             {
