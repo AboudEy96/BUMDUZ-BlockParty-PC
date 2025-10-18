@@ -20,18 +20,22 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        Debug.Log("🔹 Start called");
         if (!PhotonNetwork.IsConnected)
         {
+            Debug.Log("🔹 Not connected. Connecting using settings...");
             PhotonNetwork.ConnectUsingSettings();
         }
         else if (!PhotonNetwork.InLobby)
         {
+            Debug.Log("🔹 Already connected but not in lobby. Joining lobby...");
             PhotonNetwork.JoinLobby();
         }
     }
 
     public override void OnConnectedToMaster()
     {
+        Debug.Log("✅ Connected to Master. Joining lobby...");
         PhotonNetwork.JoinLobby();
     }
 
@@ -40,6 +44,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         Debug.Log("✅ Joined Lobby.");
         if (pendingCreateRoom)
         {
+            Debug.Log("🔹 Pending room creation detected. Creating room now...");
             CreateRoomNow();
             pendingCreateRoom = false;
         }
@@ -47,8 +52,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
+        Debug.Log("🔹 CreateRoom called");
         if (!PhotonNetwork.InLobby)
         {
+            Debug.LogWarning("⚠️ Not in lobby yet. Joining lobby first...");
             PhotonNetwork.JoinLobby();
             pendingCreateRoom = true;
             return;
@@ -72,11 +79,20 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             MaxPlayers = 4
         };
 
+        Debug.Log("🔹 Creating room: " + createRoomInput.text);
         PhotonNetwork.CreateRoom(createRoomInput.text, options);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> updatedRoomList)
     {
+        Debug.Log("🔹 OnRoomListUpdate called. Rooms count: " + updatedRoomList.Count);
+
+        if (roomListContainer == null)
+        {
+            Debug.LogError("❌ roomListContainer is NULL!");
+            return;
+        }
+
         foreach (Transform child in roomListContainer)
         {
             Destroy(child.gameObject);
@@ -84,32 +100,67 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
         foreach (RoomInfo room in updatedRoomList)
         {
+            Debug.Log("🔹 Room found: " + room.Name + " | Open: " + room.IsOpen + " | Visible: " + room.IsVisible);
+
             if (room.RemovedFromList || !room.IsVisible || !room.IsOpen)
+            {
+                Debug.Log("⚠️ Skipping room: " + room.Name);
                 continue;
+            }
+
+            if (joinButtonPrefab == null)
+            {
+                Debug.LogError("❌ joinButtonPrefab is NULL! Cannot instantiate join button.");
+                continue;
+            }
 
             GameObject button = Instantiate(joinButtonPrefab, roomListContainer);
-            button.transform.name = room.Name;
-
-            string roomName = room.Name;
-
-            button.GetComponentInChildren<Text>().text = roomName; 
-
-            button.GetComponent<Button>().onClick.AddListener(() =>
+            if (button == null)
             {
-                if (PhotonNetwork.InLobby)
+                Debug.LogError("❌ Failed to instantiate button prefab.");
+                continue;
+            }
+
+            button.name = room.Name;
+
+            var textComponent = button.GetComponentInChildren<Text>();
+            if (textComponent == null)
+            {
+                Debug.LogError("❌ No Text component found in joinButtonPrefab (" + button.name + ")");
+            }
+            else
+            {
+                textComponent.text = room.Name;
+                Debug.Log("✅ Button text set to: " + room.Name);
+            }
+
+            var buttonComp = button.GetComponent<Button>();
+            if (buttonComp == null)
+            {
+                Debug.LogError("❌ No Button component found in joinButtonPrefab (" + button.name + ")");
+            }
+            else
+            {
+                buttonComp.onClick.AddListener(() =>
                 {
-                    PhotonNetwork.JoinRoom(roomName);
-                }
-                else
-                {
-                    Debug.LogWarning("❌ You're not in the lobby yet. Please wait...");
-                }
-            });
+                    Debug.Log("🔹 Button clicked for room: " + room.Name);
+                    if (PhotonNetwork.InLobby)
+                    {
+                        PhotonNetwork.JoinRoom(room.Name);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("❌ You're not in the lobby yet. Please wait...");
+                    }
+                });
+            }
         }
     }
 
     public void JoinRoom()
     {
+        Debug.Log("🔹 JoinRoom called");
+
         if (!PhotonNetwork.InLobby)
         {
             Debug.LogWarning("❌ You're not in the lobby yet. Please wait...");
@@ -122,35 +173,59 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             return;
         }
 
+        Debug.Log("🔹 Joining room: " + joinRoomInput.text);
         PhotonNetwork.JoinRoom(joinRoomInput.text);
     }
 
     public override void OnJoinedRoom()
     {
-        if (string.IsNullOrEmpty(playerNameInput.text))
+        Debug.Log("🔹 OnJoinedRoom called");
+
+        if (playerNameInput == null)
+        {
+            Debug.LogError("❌ playerNameInput is NULL!");
+            playerNameInput.text = "Player" + Random.Range(1000, 9999);
+        }
+        else if (string.IsNullOrEmpty(playerNameInput.text))
         {
             playerNameInput.text = "Player" + Random.Range(1000, 9999);
         }
 
         playerNameInLobby = playerNameInput.text;
-        PhotonNetwork.LocalPlayer.NickName = playerNameInput.text;
+        PhotonNetwork.LocalPlayer.NickName = playerNameInLobby;
+        Debug.Log("✅ Player name set to: " + playerNameInLobby);
 
-        ServerOnlinePlayers.addOnlinePlayer();
+        try
+        {
+            ServerOnlinePlayers.addOnlinePlayer();
+            Debug.Log("✅ ServerOnlinePlayers.addOnlinePlayer() called successfully.");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("❌ Error calling ServerOnlinePlayers.addOnlinePlayer(): " + e);
+        }
 
-        if (PhotonNetwork.IsMasterClient)
+        if (startGameButton == null)
+        {
+            Debug.LogError("❌ startGameButton is NULL!");
+        }
+        else if (PhotonNetwork.IsMasterClient)
         {
             startGameButton.SetActive(true);
             startGameButton.GetComponent<Button>().onClick.RemoveAllListeners();
             startGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
+            Debug.Log("✅ startGameButton enabled for master client");
         }
         else
         {
             startGameButton.SetActive(false);
+            Debug.Log("🔹 Not master client, startGameButton hidden");
         }
     }
 
     public void StartGame()
     {
+        Debug.Log("🔹 StartGame called");
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
