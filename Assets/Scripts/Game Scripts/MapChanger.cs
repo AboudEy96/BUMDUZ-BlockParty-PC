@@ -10,26 +10,27 @@ public class MapChanger : MonoBehaviour
     public GameObject[] maps;
     private BlocksDestroyer _blocksDestroyer;
     public Transform Scoreboard;
-    public List<int> availableMaps; // لتخزين الماب المتاحة
+    public List<int> availableMaps;
     private int currentMapIndex = 0;
 
     void Start()
     {
         InitializeMaps();
+        currentMapIndex = UnityEngine.Random.Range(0, availableMaps.Count);
         ActiveMap(currentMapIndex);
+        availableMaps.RemoveAt(currentMapIndex);
     }
 
-    // تهيئة الخرائط المتاحة
     private void InitializeMaps()
     {
         availableMaps = new List<int>();
         for (int i = 0; i < maps.Length; i++)
         {
-            availableMaps.Add(i); // إضافة جميع الخرائط إلى القائمة
+            availableMaps.Add(i);
         }
     }
 
-    // تفعيل الخريطة بناءً على الفهرس
+
     public void ActiveMap(int index)
     {
         if (index >= 0 && index < maps.Length)
@@ -44,26 +45,24 @@ public class MapChanger : MonoBehaviour
         }
     }
 
-    // تشغيل الخريطة التالية بشكل عشوائي
+
     public void runNextMap()
     {
         if (availableMaps.Count > 0)
         {
-            // اختيار ماب عشوائي من الخرائط المتاحة
+
             int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
             currentMapIndex = availableMaps[randomIndex];
-            availableMaps.RemoveAt(randomIndex); // إزالة الخريطة المختارة من القائمة
+            availableMaps.RemoveAt(randomIndex); 
 
             ActiveMap(currentMapIndex);
         }
         else
         {
-            // إذا انتهت الخرائط المتاحة، إعادة تفعيل كل الخرائط
             InitializeMaps();
-            // اختيار ماب عشوائي من الخرائط المتاحة
             int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
             currentMapIndex = availableMaps[randomIndex];
-            availableMaps.RemoveAt(randomIndex); // إزالة الخريطة المختارة من القائمة
+            availableMaps.RemoveAt(randomIndex);
 
             ActiveMap(currentMapIndex);
         }

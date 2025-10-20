@@ -13,8 +13,12 @@ public class SelectColor : MonoBehaviour
     private Transform BUTTON_PARENT;
     [SerializeField] private GameObject Character;
     [SerializeField] private List<Material> _materialsSkins;
+   private SkinnedMeshRenderer sms;  
+
     private void Start()
     {
+        sms =  Character.GetComponentInChildren<SkinnedMeshRenderer>();
+        SyncCharacterColor();
         Button[] buttons = BUTTON_PARENT.GetComponentsInChildren<Button>();
 
         foreach (Button bt in buttons)
@@ -26,7 +30,12 @@ public class SelectColor : MonoBehaviour
     public void ButtonClick(Button button)
     {
         PlayerPrefs.SetString("Skin", button.name);
-        SkinnedMeshRenderer sms = Character.GetComponentInChildren<SkinnedMeshRenderer>(); 
+        SyncCharacterColor();
+        Debug.Log(PlayerPrefs.GetString("Skin"));
+    }
+
+    public void SyncCharacterColor()
+    {
         foreach (var mat in _materialsSkins)
         {
             if (mat.name == PlayerPrefs.GetString("Skin"))
@@ -35,6 +44,6 @@ public class SelectColor : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(PlayerPrefs.GetString("Skin"));
+
     }
 }
