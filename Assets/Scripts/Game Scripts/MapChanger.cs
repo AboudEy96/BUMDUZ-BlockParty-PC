@@ -18,6 +18,8 @@ public class MapChanger : MonoBehaviour
         InitializeMaps();
         currentMapIndex = UnityEngine.Random.Range(0, availableMaps.Count);
         ActiveMap(currentMapIndex);
+        GameObject map = maps[currentMapIndex];
+        ColorChangeEvent.SetUpColors(map.transform);
         availableMaps.RemoveAt(currentMapIndex);
     }
 
@@ -63,7 +65,6 @@ public class MapChanger : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
             currentMapIndex = availableMaps[randomIndex];
             availableMaps.RemoveAt(randomIndex);
-
             ActiveMap(currentMapIndex);
         }
     }
