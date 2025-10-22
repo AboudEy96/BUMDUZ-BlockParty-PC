@@ -93,6 +93,10 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         Debug.Log("Destroyed non-matching cubes on all clients");
         allCubes.Clear();
         
+        // pause and run music 
+        RandomAudioPlayer.PausedOfBlocksDestroy = true;
+        RandomAudioPlayer.PauseResumeAudio();
+        
         if (PhotonNetwork.IsMasterClient)
         {
             Invoke("ActiveNextMap", 3f);
@@ -127,6 +131,11 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         Debug.Log($"Current score: {score}");
 
         ColorChangeEvent.SetUpColors(map.transform);
+// resume music  
+        RandomAudioPlayer.PausedOfBlocksDestroy = false;
+        RandomAudioPlayer.PauseResumeAudio();
+
+        
         if (PhotonNetwork.IsMasterClient)
         {
             Invoke("SelectRandomColor", 3f);
