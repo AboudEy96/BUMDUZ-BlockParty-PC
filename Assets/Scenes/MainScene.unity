@@ -2449,7 +2449,7 @@ GameObject:
   - component: {fileID: 596915026}
   - component: {fileID: 596915025}
   m_Layer: 0
-  m_Name: Marshmello_-_Alone_[NCS_Fanmade]_[ovEZNasq4T0]_out
+  m_Name: MUSIC AUDIO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2465,8 +2465,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5a26ca7bc681ad64ba9b3881b324af79, type: 3}
-  m_Resource: {fileID: 8300000, guid: 5a26ca7bc681ad64ba9b3881b324af79, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 260d47139e1d63a4bb4abb27e167fe57, type: 3}
+  m_Resource: {fileID: 8300000, guid: 260d47139e1d63a4bb4abb27e167fe57, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
