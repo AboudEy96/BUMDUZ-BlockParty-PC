@@ -644,6 +644,11 @@ MonoBehaviour:
   characterCamera: {fileID: 40400848}
   mainCamera: {fileID: 1297226666}
   chooseModeObject: {fileID: 1739277731}
+  MainCanvas: {fileID: 835253965}
+  LoadingCanvas: {fileID: 1407712752864619343}
+  loadingImg:
+  - {fileID: 21300000, guid: cf4fa69bb639212458b056ebfed083e2, type: 3}
+  - {fileID: 21300000, guid: 0c56bc82315b2ef48b7ec67423481add, type: 3}
 --- !u!4 &186427045
 Transform:
   m_ObjectHideFlags: 0
