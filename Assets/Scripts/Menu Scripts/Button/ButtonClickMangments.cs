@@ -26,19 +26,36 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     
      private string currentMode;
      [Header("The Menu of choose object")] public GameObject chooseModeObject;
+     
+     [Header("For Main Canvas and Loading Menu")] public Canvas MainCanvas;
+        public Canvas LoadingCanvas;
+     
+        [Header("The Loading Images")]
+        public List<Sprite> loadingImg = new List<Sprite>();
+
+        
      public void Awake()
      {
          ActiveButtons();
      }
+     public void SendLoading()
+     {
+         MainCanvas.gameObject.SetActive(false);
+         Image im = LoadingCanvas.GetComponentInChildren<Image>();
+         int randomIndex = Random.Range(0, loadingImg.Count);
+         im.sprite = loadingImg[randomIndex];
+         LoadingCanvas.gameObject.SetActive(true);
+     }
+     
     public void Play(GameObject button)
     {
         string buttonName = button.transform.name;
         switch (buttonName)
         {
             case "Singleplayer":
+                SendLoading();
                 PhotonNetwork.Disconnect();
                 PhotonNetwork.OfflineMode = true;
-
                 PhotonNetwork.CreateRoom("OfflineRoom");
                 SceneManager.LoadScene("Game");
                 break;
