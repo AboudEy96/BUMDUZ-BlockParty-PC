@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class LuckyBlockManager : MonoBehaviour
 {
-    public virtual void OnTouch(GameObject _GM, GameObject _PL){}
+    
+    [Header("Luckyblock Destroy effect")]public GameObject loadParticleEffect;
+    public virtual void OnTouch(GameObject _GM, GameObject _PL)
+    {
+        Instantiate(loadParticleEffect, _GM.transform.position, Quaternion.identity);
+
+    }
     public virtual void GiveReward(GameObject pl){}
   //  public abstract void removeReward(GameObject pl, GameObject reward);
     public List<GameObject> rewards;

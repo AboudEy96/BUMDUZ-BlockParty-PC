@@ -10,11 +10,13 @@ public class LuckyBlockSpawner : LuckyBlockManager
    // public GameObject _GM;
     public int yAXIS;
     
+    private ParticleSystem fireParticles;
+
     void Start()
     {
         Invoke("SpawnLuckyBlock", 10f);
     }
-    
+
     public void SpawnLuckyBlock()
     {
         int x = Random.Range(-19, width);
@@ -22,10 +24,8 @@ public class LuckyBlockSpawner : LuckyBlockManager
         int ranNext = Random.Range(0, luckyBlocks.Count);
         Vector3 location = new Vector3(x, yAXIS, z);
         GameObject theReward = Instantiate(luckyBlocks[ranNext].gameObject, location, Quaternion.identity);
+
         Console.WriteLine($"Luckyblock Spanwed {theReward.transform.name}");
         Invoke("SpawnLuckyBlock", 25f);
     }
-
-
-
 }
