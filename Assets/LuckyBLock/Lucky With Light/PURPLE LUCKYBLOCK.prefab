@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594b20deba0e44b59fc020bc80f47f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadParticleEffect: {fileID: 7215202249805798083, guid: cb917bbba9cef7a46a7148b1abcdadc0, type: 3}
   rewards:
   - {fileID: 6775030955093586898, guid: 39ebbe79fe3c4a14eaf0906508f64183, type: 3}
   - {fileID: 1428728163550750740, guid: cc00171d7190c3a4db35c961d5d566b1, type: 3}

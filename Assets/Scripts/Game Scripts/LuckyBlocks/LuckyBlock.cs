@@ -10,6 +10,8 @@ public class LuckyBlock : LuckyBlockManager
     // give reward to player
     public override void OnTouch(GameObject theLB, GameObject pl)
     {
+        base.OnTouch(theLB, pl);
+        
         string lName = LayerMask.LayerToName(theLB.layer);
         Destroy(theLB);
         GiveReward(pl);
@@ -29,6 +31,7 @@ public class LuckyBlock : LuckyBlockManager
         Destroy(theReward, 7f);
         }
     }
+    
     private IEnumerator RemoveRewardAfterDelay(GameObject pl, GameObject reward)
     {
         yield return new WaitForSeconds(3); // Wait for 3 seconds [][][]
@@ -41,8 +44,9 @@ public class LuckyBlock : LuckyBlockManager
                 yield break; 
             }
         }
-    }
+    }     
 }
+
 
 /*public class LuckyBlockPurple : LuckyBlockManager {
     public override void onTouch(GameObject _gameObject)
