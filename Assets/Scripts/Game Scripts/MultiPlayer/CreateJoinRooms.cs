@@ -230,6 +230,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
+                //     PhotonNetwork.LoadLevel("GameScene1,2");
             PhotonNetwork.LoadLevel("Game");
         }
     }
