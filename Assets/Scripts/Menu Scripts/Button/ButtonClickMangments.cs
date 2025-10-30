@@ -11,7 +11,7 @@ using Image = UnityEngine.UI.Image;
 
 public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 {
-     public List<Transform> characters = new List<Transform>();
+    public List<Transform> characters = new List<Transform>();
      public List<Sprite> images = new List<Sprite>();
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
