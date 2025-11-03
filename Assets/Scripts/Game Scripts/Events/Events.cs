@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 public class Events : MonoBehaviour
 {
@@ -6,6 +7,15 @@ public class Events : MonoBehaviour
     public Transform MAP;
 
     [Header("Player GameObject")] public Transform PLAYER;
+    
+    
+    void Awake()
+    {
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 20;
+        PhotonNetwork.ConnectUsingSettings();
+    }
+    
     private void OnEnable()
     {
         EventManager.PlayerDeath += OnPlayerDeath;

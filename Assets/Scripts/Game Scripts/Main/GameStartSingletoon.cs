@@ -16,7 +16,7 @@ public class GameStartSingletoon : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
+     //   DontDestroyOnLoad(gameObject);
 
     }
 
