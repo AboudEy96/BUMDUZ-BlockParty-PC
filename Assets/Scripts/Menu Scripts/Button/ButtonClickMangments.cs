@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -16,6 +17,11 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
      public GameObject lightFade;
+     
+     [Header("For Demo Menu ")]
+     public string[] demoMENU = new string[] { "Profile", "Shop" };
+
+     public Transform demoMenuImage;
      
      [Header("Main and Character Camera")]
      public Camera characterCamera;
@@ -69,16 +75,23 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     
     public void Other(GameObject button)
     {
+        Image img = theImage.GetComponent<Image>();
+
         foreach (Sprite image in images)
         {
+            if (demoMENU.Contains(button.name))
+            {
+                demoMenuImage.GameObject().SetActive(true);
+                break;
+            }
             if (button.name == image.name)
             {
-                Image img = theImage.GetComponent<Image>();
                 img.sprite = image;
                 ActiveCamera();
                 ActiveButtons();
                 ActiveCharacter();
                 HideShowFade();
+                break;
             }
         }
     }

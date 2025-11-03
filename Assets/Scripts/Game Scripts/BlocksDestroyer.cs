@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Photon.Pun;
+using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class BlocksDestroyer : MonoBehaviourPunCallbacks
 {
@@ -14,16 +16,30 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
     public static int score = 0;
     public Transform theImages;
     private PhotonView _photonView;
+    
+    [Header("Start Game Button For Host")]
+    public Button StartButton;
 
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
-        if (PhotonNetwork.IsMasterClient) 
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
         {
-            Invoke("SelectRandomColor", 2f);
+           StartButton.GameObject().SetActive(true);
+           StartButton.gameObject.GetComponent<Button>().onClick.AddListener((() => OnStartClick()));
         }
     }
 
+    public void OnStartClick()
+    {
+        StartButton.GameObject().SetActive(false);
+        Invoke("SelectRandomColor", 2f);
+    }
     private void ShowSelectedColor(Transform image, string tag)
     {
         foreach (Transform color in image)
