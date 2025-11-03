@@ -49,5 +49,6 @@ public class SpawnPlayers : MonoBehaviour
             .SetSkinMaterial(PLAYER_SKIN)
             .Build(location);
 
+        
     }
 }

@@ -15,12 +15,12 @@ public class MapChanger : MonoBehaviour
 
     void Start()
     {
-        InitializeMaps();
-        currentMapIndex = UnityEngine.Random.Range(0, availableMaps.Count);
-        ActiveMap(currentMapIndex);
-        GameObject map = maps[currentMapIndex];
-        ColorChangeEvent.SetUpColors(map.transform);
-        availableMaps.RemoveAt(currentMapIndex);
+            InitializeMaps();
+            currentMapIndex = UnityEngine.Random.Range(0, availableMaps.Count);
+            ActiveMap(currentMapIndex);
+            GameObject map = maps[currentMapIndex];
+            ColorChangeEvent.SetUpColors(map.transform);
+            availableMaps.RemoveAt(currentMapIndex);
     }
 
     private void InitializeMaps()
