@@ -38,6 +38,7 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
     public void OnStartClick()
     {
         StartButton.GameObject().SetActive(false);
+        GameStartSingletoon.GetInstance().GameStart();
         Invoke("SelectRandomColor", 2f);
     }
     private void ShowSelectedColor(Transform image, string tag)

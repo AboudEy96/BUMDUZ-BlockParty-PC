@@ -19,13 +19,16 @@ public class LuckyBlockSpawner : LuckyBlockManager
 
     public void SpawnLuckyBlock()
     {
-        int x = Random.Range(-19, width);
-        int z = Random.Range(-21, height);
-        int ranNext = Random.Range(0, luckyBlocks.Count);
-        Vector3 location = new Vector3(x, yAXIS, z);
-        GameObject theReward = Instantiate(luckyBlocks[ranNext].gameObject, location, Quaternion.identity);
+        if (GameStartSingletoon.GetInstance().isGameStarted)
+        {
+            int x = Random.Range(-19, width);
+            int z = Random.Range(-21, height);
+            int ranNext = Random.Range(0, luckyBlocks.Count);
+            Vector3 location = new Vector3(x, yAXIS, z);
+            GameObject theReward = Instantiate(luckyBlocks[ranNext].gameObject, location, Quaternion.identity);
 
-        Console.WriteLine($"Luckyblock Spanwed {theReward.transform.name}");
-        Invoke("SpawnLuckyBlock", 25f);
+            Console.WriteLine($"Luckyblock Spanwed {theReward.transform.name}");
+            Invoke("SpawnLuckyBlock", 25f);
+        }
     }
 }
