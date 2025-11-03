@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -20,7 +21,11 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        
         Debug.Log("🔹 Start called");
+        // awrp players when game starts
+       // PhotonNetwork.AutomaticallySyncScene = true;
+        
         if (!PhotonNetwork.IsConnected)
         {
             Debug.Log("🔹 Not connected. Connecting using settings...");
@@ -52,6 +57,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
+        
         Debug.Log("🔹 CreateRoom called");
         if (!PhotonNetwork.InLobby)
         {
@@ -66,6 +72,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void CreateRoomNow()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         if (string.IsNullOrEmpty(createRoomInput.text))
         {
             Debug.LogWarning("❌ Room name cannot be empty.");
@@ -159,8 +166,9 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
+        
         Debug.Log("🔹 JoinRoom called");
-
+        PhotonNetwork.AutomaticallySyncScene = true;
         if (!PhotonNetwork.InLobby)
         {
             Debug.LogWarning("❌ You're not in the lobby yet. Please wait...");
@@ -225,13 +233,33 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        Debug.Log("🔹 StartGame called");
-        if (PhotonNetwork.IsMasterClient)
+        Debug.Log("StartGame called");
+        if (!PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-                //     PhotonNetwork.LoadLevel("GameScene1,2");
-            PhotonNetwork.LoadLevel("Game");
+            Debug.LogWarning("only master client can start the game");
+            return;
+        }
+        StartCoroutine(DelayedStartGame());
+
+    }
+
+    private IEnumerator DelayedStartGame()
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        PhotonNetwork.AutomaticallySyncScene = true;
+
+        yield return new WaitForSeconds(1f);
+
+        Debug.Log("Loading 'Game' via PhotonNetwork...");
+        PhotonNetwork.LoadLevel("Game");
+
+// chatgpt code if player did not move to game scene force moev
+        yield return new WaitForSeconds(0.5f);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Game")
+        {
+            Debug.LogWarning("Photon load canceled, forcing local scene load...");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
         }
     }
 
