@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
@@ -8,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
+using ColorUtility = UnityEngine.ColorUtility;
 using Image = UnityEngine.UI.Image;
 
 public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
@@ -39,10 +41,14 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         [Header("The Loading Images")]
         public List<Sprite> loadingImg = new List<Sprite>();
 
-        
+        [Header("SkyBox Hex To change")] public Material TheSkyBox;
      public void Awake()
      {
          ActiveButtons();
+         Color a;
+         string hexColor = "#808080";
+         ColorUtility.TryParseHtmlString(hexColor, out a);
+         TheSkyBox.SetColor("_TintColor", a);
      }
      public void SendLoading()
      {
@@ -84,6 +90,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 demoMenuImage.GameObject().SetActive(true);
                 break;
             }
+
             if (button.name == image.name)
             {
                 img.sprite = image;
@@ -91,7 +98,9 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 ActiveButtons();
                 ActiveCharacter();
                 HideShowFade();
-                break;
+                ChangeSkyBoxHex();
+
+            break;
             }
         }
     }
@@ -112,8 +121,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         bool characterMode = GetCurrentMode().Equals("Character") ? true : false;
         characterCamera.gameObject.SetActive(characterMode);
         mainCamera.enabled = !characterMode;
-
-
     }
 
     public void ActiveButtons()
@@ -122,6 +129,50 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         {
             button.SetActive(button.name.Contains(GetCurrentMode()));
         }   
+    }
+
+    public void ChangeSkyBoxHex()
+    {
+        PrintSkyboxProperties();
+        bool isCharacter = GetCurrentMode() == "Character";
+
+        StartCoroutine(ChangeSkyboxColorCoroutine(
+            isCharacter ? "#808080" : "#FF4EE9",
+            isCharacter ? "#FF4EE9" : "#808080",
+            1f
+        ));
+    }
+    void PrintSkyboxProperties()
+    {
+        var shader = TheSkyBox.shader;
+        int count = shader.GetPropertyCount();
+
+        for (int i = 0; i < count; i++)
+        {
+            Debug.Log($"Property {i}: {shader.GetPropertyName(i)} - Type: {shader.GetPropertyType(i)}");
+        }
+    }
+    
+    IEnumerator ChangeSkyboxColorCoroutine(string fromHex, string toHex, float duration)
+    {
+        Color startColor;
+        Color endColor;
+
+        ColorUtility.TryParseHtmlString(fromHex, out startColor);
+        ColorUtility.TryParseHtmlString(toHex, out endColor);
+
+        float t = 0f;
+        RenderSettings.skybox = TheSkyBox;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            Color newColor = Color.Lerp(startColor, endColor, t / duration);
+
+            TheSkyBox.SetColor("_TintColor", newColor);
+
+            yield return null;
+        }
     }
 
     public void ActiveCharacter()

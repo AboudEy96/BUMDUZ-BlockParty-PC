@@ -23,6 +23,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     {
         
         Debug.Log("🔹 Start called");
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
         // awrp players when game starts
        // PhotonNetwork.AutomaticallySyncScene = true;
         
@@ -31,17 +32,24 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             Debug.Log("🔹 Not connected. Connecting using settings...");
             PhotonNetwork.ConnectUsingSettings();
         }
-        else if (!PhotonNetwork.InLobby)
+     /*   else if (!PhotonNetwork.InLobby)
         {
-            Debug.Log("🔹 Already connected but not in lobby. Joining lobby...");
-            PhotonNetwork.JoinLobby();
-        }
+            StartCoroutine(StartJoinLobby());
+        }*/
+    }
+    private IEnumerator StartJoinLobby()
+    {
+        yield return new WaitForSeconds(0.3f);
+        
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("✅ Connected to Master. Joining lobby...");
-        PhotonNetwork.JoinLobby();
+    //    PhotonNetwork.JoinLobby();
+    PhotonNetwork.JoinLobby(TypedLobby.Default);
+
     }
 
     public override void OnJoinedLobby()

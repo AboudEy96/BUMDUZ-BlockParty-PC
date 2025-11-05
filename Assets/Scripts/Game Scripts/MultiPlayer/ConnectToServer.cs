@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Image = UnityEngine.UI.Image;
@@ -31,7 +32,9 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.OfflineMode)
         {
-            PhotonNetwork.JoinLobby();
+          //  PhotonNetwork.JoinLobby();
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
+
         }    
     }
 
