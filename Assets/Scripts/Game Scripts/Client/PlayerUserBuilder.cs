@@ -8,6 +8,7 @@ public class PlayerUserBuilder
     private int _id;
     private string _skinMaterial;
     private GameObject _playerPrefab;
+    private  string PLAYER_SKIN = PlayerPrefs.GetString("Skin");
     public PlayerUserBuilder(GameObject prefab)
     {
         _playerPrefab = prefab;
@@ -46,10 +47,20 @@ public class PlayerUserBuilder
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, spawnPosition, Quaternion.identity);
         PlayerUser playerComponent = player.GetComponent<PlayerUser>();
         SkinnedMeshRenderer sms = player.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-        
+        List<Material> _materialsSkins = SyncPlayerMaterial.instance._skinMaterials;
+        foreach (var mat in _materialsSkins)
+        {
+            if (mat.name == PLAYER_SKIN)
+            {
+                sms.GetComponentInChildren<SkinnedMeshRenderer>().material = mat;
+                
+                break;
+            }
+        }
         
     //    sms.material = _skinMaterial;
         playerComponent.SetupPlayer(_name, _id, _skinMaterial, _playerPrefab);
+        
         // change the material to _skinMaterial and show it to all players 
         
         /* foreach (Transform skin in player.transform)
