@@ -13,8 +13,8 @@ public class SpawnPlayers : MonoBehaviour
     public int width;
     public int yAXIS;
 
-    [Header("Materials Skinsss to translate the string to material")]
-    public List<Material> _materialsSkins;
+ //   [Header("Materials Skinsss to translate the string to material")]
+//    public List<Material> _materialsSkins;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class SpawnPlayers : MonoBehaviour
         
         SkinnedMeshRenderer sms = PREFAB_PLAYER.GetComponentInChildren<SkinnedMeshRenderer>();
         
-        foreach (var mat in _materialsSkins)
+     /*   foreach (var mat in _materialsSkins)
         {
             if (mat.name == PLAYER_SKIN)
             {
@@ -41,13 +41,14 @@ public class SpawnPlayers : MonoBehaviour
                 
                 break;
             }
-        }
+        }*/
 
         PlayerUser player = new PlayerUserBuilder(PREFAB_PLAYER)
             .SetId(1)
             .SetName(playerName)
-            .SetSkinMaterial(PLAYER_SKIN)
             .Build(location);
+            //.SetSkinMaterial(PLAYER_SKIN)
+         
 
         
     }
