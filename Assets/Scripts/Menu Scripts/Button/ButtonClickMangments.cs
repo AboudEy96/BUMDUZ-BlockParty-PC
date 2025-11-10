@@ -70,6 +70,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 PhotonNetwork.OfflineMode = true;
                 PhotonNetwork.CreateRoom("OfflineRoom");
                 SceneManager.LoadScene("Game");
+                Debug.Log("Singleplayer Mode ------");
                 break;
             default:
                 chooseModeObject.SetActive(true);
@@ -133,7 +134,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 
     public void ChangeSkyBoxHex()
     {
-        PrintSkyboxProperties();
         bool isCharacter = GetCurrentMode() == "Character";
 
         StartCoroutine(ChangeSkyboxColorCoroutine(
@@ -141,16 +141,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
             isCharacter ? "#FF4EE9" : "#808080",
             1f
         ));
-    }
-    void PrintSkyboxProperties()
-    {
-        var shader = TheSkyBox.shader;
-        int count = shader.GetPropertyCount();
-
-        for (int i = 0; i < count; i++)
-        {
-            Debug.Log($"Property {i}: {shader.GetPropertyName(i)} - Type: {shader.GetPropertyType(i)}");
-        }
     }
     
     IEnumerator ChangeSkyboxColorCoroutine(string fromHex, string toHex, float duration)
