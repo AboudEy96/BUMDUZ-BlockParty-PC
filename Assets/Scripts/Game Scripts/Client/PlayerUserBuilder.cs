@@ -59,6 +59,8 @@ public class PlayerUserBuilder
         }
         
     //    sms.material = _skinMaterial;
+//    Debug.Log("Component on prefab: " + _playerPrefab.GetComponent<PlayerUser>());
+
         playerComponent.SetupPlayer(_name, _id, _skinMaterial, _playerPrefab);
         
         // change the material to _skinMaterial and show it to all players 

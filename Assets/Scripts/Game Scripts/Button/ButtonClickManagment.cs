@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,6 +32,13 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         yield return new WaitForSeconds(2.0f);
 
+    }
+    public void OnPlayAgainButtonClicked()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     public void OnPlayButtonClicked()

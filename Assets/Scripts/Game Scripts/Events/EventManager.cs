@@ -11,7 +11,7 @@ public abstract class EventManager : MonoBehaviour
     public static event Action<GameObject> PlayerWin;
     public static event Action<GameObject> PlayerJoin;
     public static event Action ColorSetup;
-
+        
     public static void TriggerPlayerDeath(PlayerUser player) => PlayerDeath?.Invoke(player);
     public static void TriggerPlayerHit(GameObject player) => PlayerHit?.Invoke(player);
     public static void TriggerPlayerFall(GameObject player) => PlayerFall?.Invoke(player);

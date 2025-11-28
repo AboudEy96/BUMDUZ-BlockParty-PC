@@ -26,6 +26,7 @@ public class PlayerDeathEvent : MonoBehaviour
         HidePlayer(player);
         DeathScreen.gameObject.SetActive(true);
     }
+    
 
     public void HidePlayer(GameObject player)
     {
