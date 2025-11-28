@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     {
         
         Debug.Log("🔹 Start called");
-    //    PhotonNetwork.JoinLobby(TypedLobby.Default);
+      PhotonNetwork.JoinLobby(TypedLobby.Default);
         // awrp players when game starts
        // PhotonNetwork.AutomaticallySyncScene = true;
         
@@ -137,7 +138,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
             button.name = room.Name;
 
-            var textComponent = button.GetComponentInChildren<Text>();
+            var textComponent = button.GetComponentInChildren<TextMeshProUGUI>();
             if (textComponent == null)
             {
                 Debug.LogError("❌ No Text component found in joinButtonPrefab (" + button.name + ")");
