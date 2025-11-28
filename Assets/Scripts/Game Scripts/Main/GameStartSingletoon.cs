@@ -1,4 +1,6 @@
 ﻿using System;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using UnityEngine;
 
 public class GameStartSingletoon : MonoBehaviour
@@ -27,6 +29,7 @@ public class GameStartSingletoon : MonoBehaviour
 
     public void GameStart()
     {
+
         isGameStarted = true;
     }
 

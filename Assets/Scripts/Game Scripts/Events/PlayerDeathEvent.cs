@@ -2,8 +2,9 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerDeathEvent : MonoBehaviour
+public class PlayerDeathEvent : MonoBehaviourPunCallbacks
 {
     [Header("Effect Volume")]
     public PostProcessVolume EFFECT;
@@ -25,6 +26,14 @@ public class PlayerDeathEvent : MonoBehaviour
         StartCoroutine(ChangeGfxToBlack());
         HidePlayer(player);
         DeathScreen.gameObject.SetActive(true);
+    }
+
+    public void KillPlayerInPhoton(Photon.Realtime.Player owner)
+    {
+            owner.SetCustomProperties(new Hashtable
+            {
+                { "isDead", true }
+            });
     }
     
 
@@ -67,6 +76,11 @@ public class PlayerDeathEvent : MonoBehaviour
             if (view != null && view.IsMine)
             {
                 OnVoidDeath(other.gameObject);
+                KillPlayerInPhoton(view.Owner);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PlayerWinEvent.Instance.CheckIfPlayerWin();
+                }  
             }
         }
     }
