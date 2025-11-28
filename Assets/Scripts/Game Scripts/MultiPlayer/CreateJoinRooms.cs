@@ -23,7 +23,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     {
         
         Debug.Log("🔹 Start called");
-        PhotonNetwork.JoinLobby(TypedLobby.Default);
+    //    PhotonNetwork.JoinLobby(TypedLobby.Default);
         // awrp players when game starts
        // PhotonNetwork.AutomaticallySyncScene = true;
         
@@ -47,7 +47,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("✅ Connected to Master. Joining lobby...");
-    //    PhotonNetwork.JoinLobby();
     PhotonNetwork.JoinLobby(TypedLobby.Default);
 
     }

@@ -37,6 +37,10 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
         }    
     }
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
 
     public override void OnJoinedLobby()
     {
