@@ -5,73 +5,85 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CreateJoinRooms : MonoBehaviourPunCallbacks
 {
-    public InputField createRoomInput;
-    public InputField joinRoomInput;
-    public InputField playerNameInput;
+    #region === UI References ===
+    [Header("Inputs")]
+    [SerializeField] private InputField createRoomInput;
+    [SerializeField] private InputField joinRoomInput;
+    [SerializeField] private InputField playerNameInput;
+
+    [Header("UI Elements")]
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject joinButtonPrefab;
+    [SerializeField] private Transform roomListContainer;
+    [SerializeField] private GameObject startGameButton;
+
+    [Header("Canvasess")]
+    [SerializeField] private GameObject RoomsListCanvas;
+    [SerializeField] private GameObject CreateCanvas;
+
+    [Header("Cameras")]
+    [SerializeField] private List<Camera> cameras;
+    #endregion
+
+    #region === Variables ===
     public static string playerNameInLobby;
-    public Canvas canvas;
-    public GameObject joinButtonPrefab;
-    public Transform roomListContainer;
-    [Header("Start Game Button for host master")]
-    public GameObject startGameButton;
-
     private bool pendingCreateRoom = false;
+    #endregion
 
+    #region === Unity Events ===
     private void Start()
     {
-        
-        Debug.Log("🔹 Start called");
-      PhotonNetwork.JoinLobby(TypedLobby.Default);
-        // awrp players when game starts
-       // PhotonNetwork.AutomaticallySyncScene = true;
-        
+        if (!PhotonNetwork.InLobby)
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
+
         if (!PhotonNetwork.IsConnected)
         {
-            Debug.Log("🔹 Not connected. Connecting using settings...");
+            Debug.Log("Connecting...");
             PhotonNetwork.ConnectUsingSettings();
         }
-     /*   else if (!PhotonNetwork.InLobby)
-        {
-            StartCoroutine(StartJoinLobby());
-        }*/
     }
-    private IEnumerator StartJoinLobby()
-    {
-        yield return new WaitForSeconds(0.3f);
-        
-            PhotonNetwork.JoinLobby(TypedLobby.Default);
-    }
+    #endregion
 
+    #region === Photon Callbacks ===
     public override void OnConnectedToMaster()
     {
-        Debug.Log("✅ Connected to Master. Joining lobby...");
-    PhotonNetwork.JoinLobby(TypedLobby.Default);
-
+        Debug.Log("Connected -> Joining Lobby");
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("✅ Joined Lobby.");
+        Debug.Log("Joined Lobby");
+
         if (pendingCreateRoom)
         {
-            Debug.Log("🔹 Pending room creation detected. Creating room now...");
             CreateRoomNow();
             pendingCreateRoom = false;
         }
     }
 
+    public override void OnRoomListUpdate(List<RoomInfo> updatedRoomList)
+    {
+        RefreshRoomList(updatedRoomList);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        HandleJoinedRoom();
+    }
+    #endregion
+
+    #region === Room Creation / Join ===
     public void CreateRoom()
     {
-        
-        Debug.Log("🔹 CreateRoom called");
         if (!PhotonNetwork.InLobby)
         {
-            Debug.LogWarning("⚠️ Not in lobby yet. Joining lobby first...");
-            PhotonNetwork.JoinLobby();
             pendingCreateRoom = true;
+            PhotonNetwork.JoinLobby();
             return;
         }
 
@@ -80,12 +92,13 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void CreateRoomNow()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
         if (string.IsNullOrEmpty(createRoomInput.text))
         {
-            Debug.LogWarning("❌ Room name cannot be empty.");
+            Debug.LogWarning("Room name empty.");
             return;
         }
+
+        PhotonNetwork.AutomaticallySyncScene = true;
 
         RoomOptions options = new RoomOptions
         {
@@ -94,163 +107,102 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             MaxPlayers = 4
         };
 
-        Debug.Log("🔹 Creating room: " + createRoomInput.text);
         PhotonNetwork.CreateRoom(createRoomInput.text, options);
-    }
-
-    public override void OnRoomListUpdate(List<RoomInfo> updatedRoomList)
-    {
-        Debug.Log("🔹 OnRoomListUpdate called. Rooms count: " + updatedRoomList.Count);
-
-        if (roomListContainer == null)
-        {
-            Debug.LogError("❌ roomListContainer is NULL!");
-            return;
-        }
-
-        foreach (Transform child in roomListContainer)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (RoomInfo room in updatedRoomList)
-        {
-            Debug.Log("🔹 Room found: " + room.Name + " | Open: " + room.IsOpen + " | Visible: " + room.IsVisible);
-
-            if (room.RemovedFromList || !room.IsVisible || !room.IsOpen)
-            {
-                Debug.Log("⚠️ Skipping room: " + room.Name);
-                continue;
-            }
-
-            if (joinButtonPrefab == null)
-            {
-                Debug.LogError("❌ joinButtonPrefab is NULL! Cannot instantiate join button.");
-                continue;
-            }
-
-            GameObject button = Instantiate(joinButtonPrefab, roomListContainer);
-            if (button == null)
-            {
-                Debug.LogError("❌ Failed to instantiate button prefab.");
-                continue;
-            }
-
-            button.name = room.Name;
-
-            var textComponent = button.GetComponentInChildren<TextMeshProUGUI>();
-            if (textComponent == null)
-            {
-                Debug.LogError("❌ No Text component found in joinButtonPrefab (" + button.name + ")");
-            }
-            else
-            {
-                textComponent.text = room.Name;
-                Debug.Log("✅ Button text set to: " + room.Name);
-            }
-
-            var buttonComp = button.GetComponent<Button>();
-            if (buttonComp == null)
-            {
-                Debug.LogError("❌ No Button component found in joinButtonPrefab (" + button.name + ")");
-            }
-            else
-            {
-                buttonComp.onClick.AddListener(() =>
-                {
-                    Debug.Log("🔹 Button clicked for room: " + room.Name);
-                    if (PhotonNetwork.InLobby)
-                    {
-                        PhotonNetwork.JoinRoom(room.Name);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("❌ You're not in the lobby yet. Please wait...");
-                    }
-                });
-            }
-        }
     }
 
     public void JoinRoom()
     {
-        
-        Debug.Log("🔹 JoinRoom called");
         PhotonNetwork.AutomaticallySyncScene = true;
-        if (!PhotonNetwork.InLobby)
-        {
-            Debug.LogWarning("❌ You're not in the lobby yet. Please wait...");
-            return;
-        }
 
         if (string.IsNullOrEmpty(joinRoomInput.text))
         {
-            Debug.LogWarning("❌ Join Room field is empty.");
+            Debug.LogWarning("Join field empty.");
             return;
         }
 
-        Debug.Log("🔹 Joining room: " + joinRoomInput.text);
         PhotonNetwork.JoinRoom(joinRoomInput.text);
     }
+    #endregion
 
-    public override void OnJoinedRoom()
+    #region === UI Handling ===
+    private void RefreshRoomList(List<RoomInfo> roomList)
     {
-        Debug.Log("🔹 OnJoinedRoom called");
+        foreach (Transform child in roomListContainer)
+            Destroy(child.gameObject);
 
-        if (playerNameInput == null)
+        foreach (RoomInfo room in roomList)
         {
-            Debug.LogError("❌ playerNameInput is NULL!");
-            playerNameInput.text = "Player" + Random.Range(1000, 9999);
+            if (!room.IsOpen || !room.IsVisible || room.RemovedFromList)
+                continue;
+
+            GameObject button = Instantiate(joinButtonPrefab, roomListContainer);
+            button.name = room.Name;
+
+            var text = button.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null) text.text = room.Name;
+
+            button.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                PhotonNetwork.JoinRoom(room.Name);
+            });
         }
-        else if (string.IsNullOrEmpty(playerNameInput.text))
+    }
+
+    private void HandleJoinedRoom()
+    {
+        SetPlayerName();
+        ServerOnlinePlayers.addOnlinePlayer();
+
+        bool isHost = PhotonNetwork.IsMasterClient;
+
+        startGameButton.SetActive(isHost);
+        if (isHost)
         {
-            playerNameInput.text = "Player" + Random.Range(1000, 9999);
+            startGameButton.GetComponent<Button>().onClick.RemoveAllListeners();
+            startGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
         }
+
+        RoomsListCanvas.SetActive(false);
+        CreateCanvas.SetActive(false);
+
+        cameras[0].gameObject.SetActive(false);
+        cameras[1].gameObject.SetActive(true);
+        string skinName = PlayerPrefs.GetString("Skin");
+
+        Hashtable props = new Hashtable()
+        {
+            { "SkinName", skinName }
+        };  
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        Debug.Log("My Skin Is: " + skinName);
+    }
+    #endregion
+
+    #region === Player Name ===
+    private void SetPlayerName()
+    {
+        if (string.IsNullOrEmpty(playerNameInput.text))
+            playerNameInput.text = "Player" + Random.Range(1000, 9999);
 
         playerNameInLobby = playerNameInput.text;
         PhotonNetwork.LocalPlayer.NickName = playerNameInLobby;
-        Debug.Log("✅ Player name set to: " + playerNameInLobby);
-
-        try
-        {
-            ServerOnlinePlayers.addOnlinePlayer();
-            Debug.Log("✅ ServerOnlinePlayers.addOnlinePlayer() called successfully.");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("❌ Error calling ServerOnlinePlayers.addOnlinePlayer(): " + e);
-        }
-
-        if (startGameButton == null)
-        {
-            Debug.LogError("❌ startGameButton is NULL!");
-        }
-        else if (PhotonNetwork.IsMasterClient)
-        {
-            startGameButton.SetActive(true);
-            startGameButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            startGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
-            Debug.Log("✅ startGameButton enabled for master client");
-        }
-        else
-        {
-            startGameButton.SetActive(false);
-            Debug.Log("🔹 Not master client, startGameButton hidden");
-        }
     }
+    #endregion
 
+    #region === Start Game ===
     public void StartGame()
     {
-        Debug.Log("StartGame called");
         if (!PhotonNetwork.IsMasterClient)
         {
-            Debug.LogWarning("only master client can start the game");
+            Debug.LogWarning("not master client");
             return;
         }
-        StartCoroutine(DelayedStartGame());
 
+        StartCoroutine(DelayedStartGame());
     }
 
+    
+    // chatgpt code to move the host to game scene while delay
     private IEnumerator DelayedStartGame()
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -259,25 +211,32 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("Loading 'Game' via PhotonNetwork...");
         PhotonNetwork.LoadLevel("Game");
 
-// chatgpt code if player did not move to game scene force moev
         yield return new WaitForSeconds(0.5f);
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Game")
-        {
-            Debug.LogWarning("Photon load canceled, forcing local scene load...");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
-        }
-    }
 
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Game")
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+    }
+    #endregion
+
+    #region spawnPlayer
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        newPlayer.NickName = playerNameInLobby;
+        Debug.Log("and my name is: " + newPlayer.NickName);
+    }
+    #endregion
+
+    #region === Errors ===
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.LogWarning("❌ Create Room Failed: " + message);
+        Debug.LogError("Create Room Failed: " + message);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogWarning("❌ Join Room Failed: " + message);
+        Debug.LogError("Join Room Failed: " + message);
     }
+    #endregion
 }
