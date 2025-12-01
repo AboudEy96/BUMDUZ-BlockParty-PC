@@ -9,6 +9,13 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CreateJoinRooms : MonoBehaviourPunCallbacks
 {
+    #region Factory
+
+    private PhotonPlayerFactory playerFactory;
+//    [SerializeField] private SkinManager skinManager;
+
+    #endregion
+    
     #region === UI References ===
     [Header("Inputs")]
     [SerializeField] private InputField createRoomInput;
@@ -48,6 +55,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    
     #region === Photon Callbacks ===
     public override void OnConnectedToMaster()
     {
@@ -174,7 +182,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             { "SkinName", skinName }
         };  
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName);
+       playerFactory.CreatePlayer(1, playerMaterial); 
         Debug.Log("My Skin Is: " + skinName);
+        
     }
     #endregion
 
