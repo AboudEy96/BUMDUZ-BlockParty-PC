@@ -1,7 +1,9 @@
-﻿namespace Menu_Scripts.LobbyMenu.PlayersInRoom
+﻿using UnityEngine;
+
+namespace Menu_Scripts.LobbyMenu.PlayersInRoom
 {
     public interface IPlayerFactory
     {
-        IPlayer CreatePlayer(int slotIndex, SkinInfo playerSkin);
+        IPlayer CreatePlayer(int slotIndex,GameObject playerCharacter, Material playerSkin);
     }
 }

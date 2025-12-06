@@ -6,12 +6,12 @@ public class ShowPlayerSkin : MonoBehaviour, IPlayer
     
     public Renderer playerRenderer;
 
-    public void Initialize(int actorNum, SkinInfo playerSkin)
+    public void Initialize(int actorNum, GameObject playerCharacter, Material playerSkin)
     {
-        if(playerRenderer != null && playerSkin.material != null)
-            playerRenderer.material = playerSkin.material;
+        if(playerRenderer != null && playerSkin != null)
+            playerRenderer.material = playerSkin;
 
-        Debug.Log($"Player {actorNum} initialized with skin {playerSkin.skinName}");
+        Debug.Log($"Player {actorNum} initialized with skin {playerSkin.name}");
 
     }
 }

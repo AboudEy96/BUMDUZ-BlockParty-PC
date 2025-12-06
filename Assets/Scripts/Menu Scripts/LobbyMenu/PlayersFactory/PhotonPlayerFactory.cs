@@ -6,13 +6,13 @@ public class PhotonPlayerFactory : MonoBehaviour, IPlayerFactory
 {
 
     public Transform[] spawnPoints;
-    public IPlayer CreatePlayer(int spawnIndex, SkinInfo skinInfo)
+    public IPlayer CreatePlayer(int spawnIndex, GameObject playerCharacter, Material skinInfo)
     {
-        var go = PhotonNetwork.Instantiate(skinInfo.prefab.name,
+        var go = PhotonNetwork.Instantiate(playerCharacter.name,
             spawnPoints[spawnIndex].position, 
             spawnPoints[spawnIndex].rotation);
         var player = go.GetComponent<IPlayer>();
-        player.Initialize(PhotonNetwork.LocalPlayer.ActorNumber, null);
+        player.Initialize(PhotonNetwork.LocalPlayer.ActorNumber, playerCharacter, skinInfo);
         return player;
     }
 }
