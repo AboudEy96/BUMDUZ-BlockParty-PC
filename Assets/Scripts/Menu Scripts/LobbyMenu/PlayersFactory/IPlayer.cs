@@ -1,10 +1,12 @@
-﻿namespace Menu_Scripts.LobbyMenu.PlayersInRoom
+﻿using UnityEngine;
+
+namespace Menu_Scripts.LobbyMenu.PlayersInRoom
 {
     
     public interface IPlayer
     {
         
-        void Initialize(int actorNumber, SkinInfo playerSkin);
+        void Initialize(int actorNumber,GameObject playerCharacter, Material playerSkin);
 
     }
 }
