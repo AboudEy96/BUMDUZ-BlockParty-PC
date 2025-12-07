@@ -6,7 +6,8 @@ using Random = UnityEngine.Random;
 
 public class SpawnPlayers : MonoBehaviour
 {
-    public GameObject PREFAB_PLAYER = PlayerCharacterSingletoon.CHARACTER;
+    
+    public GameObject PREFAB_PLAYER;
     public String PLAYER_SKIN;
     private string playerName = CreateJoinRooms.playerNameInLobby;
     public int height;
@@ -20,6 +21,8 @@ public class SpawnPlayers : MonoBehaviour
     {
         PLAYER_SKIN = PlayerPrefs.GetString("Skin", "PurpleBlue");
         Debug.Log(PlayerPrefs.GetString("Skin"));
+        PREFAB_PLAYER = PlayerCharacterSingletoon.instance.CHARACTER;
+        Debug.Log(PREFAB_PLAYER.name);
     }
 
     void Start()
