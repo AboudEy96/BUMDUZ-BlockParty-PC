@@ -8,14 +8,15 @@ public class SelectColor : MonoBehaviour
 {
 
     public Material skinColor;
-
+    
     [SerializeField]
     private Transform BUTTON_PARENT;
     [SerializeField] private GameObject Character;
-    [SerializeField] private List<Material> _materialsSkins;
-   private SkinnedMeshRenderer sms;  
+   private SkinnedMeshRenderer sms;
 
-    private void Start()
+   
+
+   private void Start()
     {
         sms =  Character.GetComponentInChildren<SkinnedMeshRenderer>();
         SyncCharacterColor();
@@ -36,7 +37,7 @@ public class SelectColor : MonoBehaviour
 
     public void SyncCharacterColor()
     {
-        foreach (var mat in _materialsSkins)
+        foreach (var mat in SyncPlayerMaterial.instance._skinMaterials)
         {
             if (mat.name == PlayerPrefs.GetString("Skin"))
             {

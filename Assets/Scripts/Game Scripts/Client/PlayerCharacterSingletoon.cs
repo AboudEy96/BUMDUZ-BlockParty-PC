@@ -5,15 +5,35 @@ using UnityEngine;
 public class PlayerCharacterSingletoon : MonoBehaviour
 {
     // -- Singletoon to save the player character and color --
-    [SerializeField]
-    public static GameObject CHARACTER;
-    public static Texture COLOR;
-    public static Material MAT;
+    public GameObject CHARACTER;
+    public static PlayerCharacterSingletoon instance;
 
-    private void Start()
+    private void Awake()
     {
-        MAT = CHARACTER.GetComponent<Renderer>().material;
-        MAT.mainTexture = COLOR;
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+      
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
+
+    
+    public PlayerCharacterSingletoon GetInstance()
+    {
+        return instance;
+    }
+    public void SetCharacter(GameObject character)
+    {
+        CHARACTER = character;
+    }
+
+    public GameObject GetCharacter()
+    {
+        return CHARACTER;
+    }
+
     
 }
