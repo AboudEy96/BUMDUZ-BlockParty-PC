@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerCharacterSingletoon : MonoBehaviour
 {
     // -- Singletoon to save the player character and color --
-    public GameObject CHARACTER;
+    public GameObject LOBBY_CHARACTER; // without player scripts
+    public GameObject GAME_CHARACTER; // with playtey scripts
     public static PlayerCharacterSingletoon instance;
 
     private void Awake()
@@ -25,14 +26,14 @@ public class PlayerCharacterSingletoon : MonoBehaviour
     {
         return instance;
     }
-    public void SetCharacter(GameObject character)
+    public void SetGameCharacter(GameObject character)
     {
-        CHARACTER = character;
+        GAME_CHARACTER = character;
     }
 
-    public GameObject GetCharacter()
+    public GameObject GetGameCharacter()
     {
-        return CHARACTER;
+        return GAME_CHARACTER;
     }
 
     

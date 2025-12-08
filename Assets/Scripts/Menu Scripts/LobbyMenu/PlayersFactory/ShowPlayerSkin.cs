@@ -11,7 +11,7 @@ public class ShowPlayerSkin : MonoBehaviour, IPlayer
         if(playerRenderer != null && playerSkin != null)
             playerRenderer.material = playerSkin;
 
-        Debug.Log($"Player {actorNum} initialized with skin {playerSkin.name}");
+        Debug.Log($"player {actorNum} initialized with skin {playerSkin.name}");
 
     }
 }

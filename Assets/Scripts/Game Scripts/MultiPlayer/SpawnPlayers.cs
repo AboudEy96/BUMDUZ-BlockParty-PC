@@ -19,9 +19,9 @@ public class SpawnPlayers : MonoBehaviour
 
     private void Awake()
     {
-        PLAYER_SKIN = PlayerPrefs.GetString("Skin", "PurpleBlue");
+//        PLAYER_SKIN = PlayerPrefs.GetString("Skin", "PurpleBlue");
         Debug.Log(PlayerPrefs.GetString("Skin"));
-        PREFAB_PLAYER = PlayerCharacterSingletoon.instance.CHARACTER;
+        PREFAB_PLAYER = PlayerCharacterSingletoon.instance.GAME_CHARACTER;
         Debug.Log(PREFAB_PLAYER.name);
     }
 

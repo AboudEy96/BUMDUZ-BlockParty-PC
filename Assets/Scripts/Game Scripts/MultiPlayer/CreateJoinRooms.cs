@@ -11,7 +11,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 {
     #region Factory
 
-    private PlayerCharacterSingletoon playerCharacterSingletoon;
     [SerializeField] private PhotonPlayerFactory playerFactory;
 //    [SerializeField] private SkinManager skinManager;
 
@@ -184,7 +183,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         };  
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName);
-        playerFactory.CreatePlayer(1, playerCharacterSingletoon.CHARACTER, playerMaterial); 
+        Debug.Log("PlayerFactory = " + playerFactory);
+        Debug.Log("Material name is " + playerMaterial.name);
+        Debug.Log("Player character name is" + PlayerCharacterSingletoon.instance.LOBBY_CHARACTER.name);
+        playerFactory.CreatePlayer(1, PlayerCharacterSingletoon.instance.LOBBY_CHARACTER, playerMaterial); 
         Debug.Log("My Skin Is: " + skinName);
     }
     #endregion
