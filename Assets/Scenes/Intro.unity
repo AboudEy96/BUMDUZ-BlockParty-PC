@@ -585,7 +585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a11497240d4c2590d885d6e5d08ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CHARACTER: {fileID: 3860311051854682870, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
+  LOBBY_CHARACTER: {fileID: 3860311051854682870, guid: 10166b252109d1142ad23b4081684fe7, type: 3}
+  GAME_CHARACTER: {fileID: 3860311051854682870, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
 --- !u!1 &1555833034
 GameObject:
   m_ObjectHideFlags: 0
