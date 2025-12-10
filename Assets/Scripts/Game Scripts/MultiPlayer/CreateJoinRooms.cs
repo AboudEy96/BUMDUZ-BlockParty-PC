@@ -34,6 +34,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     [Header("Cameras")]
     [SerializeField] private List<Camera> cameras;
+
+    [Header("In Room and In Lobby")] [SerializeField]
+    private GameObject IN_ROOM;
+    [SerializeField] private GameObject IN_LOBBY;
     #endregion
 
     #region === Variables ===
@@ -116,7 +120,14 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         };
 
         PhotonNetwork.CreateRoom(createRoomInput.text, options);
+        ChangeScreen();
     }
+
+    public void ChangeScreen()
+    {
+        IN_ROOM.SetActive(!IN_ROOM.activeSelf);
+        IN_LOBBY.SetActive(!IN_LOBBY.activeSelf);
+    } 
 
     public void JoinRoom()
     {

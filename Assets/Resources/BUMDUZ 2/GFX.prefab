@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 049223e16ef8f3c489118cee7cacb2fd, type: 3}
       propertyPath: m_Name
-      value: BUMDUZ
+      value: GFX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -80,6 +80,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 049223e16ef8f3c489118cee7cacb2fd, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6757864446281937574}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 049223e16ef8f3c489118cee7cacb2fd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2958705119791159575}
   m_SourcePrefab: {fileID: 100100000, guid: 049223e16ef8f3c489118cee7cacb2fd, type: 3}
 --- !u!1 &1377550710065548044 stripped
 GameObject:
@@ -125,6 +128,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3790442925989443091}
+  - {fileID: -6757864446281937574}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -265,13 +269,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 1
-    Name: Run
-  - Type: 4
-    SynchronizeType: 1
-    Name: Jump
+  m_SynchronizeParameters: []
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!95 &2958705119791159575
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377550710065548044}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4da17f071769e504d9a6ac7fc95216c4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -3933,7 +3933,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -330.967, y: 168.65953}
+  m_AnchoredPosition: {x: -330.967, y: 168.65918}
   m_SizeDelta: {x: 330.96698, y: 287.61902}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &989190435
@@ -5621,6 +5621,8 @@ MonoBehaviour:
   cameras:
   - {fileID: 895299689}
   - {fileID: 1943009234}
+  IN_ROOM: {fileID: 1664462071}
+  IN_LOBBY: {fileID: 1759266235}
 --- !u!4 &1421627838
 Transform:
   m_ObjectHideFlags: 0
@@ -7172,7 +7174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1759266236
 Transform:
   m_ObjectHideFlags: 0
@@ -8445,8 +8447,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1145330937}
   m_HandleRect: {fileID: 1145330936}
   m_Direction: 2
-  m_Value: -0.000016272465
-  m_Size: 0.82720083
+  m_Value: -0.0000092108285
+  m_Size: 0.82720745
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
