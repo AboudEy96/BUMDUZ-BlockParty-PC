@@ -795,7 +795,8 @@ GameObject:
   - component: {fileID: 48875774836427019}
   - component: {fileID: 7620056381918892002}
   - component: {fileID: -4136996346478509340}
-  - component: {fileID: -4952245308760179102}
+  - component: {fileID: 5273780926843334812}
+  - component: {fileID: -1218513279116112661}
   m_Layer: 6
   m_Name: LOBBY BUMDUZ
   m_TagString: Player
@@ -920,7 +921,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-4952245308760179102
+--- !u!114 &5273780926843334812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860311051854682870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c621c8080fd64d40872f5428ed5cc07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
+--- !u!114 &-1218513279116112661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

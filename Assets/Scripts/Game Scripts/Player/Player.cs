@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         {
             characterController.ResetVerticalVelocity();
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))  
             {
                 characterController.ResetVerticalVelocity();
                 characterController.Jump(hasEffect("JumpBoost") ? jumpForce + 2f: jumpForce, gravity);
