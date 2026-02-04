@@ -54,6 +54,6 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
     }
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("MainScene");
     }
 }
