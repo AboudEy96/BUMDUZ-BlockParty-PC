@@ -8,6 +8,7 @@ public class PlayerController : IPlayerController
     private readonly Rigidbody _rb;
     private readonly PhotonView _photonView;
     public float speed;
+
     public PlayerController(CharacterController controller)
     {
         _controller = controller;
@@ -16,7 +17,7 @@ public class PlayerController : IPlayerController
             Debug.LogError("CharacterController is not assigned!");
         }
     }
-    
+
     public PlayerController(Rigidbody rigidbody)
     {
         _rb = rigidbody;
@@ -28,19 +29,23 @@ public class PlayerController : IPlayerController
 
     public bool IsGrounded(Vector3 groundCheckPosition, float groundDistance, LayerMask groundMask)
     {
-        bool isGrounded = Physics.CheckSphere(groundCheckPosition, groundDistance, groundMask) && _velocity.y < 0;
-      //  Debug.Log($"Is Grounded: {isGrounded}");
-        return isGrounded;
+        return _controller != null && _controller.isGrounded;
     }
 
     public void ResetVerticalVelocity()
     {
-        _velocity.y = -2f;
+        if (_controller != null && _controller.isGrounded && _velocity.y < 0f)
+        {
+            _velocity.y = -2f;
+        }
     }
 
     public void Jump(float jumpHeight, float gravity)
     {
-        _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (_controller != null && _controller.isGrounded)
+        {
+            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+        }
     }
 
     public Vector3 CalculateMoveDirection(Transform cameraTransform, float horizontal, float vertical)
@@ -62,8 +67,12 @@ public class PlayerController : IPlayerController
     public void Move(Vector3 direction, float moveSpeed)
     {
         speed = moveSpeed;
+
         _controller.Move(direction * speed * Time.deltaTime);
+
+        ResetVerticalVelocity();
         ApplyGravity();
+
         _controller.Move(_velocity * Time.deltaTime);
     }
 
