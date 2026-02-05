@@ -30,7 +30,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     [SerializeField] private List<Camera> cameras;
 
     [Header("In Room and In Lobby")]
-    [SerializeField] private GameObject IN_ROOM;
+    [SerializeField] private GameObject OUT_LOBBY;
     [SerializeField] private GameObject IN_LOBBY;
 
     public static string playerNameInLobby;
@@ -38,13 +38,18 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected){
             PhotonNetwork.ConnectUsingSettings();
+        return; }
+        if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
+
     }
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
     public override void OnJoinedLobby()
@@ -56,15 +61,47 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         }
     }
 
+    #region Rooms Show Update
+
+    private readonly Dictionary<string, RoomInfo> cachedRooms = new Dictionary<string, RoomInfo>();
+
     public override void OnRoomListUpdate(List<RoomInfo> updatedRoomList)
     {
+        if (updatedRoomList == null || updatedRoomList.Count == 0)
+            return;
+
         RefreshRoomList(updatedRoomList);
     }
+
+    private void RefreshRoomListFromCache()
+    {
+        foreach (Transform child in roomListContainer)
+            Destroy(child.gameObject);
+
+        foreach (var kvp in cachedRooms)
+        {
+            RoomInfo room = kvp.Value;
+
+            if (!room.IsOpen || room.MaxPlayers > 0 && room.PlayerCount >= room.MaxPlayers)
+                continue;
+
+            GameObject button = Instantiate(joinButtonPrefab, roomListContainer);
+            button.name = room.Name;
+
+            var text = button.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null) text.text = $"{room.Name} ({room.PlayerCount}/{room.MaxPlayers})";
+
+            button.GetComponent<Button>().onClick.RemoveAllListeners();
+            button.GetComponent<Button>().onClick.AddListener(() => PhotonNetwork.JoinRoom(room.Name));
+        }
+
+    }
+    #endregion
 
     public override void OnJoinedRoom()
     {
         HandleJoinedRoom();
-        SwitchToRoomCamera();
+        ChangeScreen();
     }
 
     public void CreateRoom()
@@ -94,13 +131,15 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         };
 
         PhotonNetwork.CreateRoom(createRoomInput.text, options);
-        ChangeScreen();
+     //   ChangeScreen();
     }
 
     public void ChangeScreen()
     {
-        IN_ROOM.SetActive(!IN_ROOM.activeSelf);
+        OUT_LOBBY.SetActive(!OUT_LOBBY.activeSelf);
         IN_LOBBY.SetActive(!IN_LOBBY.activeSelf);
+        cameras[0].gameObject.SetActive(!cameras[0].gameObject.activeSelf);
+        //cameras[1].gameObject.SetActive(!cameras[1].gameObject.activeSelf);
     }
 
     public void JoinRoom()
@@ -171,12 +210,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         );
     }
     
-    private void SwitchToRoomCamera()
-    {
-        cameras[0].gameObject.SetActive(false);
-        cameras[1].gameObject.SetActive(true);
-        IN_LOBBY.SetActive(!IN_LOBBY.activeSelf);
-    }
 
     private void SetPlayerName()
     {

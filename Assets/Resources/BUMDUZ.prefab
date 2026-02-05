@@ -1243,6 +1243,7 @@ GameObject:
   - component: {fileID: 7620056381918892002}
   - component: {fileID: -4136996346478509340}
   - component: {fileID: 576993891935248363}
+  - component: {fileID: 4870929868093139649}
   m_Layer: 6
   m_Name: BUMDUZ
   m_TagString: Player
@@ -1452,10 +1453,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Run
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Jump
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -1494,6 +1495,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ac11bb465b0d54f9995d449abc798a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4870929868093139649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860311051854682870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c621c8080fd64d40872f5428ed5cc07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
 --- !u!1 &3993638526121363836
 GameObject:
   m_ObjectHideFlags: 0

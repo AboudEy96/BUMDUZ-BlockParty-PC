@@ -16,7 +16,7 @@ public class PhotonPlayerFactory : MonoBehaviour, IPlayerFactory
             spawnPoints[spawnIndex].rotation);
         var player = go.GetComponent<IPlayer>();
         player.Initialize(PhotonNetwork.LocalPlayer.ActorNumber, playerCharacter, skinInfo);
-        go.GetComponentInChildren<Renderer>().material = skinInfo;
+        go.GetComponentInChildren<SkinnedMeshRenderer>().material = skinInfo;
         return player;
     }
 }
