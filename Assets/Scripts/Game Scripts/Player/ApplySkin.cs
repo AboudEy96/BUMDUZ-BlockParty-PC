@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class ApplySkin : MonoBehaviourPun
 {
-    [SerializeField] private Renderer _renderer;
+    [SerializeField] private SkinnedMeshRenderer _renderer;
     
     
     void Start()
     {
-        
+        _renderer =  GetComponentInChildren<SkinnedMeshRenderer>();
         if (photonView.Owner.CustomProperties.TryGetValue("SkinName", out var s))
         {
             var mat = SyncPlayerMaterial.instance.GetMaterialByName((string)s);

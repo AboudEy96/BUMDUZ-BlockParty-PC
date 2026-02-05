@@ -5,6 +5,7 @@ public class ShowPlayerSkin : MonoBehaviour, IPlayer
 {
     
     public Renderer playerRenderer;
+    // to initialize the the player from factory to spawn lobby
 
     public void Initialize(int actorNum, GameObject playerCharacter, Material playerSkin)
     {

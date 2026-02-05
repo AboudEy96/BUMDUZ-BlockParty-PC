@@ -796,7 +796,7 @@ GameObject:
   - component: {fileID: 7620056381918892002}
   - component: {fileID: -4136996346478509340}
   - component: {fileID: 5273780926843334812}
-  - component: {fileID: -1218513279116112661}
+  - component: {fileID: 1548880091113001956}
   m_Layer: 6
   m_Name: LOBBY BUMDUZ
   m_TagString: Player
@@ -934,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 0}
---- !u!114 &-1218513279116112661
+--- !u!114 &1548880091113001956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
