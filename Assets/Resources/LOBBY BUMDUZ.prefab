@@ -934,6 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 0}
+  _nameInput: {fileID: 3367578412483917883}
 --- !u!114 &1548880091113001956
 MonoBehaviour:
   m_ObjectHideFlags: 0
