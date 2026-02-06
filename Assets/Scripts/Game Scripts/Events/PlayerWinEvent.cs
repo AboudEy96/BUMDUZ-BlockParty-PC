@@ -14,7 +14,6 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     
     public void OnPlayerWin(Photon.Realtime.Player pl)
     {
-        CheckIfPlayerWin();
         GameStartSingletoon.GetInstance().GameEnd();
     }
 
@@ -40,6 +39,8 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         {
             WhoWon(lastAlivePlayer);
         }
+        Debug.Log($"[CheckIfPlayerWin] SurvivedPlayers={SurvivedPlayers} lastAlive={(lastAlivePlayer != null ? lastAlivePlayer.NickName : "null")}");
+
     }
 
 
@@ -47,6 +48,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     {
         photonView.RPC("PrintWinner", RpcTarget.All, winner.NickName);
         photonView.RPC("LeaveRoom", RpcTarget.All);
+        OnPlayerWin(winner);
     }
 
     [PunRPC]

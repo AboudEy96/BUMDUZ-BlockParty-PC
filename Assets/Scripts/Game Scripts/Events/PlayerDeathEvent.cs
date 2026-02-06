@@ -77,10 +77,7 @@ public class PlayerDeathEvent : MonoBehaviourPunCallbacks
             {
                 OnVoidDeath(other.gameObject);
                 KillPlayerInPhoton(view.Owner);
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PlayerWinEvent.Instance.CheckIfPlayerWin();
-                }  
+                PlayerWinEvent.Instance.CheckIfPlayerWin();
             }
         }
     }

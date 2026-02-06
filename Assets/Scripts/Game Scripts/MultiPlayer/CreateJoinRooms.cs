@@ -38,6 +38,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        
         if (!PhotonNetwork.IsConnected){
             PhotonNetwork.ConnectUsingSettings();
         return; }

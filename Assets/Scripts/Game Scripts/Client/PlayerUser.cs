@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class PlayerUser : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerUser : MonoBehaviour
     public string skinMaterial;
     [Header("Player Prefab ")]
     public GameObject prefab;
+    [SerializeField] private TextMeshPro _nameInput;
 
     public void SetupPlayer(string name, int id, string skinMaterial, GameObject prefab)
     {
@@ -15,6 +17,7 @@ public class PlayerUser : MonoBehaviour
         this.id = id;
         this.prefab = prefab;
         this.skinMaterial = skinMaterial;
+        this._nameInput.text = name;
         Debug.Log($"Player created: {name}, ID: {id}, Skin: {skinMaterial}");
 
     }

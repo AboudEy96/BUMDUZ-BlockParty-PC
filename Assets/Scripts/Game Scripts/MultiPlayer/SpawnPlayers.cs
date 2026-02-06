@@ -4,12 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 using Random = UnityEngine.Random;
 
-public class SpawnPlayers : MonoBehaviour
+public class SpawnPlayers : MonoBehaviourPun
 {
     
     public GameObject PREFAB_PLAYER;
     public String PLAYER_SKIN;
-    private string playerName = CreateJoinRooms.playerNameInLobby;
+    private string playerName = "CreateJoinRooms.playerNameInLobby";
     public int height;
     public int width;
     public int yAXIS;
@@ -33,7 +33,6 @@ public class SpawnPlayers : MonoBehaviour
         Vector3 location = new Vector3(x, yAXIS, z);
         //  PhotonNetwork.Instantiate(player.name, location, Quaternion.identity);
 
-        
         SkinnedMeshRenderer sms = PREFAB_PLAYER.GetComponentInChildren<SkinnedMeshRenderer>();
         
      /*   foreach (var mat in _materialsSkins)
@@ -45,7 +44,7 @@ public class SpawnPlayers : MonoBehaviour
                 break;
             }
         }*/
-
+     playerName = PhotonNetwork.NickName;
         PlayerUser player = new PlayerUserBuilder(PREFAB_PLAYER)
             .SetId(1)
             .SetName(playerName)
