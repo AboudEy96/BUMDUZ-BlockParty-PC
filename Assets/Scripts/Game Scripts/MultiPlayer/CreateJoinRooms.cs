@@ -200,6 +200,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             { "SkinName", skinName },
             {"SpawnIndex", spawnIndex}
         };
+        
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName);
