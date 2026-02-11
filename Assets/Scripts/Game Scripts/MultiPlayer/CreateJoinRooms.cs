@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -139,6 +140,8 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     {
         OUT_LOBBY.SetActive(!OUT_LOBBY.activeSelf);
         IN_LOBBY.SetActive(!IN_LOBBY.activeSelf);
+        RoomsListCanvas.SetActive(!RoomsListCanvas.activeSelf);
+        CreateCanvas.SetActive(!CreateCanvas.activeSelf);
         cameras[0].gameObject.SetActive(!cameras[0].gameObject.activeSelf);
         //cameras[1].gameObject.SetActive(!cameras[1].gameObject.activeSelf);
     }
@@ -188,9 +191,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             startGameButton.GetComponent<Button>().onClick.RemoveAllListeners();
             startGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
         }
-
-        RoomsListCanvas.SetActive(false);
-        CreateCanvas.SetActive(false);
+        
 
         string skinName = PlayerPrefs.GetString("Skin");
         int spawnIndex = (PhotonNetwork.LocalPlayer.ActorNumber - 1) % 4;
@@ -250,6 +251,26 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
         }
     }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        startGameButton.SetActive(false);
+        ChangeScreen();
+     
+
+        Debug.Log("Leave Room");
+    }
+
+    public void LeaveLobby()
+    {
+        PhotonNetwork.Disconnect();
+        PhotonNetwork.LoadLevel("MainScene");
+        PhotonNetwork.OfflineMode = true;
+        Debug.Log("Leave Lobby");
+    }
+    
+    
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
