@@ -14,7 +14,7 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
     
     private List<Transform> allCubes = new List<Transform>();
     public static int score = 0;
-    public Transform theImages;
+    [SerializeField]private Transform theImages;
     private PhotonView _photonView;
     
     [Header("Start Game Button For Host")]
