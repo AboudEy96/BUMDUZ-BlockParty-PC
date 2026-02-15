@@ -8,6 +8,7 @@ public class PlayerController : IPlayerController
     private readonly Rigidbody _rb;
     private readonly PhotonView _photonView;
     public float speed;
+    public bool IsMoving { get; private set; }
 
     public PlayerController(CharacterController controller)
     {
@@ -67,6 +68,7 @@ public class PlayerController : IPlayerController
     public void Move(Vector3 direction, float moveSpeed)
     {
         speed = moveSpeed;
+        IsMoving = direction.magnitude > 0.1f;
 
         _controller.Move(direction * speed * Time.deltaTime);
 
