@@ -30,6 +30,7 @@ TagManager:
   - Skin
   - Lime
   - Green
+  - Magenta
   layers:
   - Default
   - TransparentFX
