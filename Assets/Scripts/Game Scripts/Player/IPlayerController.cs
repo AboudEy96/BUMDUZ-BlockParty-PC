@@ -8,5 +8,6 @@ public interface IPlayerController
     Vector3 CalculateMoveDirection(Transform cameraTransform, float horizontal, float vertical);
     void RotateTowards(Vector3 direction, float rotationSpeed);
     void Move(Vector3 direction, float moveSpeed);
+    bool IsMoving { get; }
 
 }
