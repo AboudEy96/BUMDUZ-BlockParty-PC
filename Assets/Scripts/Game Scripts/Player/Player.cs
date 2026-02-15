@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public Transform cameraTransform;
 
     private PlayerController characterController;
+    public bool IsRunning { get; private set; }
     private ServerOnlinePlayers serverOnlinePlayers;
     PhotonView _photonView;
 
@@ -67,7 +68,8 @@ public class Player : MonoBehaviour
             characterController.Jump(hasEffect("JumpBoost") ? jumpForce + 2f : jumpForce, gravity);
         }
 
-        animator.SetBool("Run", moveDirection.magnitude > 0.1f);
+        IsRunning = characterController.IsMoving;
+        animator.SetBool("Run", IsRunning);
     }
 
     bool hasEffect(string childName)
