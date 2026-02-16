@@ -37,21 +37,38 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     public static string playerNameInLobby;
     private bool pendingCreateRoom = false;
 
+    private readonly Dictionary<string, RoomInfo> cachedRooms = new Dictionary<string, RoomInfo>();
+    private readonly Dictionary<string, GameObject> roomButtons = new Dictionary<string, GameObject>();
+
     private void Start()
     {
-        
-        if (!PhotonNetwork.IsConnected){
+        if (!PhotonNetwork.IsConnected)
+        {
             PhotonNetwork.ConnectUsingSettings();
-        return; }
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby(TypedLobby.Default);
+            return;
+        }
 
+        StartCoroutine(JoinLobbyAfterUIReady());
+    }
+    private IEnumerator JoinLobbyAfterUIReady()
+    {
+        yield return null;
+
+        if (PhotonNetwork.InLobby)
+            PhotonNetwork.LeaveLobby();
+
+        while (PhotonNetwork.InLobby)
+            yield return null;
+
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
     public override void OnConnectedToMaster()
     {
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby(TypedLobby.Default);
+        if (!PhotonNetwork.OfflineMode)
+        {
+            SceneManager.LoadScene("Lobby");
+        }
     }
 
     public override void OnJoinedLobby()
@@ -63,42 +80,49 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         }
     }
 
-    #region Rooms Show Update
-
-    private readonly Dictionary<string, RoomInfo> cachedRooms = new Dictionary<string, RoomInfo>();
-
     public override void OnRoomListUpdate(List<RoomInfo> updatedRoomList)
     {
-        if (updatedRoomList == null || updatedRoomList.Count == 0)
-            return;
+        if (updatedRoomList == null) return;
 
-        RefreshRoomList(updatedRoomList);
-    }
-
-    private void RefreshRoomListFromCache()
-    {
-        foreach (Transform child in roomListContainer)
-            Destroy(child.gameObject);
-
-        foreach (var kvp in cachedRooms)
+        foreach (var info in updatedRoomList)
         {
-            RoomInfo room = kvp.Value;
+            if (info.RemovedFromList || !info.IsVisible || !info.IsOpen)
+            {
+                cachedRooms.Remove(info.Name);
 
-            if (!room.IsOpen || room.MaxPlayers > 0 && room.PlayerCount >= room.MaxPlayers)
+                if (roomButtons.TryGetValue(info.Name, out var go) && go != null)
+                    Destroy(go);
+
+                roomButtons.Remove(info.Name);
                 continue;
+            }
 
-            GameObject button = Instantiate(joinButtonPrefab, roomListContainer);
-            button.name = room.Name;
+            cachedRooms[info.Name] = info;
 
-            var text = button.GetComponentInChildren<TextMeshProUGUI>();
-            if (text != null) text.text = $"{room.Name} ({room.PlayerCount}/{room.MaxPlayers})";
+            if (!roomButtons.TryGetValue(info.Name, out var buttonGO) || buttonGO == null)
+            {
+                buttonGO = Instantiate(joinButtonPrefab, roomListContainer);
+                roomButtons[info.Name] = buttonGO;
 
-            button.GetComponent<Button>().onClick.RemoveAllListeners();
-            button.GetComponent<Button>().onClick.AddListener(() => PhotonNetwork.JoinRoom(room.Name));
+                var btn = buttonGO.GetComponent<Button>();
+                btn.onClick.RemoveAllListeners();
+                string roomNameCopy = info.Name;
+                btn.onClick.AddListener(() => PhotonNetwork.JoinRoom(roomNameCopy));
+            }
+
+            var roomNameTransform = buttonGO.transform.Find("ROOM NAME");
+            if (roomNameTransform != null)
+            {
+                var roomNameText = roomNameTransform.GetComponent<TextMeshProUGUI>();
+                if (roomNameText != null)
+                    roomNameText.text = $"{info.Name} ({info.PlayerCount}/{info.MaxPlayers})";
+            }
+
+            bool full = info.MaxPlayers > 0 && info.PlayerCount >= info.MaxPlayers;
+            buttonGO.SetActive(!full);
         }
-
     }
-    #endregion
+
 
     public override void OnJoinedRoom()
     {
@@ -111,7 +135,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InLobby)
         {
             pendingCreateRoom = true;
-            PhotonNetwork.JoinLobby();
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
             return;
         }
 
@@ -132,8 +156,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             MaxPlayers = 4
         };
 
-        PhotonNetwork.CreateRoom(createRoomInput.text, options);
-     //   ChangeScreen();
+        PhotonNetwork.CreateRoom(createRoomInput.text, options, TypedLobby.Default);
     }
 
     public void ChangeScreen()
@@ -143,7 +166,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         RoomsListCanvas.SetActive(!RoomsListCanvas.activeSelf);
         CreateCanvas.SetActive(!CreateCanvas.activeSelf);
         cameras[0].gameObject.SetActive(!cameras[0].gameObject.activeSelf);
-        //cameras[1].gameObject.SetActive(!cameras[1].gameObject.activeSelf);
     }
 
     public void JoinRoom()
@@ -154,29 +176,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             return;
 
         PhotonNetwork.JoinRoom(joinRoomInput.text);
-    }
-
-    private void RefreshRoomList(List<RoomInfo> roomList)
-    {
-        foreach (Transform child in roomListContainer)
-            Destroy(child.gameObject);
-
-        foreach (RoomInfo room in roomList)
-        {
-            if (!room.IsOpen || !room.IsVisible || room.RemovedFromList)
-                continue;
-
-            GameObject button = Instantiate(joinButtonPrefab, roomListContainer);
-            button.name = room.Name;
-
-            var text = button.GetComponentInChildren<TextMeshProUGUI>();
-            if (text != null) text.text = room.Name;
-
-            button.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                PhotonNetwork.JoinRoom(room.Name);
-            });
-        }
     }
 
     private void HandleJoinedRoom()
@@ -191,7 +190,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             startGameButton.GetComponent<Button>().onClick.RemoveAllListeners();
             startGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
         }
-        
 
         string skinName = PlayerPrefs.GetString("Skin");
         int spawnIndex = (PhotonNetwork.LocalPlayer.ActorNumber - 1) % 4;
@@ -199,9 +197,9 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable
         {
             { "SkinName", skinName },
-            {"SpawnIndex", spawnIndex}
+            { "SpawnIndex", spawnIndex }
         };
-        
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName);
@@ -212,7 +210,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             playerMaterial
         );
     }
-    
 
     private void SetPlayerName()
     {
@@ -240,15 +237,14 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
 
         PhotonNetwork.LoadLevel("Game");
-        
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Game")
+
+        if (SceneManager.GetActiveScene().name != "Game")
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-            //     PhotonNetwork.LoadLevel("GameScene1,2");
             PhotonNetwork.LoadLevel("Game");
             Debug.LogWarning("Photon load canceled, forcing local scene load...");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Game");
         }
     }
 
@@ -257,8 +253,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         startGameButton.SetActive(false);
         ChangeScreen();
-     
-
         Debug.Log("Leave Room");
     }
 
@@ -269,8 +263,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.OfflineMode = true;
         Debug.Log("Leave Lobby");
     }
-    
-    
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {

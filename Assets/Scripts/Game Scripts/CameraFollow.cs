@@ -7,19 +7,15 @@ public class CameraFollow : MonoBehaviour
     private Transform target;
     private Player targetPlayer;
 
-    [Header("Base Camera Settings")]
     public Vector3 offset = new Vector3(0, 5, -10);
     public float rotationSpeed = 100f;
     public float followLerpSpeed = 10f;
 
-    [Header("Run Camera Effects")]
-    public float runBackwardDistance = 2f;
-    public float runOffsetLerpSpeed = 6f;
-    public float shakeAmount = 0.08f;
-    public float shakeFrequency = 18f;
+    public float runExtraDistance = 3f;
+    public float runLerpSpeed = 6f;
 
     private float currentYaw = 0f;
-    private float currentRunOffset;
+    private float currentExtraDistance = 0f;
 
     private void Start()
     {
@@ -37,9 +33,7 @@ public class CameraFollow : MonoBehaviour
         targetPlayer = target?.GetComponent<Player>();
 
         if (target == null || photonView == null || !photonView.IsMine)
-        {
             gameObject.SetActive(false);
-        }
     }
 
     private void LateUpdate()
@@ -50,18 +44,19 @@ public class CameraFollow : MonoBehaviour
         currentYaw += mouseX;
 
         bool isRunning = targetPlayer != null && targetPlayer.IsRunning;
-        float targetRunOffset = isRunning ? runBackwardDistance : 0f;
-        currentRunOffset = Mathf.Lerp(currentRunOffset, targetRunOffset, runOffsetLerpSpeed * Time.deltaTime);
 
-        Vector3 dynamicOffset = offset + new Vector3(0f, 0f, -currentRunOffset);
-        Vector3 desiredPosition = target.position + Quaternion.Euler(0, currentYaw, 0) * dynamicOffset;
+        float targetExtra = isRunning ? runExtraDistance : 0f;
+        currentExtraDistance = Mathf.Lerp(currentExtraDistance, targetExtra, runLerpSpeed * Time.deltaTime);
 
-        if (isRunning)
-        {
-            float shakeX = (Mathf.PerlinNoise(Time.time * shakeFrequency, 0f) - 0.5f) * 2f * shakeAmount;
-            float shakeY = (Mathf.PerlinNoise(0f, Time.time * shakeFrequency) - 0.5f) * 2f * shakeAmount;
-            desiredPosition += transform.right * shakeX + transform.up * shakeY;
-        }
+        Quaternion rotation = Quaternion.Euler(0f, currentYaw, 0f);
+
+        Vector3 direction = (rotation * offset).normalized;
+
+        float baseDistance = offset.magnitude;
+
+        float finalDistance = baseDistance + currentExtraDistance;
+
+        Vector3 desiredPosition = target.position + direction * finalDistance;
 
         transform.position = Vector3.Lerp(transform.position, desiredPosition, followLerpSpeed * Time.deltaTime);
         transform.LookAt(target.position + Vector3.up * 1.2f);
