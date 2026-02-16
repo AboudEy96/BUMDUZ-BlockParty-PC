@@ -5,6 +5,7 @@ using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -42,7 +43,8 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         public List<Sprite> loadingImg = new List<Sprite>();
 
         [Header("SkyBox Hex To change")] public Material TheSkyBox;
-     public void Awake()
+
+        public void Awake()
      {
          ActiveButtons();
          Color a;
@@ -179,5 +181,15 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
             
             
         }
+    }
+
+    public void onCloseButtonClick()
+    {
+        GameObject clicked = EventSystem.current.currentSelectedGameObject;
+        if (clicked == null) return;
+
+        Transform parent = clicked.transform.parent;
+        if (parent != null)
+            parent.gameObject.SetActive(false);
     }
 }

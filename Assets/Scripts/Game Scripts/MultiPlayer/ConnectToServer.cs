@@ -32,19 +32,21 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.OfflineMode)
         {
-          //  PhotonNetwork.JoinLobby();
-            PhotonNetwork.JoinLobby(TypedLobby.Default);
+            SceneManager.LoadScene("Lobby");
 
-        }    
+            //  PhotonNetwork.JoinLobby();
+         //   PhotonNetwork.JoinLobby(TypedLobby.Default);
+        }
+
     }
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Lobby");
     }
 
-    public override void OnJoinedLobby()
+  /*  public override void OnJoinedLobby()
     {
         SceneManager.LoadScene("Lobby");
-    }
+    }*/
 
 }
