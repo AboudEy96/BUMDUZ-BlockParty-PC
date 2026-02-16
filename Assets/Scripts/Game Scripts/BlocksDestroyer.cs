@@ -155,7 +155,7 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         
         if (PhotonNetwork.IsMasterClient)
         {
-            Invoke("SelectRandomColor", 3f);
+            Invoke("SelectRandomColor", 4.5f);
         }
     }
 
