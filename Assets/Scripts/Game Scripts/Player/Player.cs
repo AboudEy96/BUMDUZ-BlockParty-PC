@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
 
         IsRunning = characterController.IsMoving;
         animator.SetBool("Run", IsRunning);
-    }
+    }   
 
     bool hasEffect(string childName)
     {

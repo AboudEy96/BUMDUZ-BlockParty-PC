@@ -12,26 +12,25 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 {
     [SerializeField] private PhotonPlayerFactory playerFactory;
 
-    [Header("Inputs")]
-    [SerializeField] private InputField createRoomInput;
+    [Header("Inputs")] [SerializeField] private InputField createRoomInput;
     [SerializeField] private InputField joinRoomInput;
     [SerializeField] private InputField playerNameInput;
 
-    [Header("UI Elements")]
-    [SerializeField] private Canvas canvas;
+    [Header("UI Elements")] [SerializeField]
+    private Canvas canvas;
+
     [SerializeField] private GameObject joinButtonPrefab;
     [SerializeField] private Transform roomListContainer;
     [SerializeField] private GameObject startGameButton;
 
-    [Header("Canvasess")]
-    [SerializeField] private GameObject RoomsListCanvas;
+    [Header("Canvasess")] [SerializeField] private GameObject RoomsListCanvas;
     [SerializeField] private GameObject CreateCanvas;
 
-    [Header("Cameras")]
-    [SerializeField] private List<Camera> cameras;
+    [Header("Cameras")] [SerializeField] private List<Camera> cameras;
 
-    [Header("In Room and In Lobby")]
-    [SerializeField] private GameObject OUT_LOBBY;
+    [Header("In Room and In Lobby")] [SerializeField]
+    private GameObject OUT_LOBBY;
+
     [SerializeField] private GameObject IN_LOBBY;
 
     public static string playerNameInLobby;
@@ -50,6 +49,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
         StartCoroutine(JoinLobbyAfterUIReady());
     }
+
     private IEnumerator JoinLobbyAfterUIReady()
     {
         yield return null;
@@ -203,13 +203,21 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName);
-
-        playerFactory.CreatePlayer(
-            spawnIndex,
-            PlayerCharacterSingletoon.instance.LOBBY_CHARACTER,
-            playerMaterial
-        );
-    }
+        try
+        {
+            playerFactory.CreatePlayer(
+                spawnIndex,
+                PlayerCharacterSingletoon.instance.LOBBY_CHARACTER,
+                playerMaterial);
+        }
+        catch (System.Exception e)
+        {
+            string[] skins = { "Colorful", "Yellow", "Aqua", };
+            int ind = Random.Range(0, skins.Length - 1);
+            PlayerPrefs.SetString("Skin", skins[ind]);
+        };
+        
+}
 
     private void SetPlayerName()
     {

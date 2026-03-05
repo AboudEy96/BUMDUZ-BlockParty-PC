@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LOBBY_CHARACTER: {fileID: 3860311051854682870, guid: 10166b252109d1142ad23b4081684fe7, type: 3}
-  GAME_CHARACTER: {fileID: 3860311051854682870, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
+  GAME_CHARACTER: {fileID: 1005521441754725502, guid: 746dadf7a20741b47b36cd9b55e1f27b, type: 3}
 --- !u!114 &1405803257
 MonoBehaviour:
   m_ObjectHideFlags: 0
