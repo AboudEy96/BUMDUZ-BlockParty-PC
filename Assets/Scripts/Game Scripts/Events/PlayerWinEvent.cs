@@ -1,73 +1,94 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class PlayerWinEvent : MonoBehaviourPunCallbacks
 {
     public static PlayerWinEvent Instance;
 
+    private bool gameEnded;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
-    
-    public void OnPlayerWin(Photon.Realtime.Player pl)
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        GameStartSingletoon.GetInstance().GameEnd();
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+
+        if (changedProps != null && changedProps.ContainsKey("isDead"))
+        {
+            CheckIfPlayerWin();
+        }
     }
 
     public void CheckIfPlayerWin()
     {
-        int SurvivedPlayers = 0;
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+
+        int survivedPlayers = 0;
         Photon.Realtime.Player lastAlivePlayer = null;
 
         foreach (var player in PhotonNetwork.PlayerList)
         {
             bool isDead = false;
-            if (player.CustomProperties.ContainsKey("isDead"))
-                isDead = (bool)player.CustomProperties["isDead"];
+            if (player.CustomProperties.TryGetValue("isDead", out var v) && v is bool b)
+                isDead = b;
 
             if (!isDead)
             {
-                SurvivedPlayers++;
+                survivedPlayers++;
                 lastAlivePlayer = player;
             }
         }
-        
-        if (SurvivedPlayers == 1)
+
+        Debug.Log($"[CheckIfPlayerWin] SurvivedPlayers={survivedPlayers} lastAlive={(lastAlivePlayer != null ? lastAlivePlayer.NickName : "null")}");
+
+        if (survivedPlayers == 1 && lastAlivePlayer != null)
         {
+            gameEnded = true;
             WhoWon(lastAlivePlayer);
         }
-        Debug.Log($"[CheckIfPlayerWin] SurvivedPlayers={SurvivedPlayers} lastAlive={(lastAlivePlayer != null ? lastAlivePlayer.NickName : "null")}");
-
     }
 
-
-    public void WhoWon(Photon.Realtime.Player winner)
+    private void WhoWon(Photon.Realtime.Player winner)
     {
-        photonView.RPC("PrintWinner", RpcTarget.All, winner.NickName);
-        photonView.RPC("LeaveRoom", RpcTarget.All);
-        OnPlayerWin(winner);
+        photonView.RPC(nameof(PrintWinner), RpcTarget.All, winner.NickName);
+        photonView.RPC(nameof(RemoteGameEnd), RpcTarget.All);
+        photonView.RPC(nameof(LeaveRoom), RpcTarget.All);
     }
 
     [PunRPC]
-    void LeaveRoom()
+    private void RemoteGameEnd()
+    {
+        GameStartSingletoon.GetInstance().GameEnd();
+    }
+
+    [PunRPC]
+    private void LeaveRoom()
     {
         StartCoroutine(LeaveRoomCoroutine());
     }
 
-    private IEnumerator LeaveRoomCoroutine()
+    private System.Collections.IEnumerator LeaveRoomCoroutine()
     {
         yield return new WaitForSeconds(7f);
 
         if (PhotonNetwork.InRoom)
-        {
             PhotonNetwork.LeaveRoom();
-        }
     }
+
     [PunRPC]
-    void PrintWinner(string winnerName)
+    private void PrintWinner(string winnerName)
     {
         Debug.Log("Winner of the game is: " + winnerName);
     }
