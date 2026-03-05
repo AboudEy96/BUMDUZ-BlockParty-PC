@@ -51,6 +51,7 @@ MonoBehaviour:
   - ChangeMaterial_RPC
   - LeaveRoom
   - PrintWinner
+  - RemoteGameEnd
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
