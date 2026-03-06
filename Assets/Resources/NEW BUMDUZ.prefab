@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 1610428640777769252}
   - component: {fileID: 4621402067783563668}
   - component: {fileID: 6618082461473876225}
+  - component: {fileID: 8790337354982082911}
   m_Layer: 6
   m_Name: NEW BUMDUZ
   m_TagString: Player
@@ -285,7 +286,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   cameraTransform: {fileID: 6297581820214953168}
-  animator: {fileID: -4136996346478509340, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
+  animator: {fileID: 4621402067783563668}
 --- !u!114 &5047449948790455186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,11 +451,11 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
-    Name: Run
+    SynchronizeType: 0
+    Name: RUN
   - Type: 4
-    SynchronizeType: 1
-    Name: Jump
+    SynchronizeType: 0
+    Name: JUMP
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -494,6 +495,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 0}
   _nameInput: {fileID: 3367578412483917883, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
+--- !u!114 &8790337354982082911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005521441754725502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46eb8eefa504f92449bb2e3e35f8778c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  characterController: {fileID: 0}
 --- !u!1 &1375041927493214944
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636973713670146992}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000026692543, y: -0.7071067, z: -0.00000002669254, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.37835762, y: 0.37835762, z: 0.37835762}
   m_ConstrainProportionsScale: 0
