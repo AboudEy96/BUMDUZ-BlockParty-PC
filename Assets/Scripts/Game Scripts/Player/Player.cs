@@ -45,7 +45,15 @@ public class Player : MonoBehaviour
             {
                 cameraTransform = mainCamera.transform;
             }
-            playerName.text = PhotonNetwork.LocalPlayer.NickName;
+            try
+            {
+                playerName.text = PhotonNetwork.LocalPlayer.NickName;
+            }
+            catch (System.Exception e)
+            {
+                playerName.text = "Player 1";
+            }
+            
         }
     }
 
@@ -69,7 +77,7 @@ public class Player : MonoBehaviour
         }
 
         IsRunning = characterController.IsMoving;
-        animator.SetBool("Run", IsRunning);
+    //    animator.SetBool("RUN", IsRunning);
     }   
 
     bool hasEffect(string childName)
