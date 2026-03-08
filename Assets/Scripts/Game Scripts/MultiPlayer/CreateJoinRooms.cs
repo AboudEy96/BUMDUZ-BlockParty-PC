@@ -202,12 +202,13 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName);
+        var pl = PlayerCharacterSingletoon.instance.LOBBY_CHARACTER;
+        Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName, pl.name);
         try
         {
             playerFactory.CreatePlayer(
                 spawnIndex,
-                PlayerCharacterSingletoon.instance.LOBBY_CHARACTER,
+                pl,
                 playerMaterial);
         }
         catch (System.Exception e)

@@ -21,7 +21,10 @@ public class ColorChangeEvent : MonoBehaviour
             {
                 Material material = cube.GetComponent<Renderer>().material;
                 string materialName = material.name.Replace("(Instance)", "").Trim();
-                
+                if (materialName.Contains("Default"))
+                {
+                    materialName = "White";
+                }
                 cube.tag = materialName; 
                     
             }
