@@ -144,14 +144,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80218070}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -559,6 +559,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f5b56a9be64030943b650fa61c295340, type: 2}
   - {fileID: 2100000, guid: b92412b3b9c3c2940800e95b777038e6, type: 2}
   - {fileID: 2100000, guid: 560e04e20ec5ced4b864e1a8c6cda888, type: 2}
+  _MUMDUZMaterials:
+  - {fileID: 2100000, guid: 9fd7f90b94b67384098adf1314011c80, type: 2}
+  - {fileID: 2100000, guid: f7b83e04b502dc047bcd85d691f7c1ea, type: 2}
+  - {fileID: 2100000, guid: fb6e59a57d7e94e4f952e42c2a158ee5, type: 2}
+  - {fileID: 2100000, guid: e77ff0ef38b579546b7ea0347f7c3348, type: 2}
+  - {fileID: 2100000, guid: ea569d9d05a69de488c18e3b1959f5cf, type: 2}
+  - {fileID: 2100000, guid: 76537a610afcaeb47962672076f05e00, type: 2}
+  - {fileID: 2100000, guid: ce35ce30a1c6dbc4bad29677a5dfbe36, type: 2}
 --- !u!4 &1405803255
 Transform:
   m_ObjectHideFlags: 0
