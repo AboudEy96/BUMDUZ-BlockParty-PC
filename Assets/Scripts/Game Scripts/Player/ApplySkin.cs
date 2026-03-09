@@ -19,7 +19,7 @@ public class ApplySkin : MonoBehaviourPun
         if (photonView.Owner.CustomProperties.TryGetValue("SkinName", out var s))
         {
             // GAMEOBJECTNAME TO CHECK IF IT'S STARTS WITH BUMDUZ OR MUMDUZ, THE NAME IS THE COLOR.
-            var mat = SyncPlayerMaterial.instance.GetMaterialByName((string)s, gameObject.name);
+            var mat = SyncPlayerMaterial.instance.GetMaterialByName((string)s, _renderer.transform.name);
             if (mat != null){ _renderer.material = mat;}
             _nameInput.text = photonView.Owner.NickName;
         }

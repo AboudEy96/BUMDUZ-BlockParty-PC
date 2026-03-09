@@ -193,16 +193,18 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
         string skinName = PlayerPrefs.GetString("Skin");
         int spawnIndex = (PhotonNetwork.LocalPlayer.ActorNumber - 1) % 4;
-
+        int character = PlayerPrefs.GetInt("CharacterType");
         Hashtable props = new Hashtable
         {
             { "SkinName", skinName },
+            {"CharacterType", character},
             { "SpawnIndex", spawnIndex }
         };
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        var pl = PlayerCharacterSingletoon.instance.LOBBY_CHARACTER;
+        
+        var pl = PlayerCharacterSingletoon.instance.LOBBY_CHARACTER[character];
         Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName, pl.name);
         try
         {
