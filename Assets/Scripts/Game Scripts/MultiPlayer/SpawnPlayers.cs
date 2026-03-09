@@ -21,7 +21,9 @@ public class SpawnPlayers : MonoBehaviourPun
     {
 //        PLAYER_SKIN = PlayerPrefs.GetString("Skin", "PurpleBlue");
         Debug.Log(PlayerPrefs.GetString("Skin"));
-        PREFAB_PLAYER = PlayerCharacterSingletoon.instance.GAME_CHARACTER;
+        Debug.Log(PlayerPrefs.GetInt("CharacterType"));
+        int char_id = PlayerPrefs.GetInt("CharacterType");
+        PREFAB_PLAYER = PlayerCharacterSingletoon.instance.GAME_CHARACTER[char_id];
         Debug.Log(PREFAB_PLAYER.name);
     }
 

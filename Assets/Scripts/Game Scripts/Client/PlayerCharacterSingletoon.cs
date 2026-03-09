@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerCharacterSingletoon : MonoBehaviour
 {
     // -- Singletoon to save the player character and color --
-    public GameObject LOBBY_CHARACTER; // without player scripts
-    public GameObject GAME_CHARACTER; // with playtey scripts
+    public GameObject[] LOBBY_CHARACTER; // without player scripts
+    public GameObject[] GAME_CHARACTER; // with playtey scripts
+    
     public static PlayerCharacterSingletoon instance;
 
+    
+    //=0-=-=-=-
+    // 0 BUMDUZ
+    // 1 MUMDUZ
+    // -=--=-=-
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -26,14 +32,14 @@ public class PlayerCharacterSingletoon : MonoBehaviour
     {
         return instance;
     }
-    public void SetGameCharacter(GameObject character)
+    public void SetGameCharacter(int id, GameObject character)
     {
-        GAME_CHARACTER = character;
+        GAME_CHARACTER[id] = character;
     }
 
-    public GameObject GetGameCharacter()
+    public GameObject GetGameCharacter(int id)
     {
-        return GAME_CHARACTER;
+        return GAME_CHARACTER[id];
     }
 
     

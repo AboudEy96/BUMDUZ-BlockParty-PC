@@ -27,16 +27,15 @@ public class SyncPlayerMaterial : MonoBehaviour
       List<Material> materials = null;
       
       // if the player object's name is MUMDUZ make materials = MUMDUZMaterials , else if BUMDUZ makt it _skinmaterials
-      switch (playerObjectName)
+      if (playerObjectName.Contains("BUMDUZ"))
       {
-         case string s when s.StartsWith("BUMDUZ"):
-            materials = _skinMaterials;
-            break;
-
-         case string s when s.StartsWith("MUMDUZ"):
-            materials = _MUMDUZMaterials;
-            break;
+         materials = _skinMaterials;
       }
+      else if (playerObjectName.Contains("MUMDUZ"))
+      {
+         materials = _MUMDUZMaterials;
+      }
+
       if (materials == null)
          return null;
 
