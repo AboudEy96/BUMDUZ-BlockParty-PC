@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
         characterController = new PlayerController(GetComponent<CharacterController>());
         _photonView = GetComponent<PhotonView>();
     }
+    
 
     private void Start()
     {

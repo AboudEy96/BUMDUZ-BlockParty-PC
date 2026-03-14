@@ -268,7 +268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!20 &40400848
 Camera:
   m_ObjectHideFlags: 0
@@ -588,9 +588,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1d67c9d8b74525bf6f681c90dde601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinColor: {fileID: 0}
   BUTTON_PARENT: {fileID: 603361145}
-  Character: {fileID: 7187182079733913607}
+  Characters:
+  - {fileID: 7187182079733913607}
+  - {fileID: 8474312247804973855}
 --- !u!114 &186427049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,6 +611,7 @@ MonoBehaviour:
   _buttons:
   - {fileID: 403799887}
   - {fileID: 44273059}
+  _selectColor: {fileID: 186427048}
 --- !u!1 &234363316
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,8 @@ public class SelectCharacter : MonoBehaviour
     [SerializeField] private GameObject[] _character;
     [SerializeField] private Transform _spawnPoints;
     [SerializeField] private Button[] _buttons;
-    
+    [SerializeField] private SelectColor _selectColor;
+
     void Start()
     {
         foreach (var button in _buttons)
@@ -46,11 +47,13 @@ public class SelectCharacter : MonoBehaviour
 
     public void ChangeCharacter()
     {
-    
         for (int i = 0; i < _character.Length; i++)
         {
             _character[i].SetActive(_type == i);
         }
+
+        _selectColor.RefreshCharacterSelection();
+        _selectColor.SyncCharacterColor();
     }
     
 }

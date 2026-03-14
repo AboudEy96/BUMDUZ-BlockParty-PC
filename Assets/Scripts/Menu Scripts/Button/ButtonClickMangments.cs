@@ -171,7 +171,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     {
         foreach (Transform character in characters)
         {
-            character.gameObject.SetActive(character.name.Contains(GetCurrentMode()));
+         //   character.gameObject.SetActive(character.name.Contains(GetCurrentMode()));
                 //   Vector3 location = new Vector3(2.349438f, -0.5281435f, 2.576072f);
           /*  PlayerUser player = new PlayerUserBuilder(PREFAB_PLAYER)
                 .SetId(1)

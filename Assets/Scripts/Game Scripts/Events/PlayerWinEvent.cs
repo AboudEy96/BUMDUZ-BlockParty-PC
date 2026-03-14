@@ -1,8 +1,10 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PlayerWinEvent : MonoBehaviourPunCallbacks
+
 {
     public static PlayerWinEvent Instance;
 
@@ -19,6 +21,21 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        gameEnded = false;
+    }
+
+    public override void OnJoinedRoom()
+    {
+        gameEnded = false;
+    }
+
+    public override void OnLeftRoom()
+    {
+        gameEnded = false;
+    }
+
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -29,17 +46,37 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             CheckIfPlayerWin();
         }
     }
+    
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+
+        CheckIfPlayerWin();
+    }
+
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        CheckIfPlayerWin();
+    }
 
     public void CheckIfPlayerWin()
     {
         if (!PhotonNetwork.IsMasterClient) return;
         if (gameEnded) return;
+        if (!HasGameStarted()) return;
 
         int survivedPlayers = 0;
         Photon.Realtime.Player lastAlivePlayer = null;
 
         foreach (var player in PhotonNetwork.PlayerList)
         {
+            if (player == null || player.IsInactive)
+                continue;
+
             bool isDead = false;
             if (player.CustomProperties.TryGetValue("isDead", out var v) && v is bool b)
                 isDead = b;
@@ -58,6 +95,12 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             gameEnded = true;
             WhoWon(lastAlivePlayer);
         }
+    }
+
+    private bool HasGameStarted()
+    {
+        GameStartSingletoon gameStart = GameStartSingletoon.GetInstance();
+        return gameStart != null && gameStart.isGameStarted;
     }
 
     private void WhoWon(Photon.Realtime.Player winner)

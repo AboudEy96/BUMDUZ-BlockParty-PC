@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 0}
-  _nameInput: {fileID: 3367578412483917883, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
+  _nameInput: {fileID: 4563477746335456187}
 --- !u!114 &8790337354982082911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 4536318516587243988}
   - component: {fileID: 4563477746335456187}
   m_Layer: 6
-  m_Name: NAME
+  m_Name: BUMDUZ SKIN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,8 +625,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278244095
+  m_fontColor: {r: 1, g: 0.8218751, b: 0, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 0
   m_fontColorGradient:

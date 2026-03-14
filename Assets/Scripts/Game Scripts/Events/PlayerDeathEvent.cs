@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -31,10 +31,21 @@ public class PlayerDeathEvent : MonoBehaviourPunCallbacks
 
     public void KillPlayerInPhoton(Photon.Realtime.Player owner)
     {
+        if (owner == null)
+            return;
+
+        if (owner.CustomProperties.TryGetValue("isDead", out var value) && value is bool isDead && isDead)
+            return;
+
         owner.SetCustomProperties(new Hashtable
         {
             { "isDead", true }
         });
+
+        if (PhotonNetwork.IsMasterClient && PlayerWinEvent.Instance != null)
+        {
+            PlayerWinEvent.Instance.CheckIfPlayerWin();
+        }
     }
 
     public void HidePlayer(GameObject player)

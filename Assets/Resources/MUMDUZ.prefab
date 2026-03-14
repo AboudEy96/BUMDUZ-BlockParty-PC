@@ -6370,7 +6370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 0}
-  _nameInput: {fileID: 3367578412483917883, guid: 491d9e3485075b142813b30c4348f93b, type: 3}
+  _nameInput: {fileID: 990113960371774825}
 --- !u!114 &5132460335867990189
 MonoBehaviour:
   m_ObjectHideFlags: 0
