@@ -93,7 +93,6 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         string[] tagArray = tags.ToArray();
         string selectedTag = tagArray[Random.Range(0, tagArray.Length)];
 
-        // إرسال اللون لكل اللاعبين عبر RPC
         _photonView.RPC("SyncSelectedColor", RpcTarget.AllBuffered, selectedTag);
     }
 
@@ -107,10 +106,14 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
                 cube.gameObject.SetActive(false); 
             }
         }
+
+        foreach (Transform curretnColor in theImages)
+        {
+            curretnColor.gameObject.SetActive(false);
+        }
         Debug.Log("Destroyed non-matching cubes on all clients");
         allCubes.Clear();
         
-        // pause and run music 
         RandomAudioPlayer.PausedOfBlocksDestroy = true;
         RandomAudioPlayer.PauseResumeAudio();
         
@@ -133,9 +136,9 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    private void SyncNextMap()
+    private void SyncNextMap(int mapIndex)
     {
-        _MapChanger.runNextMap();
+        _MapChanger.runNextMap(mapIndex);
         map = _MapChanger.maps[_MapChanger.getCurrentMapIndex()];
 
         foreach (Transform mapCubes in map.transform)
@@ -148,7 +151,7 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
         Debug.Log($"Current score: {score}");
 
         ColorChangeEvent.SetUpColors(map.transform);
-// resume music  
+
         RandomAudioPlayer.PausedOfBlocksDestroy = false;
         RandomAudioPlayer.PauseResumeAudio();
 
@@ -163,7 +166,8 @@ public class BlocksDestroyer : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            _photonView.RPC("SyncNextMap", RpcTarget.AllBuffered);
+            int nextIndex = _MapChanger.PickNextMapIndex();
+            _photonView.RPC("SyncNextMap", RpcTarget.AllBuffered, nextIndex);
         }
     }
 }

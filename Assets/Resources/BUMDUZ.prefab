@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 4536318516587243988}
   - component: {fileID: 4563477746335456187}
   m_Layer: 6
-  m_Name: BUMDUZ SKIN
+  m_Name: NAME
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2281,8 +2281,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.6047619, b: 0, a: 1}
-        key1: {r: 1, g: 0.3726415, b: 0.86564076, a: 1}
+        key0: {r: 1, g: 0.87811863, b: 0.3726415, a: 1}
+        key1: {r: 0.48593804, g: 0.76521456, b: 0.9811321, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}

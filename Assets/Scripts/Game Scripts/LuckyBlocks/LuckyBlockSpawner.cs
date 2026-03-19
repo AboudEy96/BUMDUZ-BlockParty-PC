@@ -1,34 +1,34 @@
-using System;
 using UnityEngine;
+using Photon.Pun;
 using Random = UnityEngine.Random;
-
 
 public class LuckyBlockSpawner : LuckyBlockManager
 {
     public int height;
     public int width;
-   // public GameObject _GM;
     public int yAXIS;
-    
-    private ParticleSystem fireParticles;
 
     void Start()
     {
-        Invoke("SpawnLuckyBlock", 10f);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Invoke(nameof(SpawnLuckyBlock), 10f);
+        }
     }
 
     public void SpawnLuckyBlock()
     {
-        if (GameStartSingletoon.GetInstance().isGameStarted)
-        {
-            int x = Random.Range(-19, width);
-            int z = Random.Range(-21, height);
-            int ranNext = Random.Range(0, luckyBlocks.Count);
-            Vector3 location = new Vector3(x, yAXIS, z);
-            GameObject theReward = Instantiate(luckyBlocks[ranNext].gameObject, location, Quaternion.identity);
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (!GameStartSingletoon.GetInstance().isGameStarted) return;
 
-            Console.WriteLine($"Luckyblock Spanwed {theReward.transform.name}");
-            Invoke("SpawnLuckyBlock", 25f);
-        }
+        int x = Random.Range(-19, width);
+        int z = Random.Range(-21, height);
+        int ranNext = Random.Range(0, luckyBlocks.Count);
+        Vector3 location = new Vector3(x, yAXIS, z);
+        PhotonNetwork.Instantiate(luckyBlocks[ranNext].name, location, Quaternion.identity);
+
+        Debug.Log($"LuckyBlock spawned: {luckyBlocks[ranNext].name}");
+
+        Invoke(nameof(SpawnLuckyBlock), 25f);
     }
 }

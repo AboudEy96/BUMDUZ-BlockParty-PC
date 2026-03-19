@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,12 +14,12 @@ public class MapChanger : MonoBehaviour
 
     void Start()
     {
-            InitializeMaps();
-            currentMapIndex = UnityEngine.Random.Range(0, availableMaps.Count);
-            ActiveMap(currentMapIndex);
-            GameObject map = maps[currentMapIndex];
-            ColorChangeEvent.SetUpColors(map.transform);
-            availableMaps.RemoveAt(currentMapIndex);
+        InitializeMaps();
+        currentMapIndex = UnityEngine.Random.Range(0, availableMaps.Count);
+        ActiveMap(currentMapIndex);
+        GameObject map = maps[currentMapIndex];
+        ColorChangeEvent.SetUpColors(map.transform);
+        availableMaps.RemoveAt(currentMapIndex);
     }
 
     private void InitializeMaps()
@@ -31,7 +30,6 @@ public class MapChanger : MonoBehaviour
             availableMaps.Add(i);
         }
     }
-
 
     public void ActiveMap(int index)
     {
@@ -47,26 +45,25 @@ public class MapChanger : MonoBehaviour
         }
     }
 
-
-    public void runNextMap()
+  
+    public void runNextMap(int chosenIndex)
     {
-        if (availableMaps.Count > 0)
-        {
+        currentMapIndex = chosenIndex;
+        availableMaps.Remove(chosenIndex);
 
-            int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
-            currentMapIndex = availableMaps[randomIndex];
-            availableMaps.RemoveAt(randomIndex); 
-
-            ActiveMap(currentMapIndex);
-        }
-        else
-        {
+        if (availableMaps.Count == 0)
             InitializeMaps();
-            int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
-            currentMapIndex = availableMaps[randomIndex];
-            availableMaps.RemoveAt(randomIndex);
-            ActiveMap(currentMapIndex);
-        }
+
+        ActiveMap(currentMapIndex);
+    }
+
+    public int PickNextMapIndex()
+    {
+        if (availableMaps.Count == 0)
+            InitializeMaps();
+
+        int randomIndex = UnityEngine.Random.Range(0, availableMaps.Count);
+        return availableMaps[randomIndex];
     }
 
     public String getMapName()

@@ -1,83 +1,62 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using Random = System.Random;
+using Photon.Pun;
+using Random = UnityEngine.Random;
 
 public class LuckyBlock : LuckyBlockManager
 {
-    // player 
-    // box [ speed , jump ] 
-    // give reward to player
+    private PhotonView _pv;
+
+    private void Awake()
+    {
+        _pv = GetComponent<PhotonView>();
+    }
+
     public override void OnTouch(GameObject theLB, GameObject pl)
     {
-        base.OnTouch(theLB, pl);
-        
-        string lName = LayerMask.LayerToName(theLB.layer);
-        Destroy(theLB);
-        GiveReward(pl);
-        // teleport to current color block 
+        PhotonView playerView = pl.GetComponent<PhotonView>();
+        if (playerView == null || !playerView.IsMine) return;
+
+        _pv.RPC(nameof(RPC_TouchLuckyBlock), RpcTarget.MasterClient,
+                playerView.ViewID);
     }
-    public override void GiveReward(GameObject pl)
+
+    [PunRPC]
+    private void RPC_TouchLuckyBlock(int playerViewID)
     {
-        if (pl.CompareTag("Player") && rewards.Count != 0)
-        {
-            Random random = new Random();
-            int ranNext = random.Next(0, rewards.Count-1);
-            GameObject theReward = Instantiate(rewards[ranNext].gameObject);
-            theReward.transform.SetParent(pl.transform);
-            Debug.Log(rewards[ranNext].gameObject.name);
-//            Invoke("removeReward", 10);
-        //    StartCoroutine(RemoveRewardAfterDelay(pl, theReward));
-        Destroy(theReward, 7f);
-        }
+        if (rewards.Count == 0) return;
+
+        int ranNext = Random.Range(0, rewards.Count);
+        string rewardName = rewards[ranNext].name;
+
+        _pv.RPC(nameof(RPC_ApplyRewardAndDestroy), RpcTarget.All,
+                playerViewID, rewardName);
     }
-    
-    private IEnumerator RemoveRewardAfterDelay(GameObject pl, GameObject reward)
+
+    [PunRPC]
+    private void RPC_ApplyRewardAndDestroy(int playerViewID, string rewardName)
     {
-        yield return new WaitForSeconds(3); // Wait for 3 seconds [][][]
-        foreach (Transform child in pl.transform)
+        if (loadParticleEffect != null)
+            Instantiate(loadParticleEffect, transform.position, Quaternion.identity);
+
+        PhotonView playerView = PhotonView.Find(playerViewID);
+        if (playerView != null)
         {
-            if (child.gameObject == reward.gameObject)
+            foreach (var reward in rewards)
             {
-                Destroy(child.gameObject);
-                Debug.Log("Reward removed: " + reward.name);
-                yield break; 
+                if (reward.name == rewardName)
+                {
+                    GameObject theReward = Instantiate(reward, playerView.transform.position, Quaternion.identity);
+                    theReward.transform.SetParent(playerView.transform);
+                    Destroy(theReward, 7f);
+                    Debug.Log($"Reward given: {rewardName} to player {playerViewID}");
+                    break;
+                }
             }
         }
-    }     
-}
 
+        PhotonNetwork.Destroy(gameObject);
+    }
 
-/*public class LuckyBlockPurple : LuckyBlockManager {
-    public override void onTouch(GameObject _gameObject)
-    {
-        if (_gameObject.CompareTag("Purple"))
-        {
-            Debug.Log("Purple Luck");
-            Destroy(_gameObject);
-        }
-    }
+    public override void GiveReward(GameObject pl) { }
 }
-public class LuckyBlockYellow : LuckyBlockManager
-{
-    public override void onTouch(GameObject _gameObject)
-    {
-        if (_gameObject.CompareTag("Yellow"))
-        {
-            Debug.Log("Yellow Luck");
-            Destroy(_gameObject);
-        }
-    }
-}
-
-public class LuckyBlockSliver : LuckyBlock
-{
-    public override void onTouch(GameObject _gameObject)
-    {
-        if (_gameObject.CompareTag("Sliver"))
-        {
-            Debug.Log("Sliver Luck");
-            Destroy(_gameObject);
-        }
-    }
-}*/

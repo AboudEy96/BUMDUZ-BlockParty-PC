@@ -24,10 +24,14 @@ public class SyncPlayerMaterial : MonoBehaviour
     public List<Material> getCurrentMaterial(string nameOfCurrentCharacter)
     {
         if (nameOfCurrentCharacter.Contains("MUMDUZ"))
+        {
             return _MUMDUZMaterials;
-
-        // default  BUMDUZ materials
-        return _skinMaterials;
+        }
+        else
+        {
+            // default  BUMDUZ materials
+            return _skinMaterials;
+        }
     }
 
     public Material GetMaterialByName(string matName, string playerObjectName)

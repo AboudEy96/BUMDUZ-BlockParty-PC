@@ -1,36 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public abstract class LuckyBlockManager : MonoBehaviour
+public abstract class LuckyBlockManager : MonoBehaviourPun
 {
-    
-    [Header("Luckyblock Destroy effect")]public GameObject loadParticleEffect;
-    public virtual void OnTouch(GameObject _GM, GameObject _PL)
-    {
-        Instantiate(loadParticleEffect, _GM.transform.position, Quaternion.identity);
+    [Header("Lucky Block Destroy Effect")]
+    public GameObject loadParticleEffect;
 
-    }
-    public virtual void GiveReward(GameObject pl){}
-  //  public abstract void removeReward(GameObject pl, GameObject reward);
     public List<GameObject> rewards;
     public List<GameObject> luckyBlocks;
 
-    
-    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && gameObject.CompareTag("LuckyBlock"))
-        {
-            //     Debug.Log("Player touched a Lucky Block!");
-            OnTouch(gameObject, other.gameObject);
-        }
+        if (!other.CompareTag("Player")) return;
+        if (!gameObject.CompareTag("LuckyBlock")) return;
+
+        OnTouch(gameObject, other.gameObject);
     }
 
-    public bool LuckyBlockLayer(GameObject lbObject, String layer)
-    {
-        return lbObject.layer == LayerMask.NameToLayer(layer);
-    }
-    
+    public virtual void OnTouch(GameObject lb, GameObject player) { }
+    public virtual void GiveReward(GameObject player) { }
 }

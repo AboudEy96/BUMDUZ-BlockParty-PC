@@ -52,6 +52,9 @@ MonoBehaviour:
   - LeaveRoom
   - PrintWinner
   - RemoteGameEnd
+  - RPC_ApplyRewardAndDestroy
+  - RPC_SyncMap
+  - RPC_TouchLuckyBlock
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

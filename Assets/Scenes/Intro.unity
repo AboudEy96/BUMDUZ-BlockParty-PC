@@ -596,7 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LOBBY_CHARACTER:
   - {fileID: 3860311051854682870, guid: 6ee8db5b2b07a5847be17a336a8bfcfa, type: 3}
-  - {fileID: 3544836972846614615, guid: 1ed6529d08f47d14798e9b5623c3db9b, type: 3}
+  - {fileID: 5769103816312157782, guid: 233588badbaf5624e8cf74bf17f6df30, type: 3}
   GAME_CHARACTER:
   - {fileID: 1005521441754725502, guid: 746dadf7a20741b47b36cd9b55e1f27b, type: 3}
   - {fileID: 7619831017513192647, guid: 4006d29302dda034b821ccebc724577a, type: 3}
