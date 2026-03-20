@@ -93,7 +93,7 @@ public class MapChanger : MonoBehaviour
         foreach (Transform obj in Scoreboard)
         {
             TMP_Text tmp = obj.GetComponent<TMP_Text>();
-            if (tmp != null)
+            if (tmp != null && tmp.gameObject.name.Equals("MAP_NAME"))
             {
                 tmp.text = nextMapName;
             }
