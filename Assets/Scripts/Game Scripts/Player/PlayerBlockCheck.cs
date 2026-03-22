@@ -6,13 +6,13 @@ public class PlayerBlockCheck : MonoBehaviour
     public Transform lights;
     private void OnTriggerStay(Collider other)
     {
-            if (BlocksDestroyer.chosenTag == null)
+            if (GameRoundManager.ChosenTag == null)
             {
                 ShowStayBlockStatus(lights, "idle");
             }
             else
             {
-                bool isOnBlock = other.transform.CompareTag(BlocksDestroyer.chosenTag);
+                bool isOnBlock = other.transform.CompareTag(GameRoundManager.ChosenTag);
                 ShowStayBlockStatus(lights, isOnBlock ? "on" : "off");
             }
     }

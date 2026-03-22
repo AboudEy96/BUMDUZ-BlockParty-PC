@@ -10,8 +10,8 @@ public class LuckyBlock : LuckyBlockManager
     private void Awake()
     {
         _pv = GetComponent<PhotonView>();
-    }
 
+    }
     public override void OnTouch(GameObject theLB, GameObject pl)
     {
         PhotonView playerView = pl.GetComponent<PhotonView>();

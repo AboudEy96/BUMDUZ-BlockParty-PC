@@ -55,6 +55,7 @@ MonoBehaviour:
   - RPC_ApplyRewardAndDestroy
   - RPC_SyncMap
   - RPC_TouchLuckyBlock
+  - SyncFirstMap
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

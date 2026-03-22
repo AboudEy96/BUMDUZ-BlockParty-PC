@@ -61,6 +61,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,9 +86,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2134598088739795498
 GameObject:
@@ -100,6 +104,7 @@ GameObject:
   - component: {fileID: 4811977674483760931}
   - component: {fileID: 918139063210508951}
   - component: {fileID: 8289694297427562415}
+  - component: {fileID: 6584559380387536631}
   m_Layer: 8
   m_Name: PURPLE LUCKYBLOCK
   m_TagString: LuckyBlock
@@ -184,6 +189,28 @@ MonoBehaviour:
   - {fileID: 1428728163550750740, guid: cc00171d7190c3a4db35c961d5d566b1, type: 3}
   - {fileID: 2446490252142729139, guid: 934959db348ac0b42bb6bda1ca1cb2cb, type: 3}
   luckyBlocks: []
+--- !u!114 &6584559380387536631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134598088739795498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2774464467683209183
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,14 +251,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2774464467683209183}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.93962264, g: 0.4166251, b: 0.89062655, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -321,14 +348,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3496809957504884595}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.93962264, g: 0.4166251, b: 0.89062655, a: 1}
   m_Intensity: 4.7
   m_Range: 10
   m_SpotAngle: 26.166546
   m_InnerSpotAngle: 13.832894
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -418,14 +445,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5963456900775783731}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.93962264, g: 0.4166251, b: 0.89062655, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44.40328
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -515,14 +542,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6097713551864785753}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.93962264, g: 0.4166251, b: 0.89062655, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44.40328
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -612,14 +639,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8740268765404689156}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.93962264, g: 0.4166251, b: 0.89062655, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44.40328
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1

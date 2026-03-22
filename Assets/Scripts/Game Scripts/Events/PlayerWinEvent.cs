@@ -5,7 +5,6 @@ using UnityEngine;
 using TMPro;
 
 public class PlayerWinEvent : MonoBehaviourPunCallbacks
-
 {
     public static PlayerWinEvent Instance;
 
@@ -21,14 +20,10 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
     }
 
-    private void OnEnable()
-    {
-        gameEnded = false;
-    }
+    private void OnEnable() => gameEnded = false;
 
     public override void OnJoinedRoom()
     {
@@ -36,9 +31,67 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         UpdateAlivePlayersText();
     }
 
-    public override void OnLeftRoom()
+    public override void OnLeftRoom() => gameEnded = false;
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
     {
-        gameEnded = false;
+        if (changedProps != null && changedProps.ContainsKey("isDead"))
+        {
+            UpdateAlivePlayersText();
+        }
+
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+
+        if (changedProps != null && changedProps.ContainsKey("isDead"))
+            CheckIfPlayerWin();
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        UpdateAlivePlayersText();
+
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+
+        CheckIfPlayerWin();
+    }
+
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        CheckIfPlayerWin();
+    }
+
+    public void CheckIfPlayerWin()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+        if (!GameStateManager.IsPlaying()) return;
+
+        int survivedPlayers = 0;
+        Photon.Realtime.Player lastAlivePlayer = null;
+
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player == null || player.IsInactive) continue;
+
+            bool isDead = false;
+            if (player.CustomProperties.TryGetValue("isDead", out var v) && v is bool b)
+                isDead = b;
+
+            if (!isDead)
+            {
+                survivedPlayers++;
+                lastAlivePlayer = player;
+            }
+        }
+
+        if (survivedPlayers == 1 && lastAlivePlayer != null)
+        {
+            gameEnded = true;
+            WhoWon(lastAlivePlayer);
+        }
     }
 
     private void UpdateAlivePlayersText()
@@ -57,81 +110,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             if (!isDead) alive++;
         }
 
-        alivePlayersText.text = $"Alive Players: <color=green>{alive}</color>";
-    }
-
-    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        if (changedProps != null && changedProps.ContainsKey("isDead"))
-        {
-            UpdateAlivePlayersText();
-        }
-
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (gameEnded) return;
-
-        if (changedProps != null && changedProps.ContainsKey("isDead"))
-        {
-            CheckIfPlayerWin();
-        }
-    }
-    
-
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-    {
-        UpdateAlivePlayersText();
-
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (gameEnded) return;
-
-        CheckIfPlayerWin();
-    }
-
-    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        CheckIfPlayerWin();
-    }
-
-    public void CheckIfPlayerWin()
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (gameEnded) return;
-        if (!HasGameStarted()) return;
-
-        int survivedPlayers = 0;
-        Photon.Realtime.Player lastAlivePlayer = null;
-
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            if (player == null || player.IsInactive)
-                continue;
-
-            bool isDead = false;
-            if (player.CustomProperties.TryGetValue("isDead", out var v) && v is bool b)
-                isDead = b;
-
-            if (!isDead)
-            {
-                survivedPlayers++;
-                lastAlivePlayer = player;
-            }
-        }
-
-        Debug.Log($"[CheckIfPlayerWin] SurvivedPlayers={survivedPlayers} lastAlive={(lastAlivePlayer != null ? lastAlivePlayer.NickName : "null")}");
-
-        if (survivedPlayers == 1 && lastAlivePlayer != null)
-        {
-            gameEnded = true;
-            WhoWon(lastAlivePlayer);
-        }
-    }
-
-    private bool HasGameStarted()
-    {
-        GameStartSingletoon gameStart = GameStartSingletoon.GetInstance();
-        return gameStart != null && gameStart.isGameStarted;
+        alivePlayersText.text = $"Alive: {alive}";
     }
 
     private void WhoWon(Photon.Realtime.Player winner)
@@ -142,21 +121,14 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void RemoteGameEnd()
-    {
-        GameStartSingletoon.GetInstance().GameEnd();
-    }
+    private void RemoteGameEnd() => GameStateManager.SetState(GameState.GameOver);
 
     [PunRPC]
-    private void LeaveRoom()
-    {
-        StartCoroutine(LeaveRoomCoroutine());
-    }
+    private void LeaveRoom() => StartCoroutine(LeaveRoomCoroutine());
 
     private System.Collections.IEnumerator LeaveRoomCoroutine()
     {
         yield return new WaitForSeconds(7f);
-
         if (PhotonNetwork.InRoom)
             PhotonNetwork.LeaveRoom();
     }
@@ -164,6 +136,6 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     [PunRPC]
     private void PrintWinner(string winnerName)
     {
-        Debug.Log("Winner of the game is: " + winnerName);
+        Debug.Log("Winner: " + winnerName);
     }
 }

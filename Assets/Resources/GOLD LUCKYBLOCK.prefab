@@ -40,14 +40,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594998158355606837}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9245283, g: 0.84413356, b: 0.48668563, a: 1}
   m_Intensity: 4.7
   m_Range: 10
   m_SpotAngle: 26.166546
   m_InnerSpotAngle: 13.832894
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -137,14 +137,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3880752240483466509}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9245283, g: 0.84413356, b: 0.48668563, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44.40328
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -255,6 +255,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -278,9 +280,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7789266730544712165
 GameObject:
@@ -294,6 +298,7 @@ GameObject:
   - component: {fileID: 3745195285038809407}
   - component: {fileID: 6582444537017883333}
   - component: {fileID: 2447084002301823447}
+  - component: {fileID: 3207087459740497892}
   m_Layer: 7
   m_Name: GOLD LUCKYBLOCK
   m_TagString: LuckyBlock
@@ -377,6 +382,28 @@ MonoBehaviour:
   - {fileID: 6775030955093586898, guid: 39ebbe79fe3c4a14eaf0906508f64183, type: 3}
   - {fileID: 1428728163550750740, guid: cc00171d7190c3a4db35c961d5d566b1, type: 3}
   luckyBlocks: []
+--- !u!114 &3207087459740497892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789266730544712165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8013703271744060477
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,14 +444,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8013703271744060477}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9245283, g: 0.84413356, b: 0.48668563, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44.40328
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -514,14 +541,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8035779955125004479}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9245283, g: 0.84413356, b: 0.48668563, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -611,14 +638,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8654776483985155735}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9245283, g: 0.84413356, b: 0.48668563, a: 1}
   m_Intensity: 4.72
   m_Range: 10
   m_SpotAngle: 44.40328
   m_InnerSpotAngle: 17
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
