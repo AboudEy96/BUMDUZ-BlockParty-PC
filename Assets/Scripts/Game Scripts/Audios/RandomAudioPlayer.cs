@@ -47,6 +47,10 @@ private void Update()
     }
 }
 
+public void setVolume(float value)
+{
+    _audioSource.volume = value;
+}
 public static void PauseResumeAudio()
 {
     if (Instance == null) return;
