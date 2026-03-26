@@ -19,6 +19,9 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+        
+        rotationSpeed = PlayerPrefs.GetFloat("Settings_MouseSpeed", 100f);
+
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             PhotonView pv = player.GetComponent<PhotonView>();

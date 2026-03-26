@@ -3,30 +3,37 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class SettingsManager : MonoBehaviour
 {
+    public static SettingsManager Instance;
+
     [Header("Settings Panel")]
     public GameObject settingsPanel;
-
     public Button settingsButton;
     
     [Header("Mouse Speed")]
     public Slider mouseSpeedSlider;
     public TextMeshProUGUI mouseSpeedValueText;
     private const float MOUSE_SPEED_MIN = 10f;
-    private const float MOUSE_SPEED_MAX = 300f;
+    private const float MOUSE_SPEED_MAX = 600f;
 
     [Header("Music Volume")]
     public Slider musicVolumeSlider;
     public TextMeshProUGUI musicVolumeValueText;
 
-    [Header("Graphics Quality")]
-    public Slider graphicsSlider;
-    public TextMeshProUGUI graphicsValueText;
-    public PostProcessVolume postProcessVolume;
+    [Header("Graphics Quality Buttons")]
+    public Button buttonLow;
+    public Button buttonMedium;
+    public Button buttonHigh;
     public List<PostProcessProfile> graphicsProfiles;
+
+    [Header("Save, Close BUTTONS")]
+    public Button buttonClose;
+
+    private PostProcessVolume postProcessVolume;
 
     private const string KEY_MOUSE  = "Settings_MouseSpeed";
     private const string KEY_VOLUME = "Settings_MusicVolume";
@@ -34,30 +41,52 @@ public class SettingsManager : MonoBehaviour
 
     private readonly string[] graphicsLabels = { "Low", "Medium", "High" };
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         SetupSliders();
+        SetupGraphicsButtons();
+        SetUpButtonsListeners();
         LoadSettings();
         ApplyAll();
     }
-#region onEnable,Disable
+
+    #region OnEnable, OnDisable
     private void OnEnable()
     {
-        settingsButton.onClick.AddListener(ToggleSettingsPanel);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        settingsButton.onClick.RemoveListener(ToggleSettingsPanel);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void ToggleSettingsPanel()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        postProcessVolume = FindObjectOfType<PostProcessVolume>();
+        ApplyGraphics(PlayerPrefs.GetInt(KEY_GFX, 1));
     }
     #endregion
-    
-    
+
+    #region Buttons Setup
+    void SetUpButtonsListeners()
+    {
+        settingsButton.onClick.AddListener(() => settingsPanel.SetActive(!settingsPanel.activeSelf));
+        buttonClose.onClick.AddListener(() => settingsPanel.SetActive(false));
+    }
+    #endregion
+
     #region Setup
     private void SetupSliders()
     {
@@ -68,33 +97,32 @@ public class SettingsManager : MonoBehaviour
         musicVolumeSlider.minValue = 0f;
         musicVolumeSlider.maxValue = 1f;
         musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+    }
 
-        graphicsSlider.minValue    = 0;
-        graphicsSlider.maxValue    = 2;
-        graphicsSlider.wholeNumbers = true;
-        graphicsSlider.onValueChanged.AddListener(OnGraphicsChanged);
+    private void SetupGraphicsButtons()
+    {
+        buttonLow.onClick.AddListener(()    => OnGraphicsChanged(0));
+        buttonMedium.onClick.AddListener(() => OnGraphicsChanged(1));
+        buttonHigh.onClick.AddListener(()   => OnGraphicsChanged(2));
     }
     #endregion
 
-#region LoadApply Settings 
+    #region Load, Apply Settings
     private void LoadSettings()
     {
         mouseSpeedSlider.value  = PlayerPrefs.GetFloat(KEY_MOUSE,  100f);
         musicVolumeSlider.value = PlayerPrefs.GetFloat(KEY_VOLUME, 0.8f);
-        graphicsSlider.value    = PlayerPrefs.GetInt(KEY_GFX,      1);
     }
 
     private void ApplyAll()
     {
         ApplyMouseSpeed(mouseSpeedSlider.value);
         ApplyMusicVolume(musicVolumeSlider.value);
-        ApplyGraphics((int)graphicsSlider.value);
+        ApplyGraphics(PlayerPrefs.GetInt(KEY_GFX, 1));
     }
-#endregion
+    #endregion
 
-#region  MouseControl
-
-
+    #region Mouse Control
     private void OnMouseSpeedChanged(float value)
     {
         ApplyMouseSpeed(value);
@@ -104,10 +132,6 @@ public class SettingsManager : MonoBehaviour
 
     private void ApplyMouseSpeed(float value)
     {
-        CameraFollow cam = FindObjectOfType<CameraFollow>();
-        if (cam != null)
-            cam.rotationSpeed = value;
-
         UpdateText(mouseSpeedValueText, Mathf.RoundToInt(value).ToString());
     }
     #endregion
@@ -127,14 +151,11 @@ public class SettingsManager : MonoBehaviour
 
         UpdateText(musicVolumeValueText, $"{Mathf.RoundToInt(value * 100)}%");
     }
-
     #endregion
 
-    #region  GFX
-    
-    private void OnGraphicsChanged(float value)
+    #region GFX
+    private void OnGraphicsChanged(int index)
     {
-        int index = (int)value;
         ApplyGraphics(index);
         PlayerPrefs.SetInt(KEY_GFX, index);
         PlayerPrefs.Save();
@@ -148,38 +169,57 @@ public class SettingsManager : MonoBehaviour
 
         switch (index)
         {
-            case 0: // LOW
+            case 0: // Low
                 QualitySettings.shadows = ShadowQuality.Disable;
                 QualitySettings.shadowDistance = 0f;
                 break;
-            case 1: // MEDIUM
+            case 1: // Medium
                 QualitySettings.shadows = ShadowQuality.HardOnly;
-                QualitySettings.shadowDistance = 30f;
+                QualitySettings.shadowDistance = 15f;
                 break;
-            case 2: // HIGH
+            case 2: // High
                 QualitySettings.shadows = ShadowQuality.All;
-                QualitySettings.shadowDistance = 80f;
+                QualitySettings.shadowDistance = 40f;
                 break;
         }
-        
+
         if (postProcessVolume != null &&
             graphicsProfiles != null &&
             index < graphicsProfiles.Count &&
             graphicsProfiles[index] != null)
         {
             postProcessVolume.profile = graphicsProfiles[index];
+            ApplyPostProcessEffects(index);
         }
 
-        UpdateText(graphicsValueText, graphicsLabels[index]);
+        HighlightActiveButton(index);
     }
-#endregion
 
+    private void ApplyPostProcessEffects(int index)
+    {
+        if (postProcessVolume == null) return;
+
+        if (postProcessVolume.profile.TryGetSettings(out AmbientOcclusion ao))
+            ao.active = index == 2;
+
+        if (postProcessVolume.profile.TryGetSettings(out Bloom bloom))
+            bloom.active = index != 0;
+
+        if (postProcessVolume.profile.TryGetSettings(out Vignette vignette))
+            vignette.active = index != 0;
+    }
+
+    private void HighlightActiveButton(int index)
+    {
+        buttonLow.interactable    = index != 0;
+        buttonMedium.interactable = index != 1;
+        buttonHigh.interactable   = index != 2;
+    }
+    #endregion
 
     private void UpdateText(TextMeshProUGUI text, string value)
     {
         if (text != null)
             text.text = value;
     }
-
-
 }
