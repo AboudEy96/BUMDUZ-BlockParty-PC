@@ -75,9 +75,12 @@ public class MapChanger : MonoBehaviour
             if (obj.CompareTag("MapScoreboard"))
                 obj.gameObject.SetActive(obj.name.Equals(mapName));
 
-            TMP_Text tmp = obj.GetComponent<TMP_Text>();
-            if (tmp != null)
-                tmp.text = mapName;
+            if (obj.gameObject.name.Equals("MAP_NAME"))
+            {
+                TMP_Text tmp = obj.GetComponent<TMP_Text>();
+                if (tmp != null)
+                    tmp.text = mapName;
+            }
         }
     }
 }
