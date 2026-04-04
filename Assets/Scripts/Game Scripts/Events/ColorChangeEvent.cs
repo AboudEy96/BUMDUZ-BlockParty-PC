@@ -3,7 +3,7 @@
 public class ColorChangeEvent : MonoBehaviour
 {
     
- //   [Header("The Map Object")]private static Transform MAP;
+    //   [Header("The Map Object")]private static Transform MAP;
 
     private string[] colors =
     {
@@ -15,18 +15,34 @@ public class ColorChangeEvent : MonoBehaviour
 
     public static void SetUpColors(Transform map)
     {
+        int cubeLayer = LayerMask.NameToLayer("Cube");
+
         foreach (Transform cube in map)
         {
-            if (cube.gameObject.layer == LayerMask.NameToLayer("Cube"))
+            if (cube.gameObject.layer != cubeLayer) continue;
+
+            Renderer r = cube.GetComponent<Renderer>();
+            if (r == null) continue;
+
+            string materialName = r.material.name
+                .Replace("(Instance)", "")
+                .Replace("(Clone)", "")
+                .Trim();
+
+            int spaceIndex = materialName.IndexOf(' ');
+            if (spaceIndex > 0)
+                materialName = materialName.Substring(0, spaceIndex);
+
+            if (string.IsNullOrEmpty(materialName) || materialName.Contains("Default"))
+                materialName = "White";
+            try
             {
-                Material material = cube.GetComponent<Renderer>().material;
-                string materialName = material.name.Replace("(Instance)", "").Trim();
-                if (materialName.Contains("Default"))
-                {
-                    materialName = "White";
-                }
-                cube.tag = materialName; 
-                    
+                cube.tag = materialName;
+            }
+            catch
+            {
+                cube.tag = "Untagged";
+                Debug.LogWarning($"Tag not found: {materialName} on {cube.name}");
             }
         }
     }

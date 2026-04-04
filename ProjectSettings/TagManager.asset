@@ -26,11 +26,11 @@ TagManager:
   - LightOFF
   - MapScoreboard
   - Biege
-  - Light Biege
   - Skin
   - Lime
   - Green
   - Magenta
+  - LightBiege
   layers:
   - Default
   - TransparentFX
@@ -44,7 +44,7 @@ TagManager:
   - Void
   - PostProcessing
   - Skin
-  - 
+  - PreviewOnly
   - 
   - 
   - 
@@ -53,7 +53,7 @@ TagManager:
   - 
   - 
   - Ragdoll
-  - 
+  - CubeUI
   - 
   - 
   - 
@@ -70,3 +70,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  m_MigratedRenderPipelines: []

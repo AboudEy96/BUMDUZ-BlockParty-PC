@@ -25,7 +25,7 @@ MonoBehaviour:
     defaultState: 1
   tonemapper:
     overrideState: 1
-    value: 2
+    value: 3
   toneCurveToeStrength:
     overrideState: 1
     value: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 62.2
+    value: 0
   brightness:
     overrideState: 1
     value: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
     value: 0
   contrast:
     overrideState: 1
-    value: -19
+    value: -6
   mixerRedOutRedIn:
     overrideState: 1
     value: 100
@@ -107,10 +107,10 @@ MonoBehaviour:
     value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: 0.106761426}
+    value: {x: 1, y: 1, z: 1, w: -0.000000010276663}
   gain:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: -0.01779359}
+    value: {x: 1, y: 1, z: 1, w: -0.0000000020553326}
   masterCurve:
     overrideState: 1
     value:
@@ -1332,7 +1332,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2.7
+    value: 0
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -1375,10 +1375,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
-    value: 1
+    value: 0
   mode:
     overrideState: 0
     value: 0
@@ -1390,10 +1390,10 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.46
+    value: 0.466
   smoothness:
     overrideState: 1
-    value: 0.18
+    value: 0.238
   roundness:
     overrideState: 1
     value: 1
@@ -1419,13 +1419,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 0.2
+    value: 2.1
   threshold:
     overrideState: 1
     value: 1
@@ -1436,7 +1436,7 @@ MonoBehaviour:
     overrideState: 1
     value: 65463.8
   diffusion:
-    overrideState: 1
+    overrideState: 0
     value: 7
   anamorphicRatio:
     overrideState: 1
