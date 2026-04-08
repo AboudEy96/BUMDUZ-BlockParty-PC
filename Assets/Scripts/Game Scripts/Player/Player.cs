@@ -66,13 +66,31 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleMovement()
+    public void HandleMovement()
     {
-        Vector3 moveDirection = characterController.CalculateMoveDirection(cameraTransform, Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        float horizontal;
+        float vertical;
+        bool jumpPressed;
+
+        #if UNITY_ANDROID || UNITY_IOS
+            Vector2 mobileInput = MobileInputProvider.Instance != null
+                ? MobileInputProvider.Instance.MoveInput
+                : Vector2.zero;
+
+            horizontal  = mobileInput.x;
+            vertical    = mobileInput.y;
+            jumpPressed = MobileInputProvider.Instance != null && MobileInputProvider.Instance.JumpPressed;
+        #else
+            horizontal  = Input.GetAxisRaw("Horizontal");
+            vertical    = Input.GetAxisRaw("Vertical");
+            jumpPressed = Input.GetButtonDown("Jump");
+        #endif
+
+        Vector3 moveDirection = characterController.CalculateMoveDirection(cameraTransform, horizontal, vertical);
         characterController.RotateTowards(moveDirection, rotationSpeed);
         characterController.Move(moveDirection, hasEffect("Speed") ? moveSpeed + 2 : moveSpeed);
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpPressed)
         {
             characterController.Jump(hasEffect("JumpBoost") ? jumpForce + 2f : jumpForce, gravity);
         }

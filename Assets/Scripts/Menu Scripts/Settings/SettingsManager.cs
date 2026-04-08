@@ -54,6 +54,7 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
+        
         SetupSliders();
         SetupGraphicsButtons();
         SetUpButtonsListeners();
@@ -188,7 +189,7 @@ public class SettingsManager : MonoBehaviour
             index < graphicsProfiles.Count &&
             graphicsProfiles[index] != null)
         {
-            postProcessVolume.profile = graphicsProfiles[index];
+            postProcessVolume.profile = Instantiate(graphicsProfiles[index]);
             ApplyPostProcessEffects(index);
         }
 

@@ -70,7 +70,7 @@ public class LevelPlayAds : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("⚠LevelPlay: Ad not ready yet!");
+                Debug.LogWarning("LevelPlay: Ad not ready yet!");
             }
         });
     }
@@ -131,6 +131,8 @@ public class LevelPlayAds : MonoBehaviour
 
     private void OnDestroy()
     {
+        isInitialized = false; 
+
         LevelPlay.OnInitSuccess -= OnInitSuccess;
         LevelPlay.OnInitFailed  -= OnInitFailed;
 
