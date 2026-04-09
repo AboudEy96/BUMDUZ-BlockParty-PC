@@ -13,6 +13,7 @@ public class LevelPlayAds : MonoBehaviour
     private const string APP_KEY    = AdsConfig.APP_KEY;
     private const string AD_UNIT_ID = AdsConfig.AD_UNIT_ID;
 
+    public static Action onAdRewardAction;
     private void Start()
     {
         if (isInitialized)
@@ -115,6 +116,8 @@ public class LevelPlayAds : MonoBehaviour
     
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
+        onAdRewardAction?.Invoke();
+
         Debug.Log($"LevelPlay: User rewarded → {reward.Name} x{reward.Amount}");
     }
     
