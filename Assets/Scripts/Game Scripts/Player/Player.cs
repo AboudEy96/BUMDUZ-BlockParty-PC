@@ -2,14 +2,13 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    // MOVE FORCES
     private float moveSpeed = 6.0f;
     private float rotationSpeed = 10.0f;
 
-    // JUMP FORCES
     private float jumpForce = 1.0f;
     private float gravity = -9.81f;
 
@@ -29,12 +28,30 @@ public class Player : MonoBehaviour
 
     [Header("Player Animator")] public Animator animator;
 
+    [Header("Mobile Input")]
+    public InputActionAsset inputActions;
+    private InputAction _moveAction;
+
     private void Awake()
     {
         characterController = new PlayerController(GetComponent<CharacterController>());
         _photonView = GetComponent<PhotonView>();
+
+        if (inputActions != null)
+        {
+            _moveAction = inputActions.FindActionMap("movement").FindAction("input");
+        }
     }
-    
+
+    private void OnEnable()
+    {
+        _moveAction?.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _moveAction?.Disable();
+    }
 
     private void Start()
     {
@@ -54,7 +71,6 @@ public class Player : MonoBehaviour
             {
                 playerName.text = "Player 1";
             }
-            
         }
     }
 
@@ -66,19 +82,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void HandleMovement()
+    private void HandleMovement()
     {
         float horizontal;
         float vertical;
         bool jumpPressed;
 
         #if UNITY_ANDROID || UNITY_IOS
-            Vector2 mobileInput = MobileInputProvider.Instance != null
-                ? MobileInputProvider.Instance.MoveInput
-                : Vector2.zero;
-
-            horizontal  = mobileInput.x;
-            vertical    = mobileInput.y;
+            Vector2 moveInput = _moveAction != null ? _moveAction.ReadValue<Vector2>() : Vector2.zero;
+            horizontal  = moveInput.x;
+            vertical    = moveInput.y;
             jumpPressed = MobileInputProvider.Instance != null && MobileInputProvider.Instance.JumpPressed;
         #else
             horizontal  = Input.GetAxisRaw("Horizontal");
@@ -97,7 +110,7 @@ public class Player : MonoBehaviour
 
         IsRunning = characterController.IsMoving;
     //    animator.SetBool("RUN", IsRunning);
-    }   
+    }
 
     bool hasEffect(string childName)
     {

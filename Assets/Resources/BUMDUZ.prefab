@@ -289,6 +289,7 @@ MonoBehaviour:
     m_Bits: 8
   cameraTransform: {fileID: 6297581820214953168}
   animator: {fileID: 4621402067783563668}
+  inputActions: {fileID: 0}
 --- !u!114 &5047449948790455186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   characterController: {fileID: 0}
+  inputActions: {fileID: -944628639613478452, guid: add4d2371657e6f459837bf85b6fb011, type: 3}
 --- !u!114 &-5998744508762061502
 MonoBehaviour:
   m_ObjectHideFlags: 0

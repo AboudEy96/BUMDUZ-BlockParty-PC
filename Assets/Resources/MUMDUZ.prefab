@@ -6117,6 +6117,7 @@ GameObject:
   - component: {fileID: 2804112370230174283}
   - component: {fileID: 1998919709991209671}
   - component: {fileID: 5132460335867990189}
+  - component: {fileID: 7894237645510789703}
   m_Layer: 6
   m_Name: MUMDUZ
   m_TagString: Player
@@ -6163,6 +6164,7 @@ MonoBehaviour:
     m_Bits: 8
   cameraTransform: {fileID: 3225092103964183282}
   animator: {fileID: 2804112370230174283}
+  inputActions: {fileID: -944628639613478452, guid: add4d2371657e6f459837bf85b6fb011, type: 3}
 --- !u!114 &9220795215431839242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6385,6 +6387,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   characterController: {fileID: 0}
+  inputActions: {fileID: -944628639613478452, guid: add4d2371657e6f459837bf85b6fb011, type: 3}
+--- !u!114 &7894237645510789703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619831017513192647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: add4d2371657e6f459837bf85b6fb011, type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: movement
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &7693538686618928414
 GameObject:
   m_ObjectHideFlags: 0
