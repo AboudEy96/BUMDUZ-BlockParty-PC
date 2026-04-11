@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using Photon.Pun;
+using TMPro;
 using Unity.ProjectAuditor.Editor;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerRespawnEvent : MonoBehaviour
 {
@@ -15,8 +17,12 @@ public class PlayerRespawnEvent : MonoBehaviour
     [Header("Effect Volume")]
     [SerializeField] private PostProcessVolume effect;
 
+    [Header("Waiting To Respawn Title")]
+    [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private Camera respawnCam;
     private ColorGrading colorGrading;
 
+    private PhotonView view;
     private void Start()
     {
         if (!effect.profile.TryGetSettings(out colorGrading))
@@ -24,6 +30,7 @@ public class PlayerRespawnEvent : MonoBehaviour
             Debug.LogError("ColorGrading not found in the PostProcessVolume!");
         }
         FindLocalPlayer();
+        view = player.GetComponent<PhotonView>();
     }
     private void FindLocalPlayer()
     {
@@ -43,23 +50,67 @@ public class PlayerRespawnEvent : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelPlayAds.onAdRewardAction += OnPlayerRespawn;
+        LevelPlayAds.onAdRewardAction += OnPlayerQueueRespawn;
+        GameRoundManager.OnNextMapStarted += OnPlayerRespawn;
     }
 
     private void OnDisable()
     {
-        LevelPlayAds.onAdRewardAction -= OnPlayerRespawn;
+        LevelPlayAds.onAdRewardAction -= OnPlayerQueueRespawn;
+        GameRoundManager.OnNextMapStarted -= OnPlayerRespawn;
     }
 
     public void OnPlayerRespawn()
     {
+        var pl = view.Owner;
+        if (!IsPlayerRespawning()) return;
+        
         ShowPlayer();
         RespawnPlayerPosition();
-        deathScreen.gameObject.SetActive(false);
-
+        title.text = " ";
         StartCoroutine(RestoreGfx());
+        pl.SetCustomProperties(new Hashtable
+        {
+            { "isDead", false }, 
+            {"Respawning", false} 
+        });
+        respawnCam.gameObject.SetActive(false);
     }
 
+    public void OnPlayerQueueRespawn(RewardType type)
+    {
+        if (type != RewardType.Respawn) return;
+        if (!IsPlayerDead()) return;
+
+        view.Owner.SetCustomProperties(new Hashtable
+        {
+            { "Respawning", true }
+        });
+        Debug.Log("PlayerQueueRespawn");
+        respawnCam.gameObject.SetActive(true);
+        deathScreen.gameObject.SetActive(false);
+        title.text = "RESPAWNING ON NEXT ROUND..";
+    }
+    
+    private bool IsPlayerDead()
+    {
+        if (view != null && view.Owner.CustomProperties.TryGetValue("isDead", out var value))
+        {
+            return (bool)value;
+        }
+
+        return false;
+    }
+
+    private bool IsPlayerRespawning()
+    {
+        if (view != null && view.Owner.CustomProperties.TryGetValue("Respawning", out var value))
+        {
+            return (bool)value;
+        }
+
+        return false;
+    }
     private void ShowPlayer()
     {
         foreach (Transform child in player.transform)

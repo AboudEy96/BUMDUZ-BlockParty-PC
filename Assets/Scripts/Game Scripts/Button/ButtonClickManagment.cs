@@ -14,6 +14,7 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
     public List<Canvas> MainCanvas;
     public Canvas LoadingCanvas;
     
+    [SerializeField] Camera spectateCamera;
     public void SendLoading()
     {
         foreach (Canvas canvas in MainCanvas)
@@ -52,6 +53,13 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
             SceneManager.LoadScene("MainScene");
         }
     }
+    public void SpectateButtonClicked()
+    {
+        Debug.Log("Spectate Clicked");
+        spectateCamera.gameObject.SetActive(true);
+        MainCanvas[1].gameObject.SetActive(false); // death ui
+    }
+    
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("MainScene");

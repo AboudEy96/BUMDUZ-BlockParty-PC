@@ -31,6 +31,9 @@ TagManager:
   - Green
   - Magenta
   - LightBiege
+  - Light Biege
+  - CoinsText
+  - SPECTATE_CAM
   layers:
   - Default
   - TransparentFX

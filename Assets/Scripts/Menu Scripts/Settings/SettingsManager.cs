@@ -34,6 +34,7 @@ public class SettingsManager : MonoBehaviour
     public Button buttonClose;
 
     private PostProcessVolume postProcessVolume;
+    private List<PostProcessProfile> _runtimeProfiles;
 
     private const string KEY_MOUSE  = "Settings_MouseSpeed";
     private const string KEY_VOLUME = "Settings_MusicVolume";
@@ -54,7 +55,6 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        
         SetupSliders();
         SetupGraphicsButtons();
         SetUpButtonsListeners();
@@ -76,6 +76,14 @@ public class SettingsManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         postProcessVolume = FindObjectOfType<PostProcessVolume>();
+
+        if (_runtimeProfiles == null || _runtimeProfiles.Count == 0)
+        {
+            _runtimeProfiles = new List<PostProcessProfile>();
+            foreach (var profile in graphicsProfiles)
+                _runtimeProfiles.Add(Instantiate(profile));
+        }
+
         ApplyGraphics(PlayerPrefs.GetInt(KEY_GFX, 1));
     }
     #endregion
@@ -170,26 +178,26 @@ public class SettingsManager : MonoBehaviour
 
         switch (index)
         {
-            case 0: // Low
+            case 0:
                 QualitySettings.shadows = ShadowQuality.Disable;
                 QualitySettings.shadowDistance = 0f;
                 break;
-            case 1: // Medium
+            case 1:
                 QualitySettings.shadows = ShadowQuality.HardOnly;
                 QualitySettings.shadowDistance = 15f;
                 break;
-            case 2: // High
+            case 2:
                 QualitySettings.shadows = ShadowQuality.All;
                 QualitySettings.shadowDistance = 40f;
                 break;
         }
 
         if (postProcessVolume != null &&
-            graphicsProfiles != null &&
-            index < graphicsProfiles.Count &&
-            graphicsProfiles[index] != null)
+            _runtimeProfiles != null &&
+            index < _runtimeProfiles.Count &&
+            _runtimeProfiles[index] != null)
         {
-            postProcessVolume.profile = Instantiate(graphicsProfiles[index]);
+            postProcessVolume.profile = _runtimeProfiles[index];
             ApplyPostProcessEffects(index);
         }
 

@@ -116,8 +116,16 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     private void WhoWon(Photon.Realtime.Player winner)
     {
         photonView.RPC(nameof(PrintWinner), RpcTarget.All, winner.NickName);
+        photonView.RPC(nameof(RPC_RewardWinner), RpcTarget.All, winner.ActorNumber);
         photonView.RPC(nameof(RemoteGameEnd), RpcTarget.All);
         photonView.RPC(nameof(LeaveRoom), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_RewardWinner(int winnerActorNumber)
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
+            RoundRewardManager.Instance?.OnGameWon();
     }
 
     [PunRPC]

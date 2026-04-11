@@ -13,7 +13,8 @@ public class LevelPlayAds : MonoBehaviour
     private const string APP_KEY    = AdsConfig.APP_KEY;
     private const string AD_UNIT_ID = AdsConfig.AD_UNIT_ID;
 
-    public static Action onAdRewardAction;
+    public static Action<RewardType> onAdRewardAction;
+    private RewardType _pendingReward;
     private void Start()
     {
         if (isInitialized)
@@ -64,15 +65,18 @@ public class LevelPlayAds : MonoBehaviour
         adButton.onClick.RemoveAllListeners();
         adButton.onClick.AddListener(() =>
         {
-            if (rewardedAd != null && rewardedAd.IsAdReady())
+            switch (adButton.gameObject.name)
             {
-                Debug.Log("LevelPlay: ShowAd called");
-                rewardedAd.ShowAd();
+                case "WATCH_TO_RESPAWN":
+                    ShowRewardedAd(RewardType.Respawn);
+                    Debug.Log("RESPAWN AD");
+                    break;
+                default:
+                    ShowRewardedAd(RewardType.Coins);
+                    Debug.Log("COINS AD");
+                break;
             }
-            else
-            {
-                Debug.LogWarning("LevelPlay: Ad not ready yet!");
-            }
+            
         });
     }
 
@@ -116,8 +120,7 @@ public class LevelPlayAds : MonoBehaviour
     
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
-        onAdRewardAction?.Invoke();
-
+        onAdRewardAction?.Invoke(_pendingReward);
         Debug.Log($"LevelPlay: User rewarded → {reward.Name} x{reward.Amount}");
     }
     
@@ -126,10 +129,17 @@ public class LevelPlayAds : MonoBehaviour
         Debug.Log("LevelPlay: Ad info changed");
     }
 
-    public void ShowRewardedAd()
+    public void ShowRewardedAd(RewardType rewardType)
     {
         if (rewardedAd != null && rewardedAd.IsAdReady())
+        {
+            _pendingReward = rewardType;
             rewardedAd.ShowAd();
+        }
+        else
+        {
+            Debug.LogWarning("LevelPlay: Ad not ready yet!");
+        }
     }
 
     private void OnDestroy()

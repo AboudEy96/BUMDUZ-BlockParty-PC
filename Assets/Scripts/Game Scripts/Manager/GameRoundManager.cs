@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine.UI;
+using Action = System.Action;
 
 public class GameRoundManager : MonoBehaviourPunCallbacks
 {
@@ -22,6 +24,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private SelectColorCommand _selectColorCommand;
     private NextMapCommand _nextMapCommand;
 
+    public static Action OnNextMapStarted;
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
@@ -94,7 +97,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void SyncNextMap(int mapIndex)
     {
         mapChanger.ActivateMap(mapIndex);
-
         foreach (Transform cube in mapChanger.GetCurrentMap().transform)
             cube.gameObject.SetActive(true);
 
@@ -103,7 +105,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
 
         RandomAudioPlayer.PausedOfBlocksDestroy = false;
         RandomAudioPlayer.PauseResumeAudio();
-
+        OnNextMapStarted?.Invoke();
         if (PhotonNetwork.IsMasterClient)
             StartCoroutine(DelayThenExecute(4.5f, _selectColorCommand));
     }
