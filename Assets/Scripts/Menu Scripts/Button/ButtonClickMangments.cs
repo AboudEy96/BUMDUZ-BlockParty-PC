@@ -22,7 +22,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      public GameObject lightFade;
      
      [Header("For Demo Menu ")]
-     public string[] demoMENU = new string[] { "Profile", "Shop" };
+     public string[] demoMENU = new string[] { "Shop" };
 
      public Transform demoMenuImage;
      
@@ -38,6 +38,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      
      [Header("For Main Canvas and Loading Menu")] public Canvas MainCanvas;
         public Canvas LoadingCanvas;
+        public Canvas ProfileCanvas;
      
         [Header("The Loading Images")]
         public List<Sprite> loadingImg = new List<Sprite>();
@@ -80,7 +81,11 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         }
         
     }
-        
+
+    public void ShowProfile()
+    {
+        ProfileCanvas.gameObject.SetActive(true);
+    }
     
     public void Other(GameObject button)
     {
@@ -107,6 +112,8 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
             }
         }
     }
+    
+    
 
     public void HideShowFade()
     {

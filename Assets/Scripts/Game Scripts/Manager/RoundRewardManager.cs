@@ -39,7 +39,7 @@ public class RoundRewardManager : MonoBehaviourPunCallbacks
         switch (type)
         {
             case RewardType.Coins:
-                CoinsManager.Instance?.AddCoins(50);
+                PlayerDataManager.Instance?.AddCoins(50);
                 break;
       
         }
@@ -50,12 +50,12 @@ public class RoundRewardManager : MonoBehaviourPunCallbacks
         if (!IsLocalPlayerAlive()) return;
 
         _roundsWon++;
-        CoinsManager.Instance?.AddCoins(COINS_PER_ROUND);
+        PlayerDataManager.Instance?.AddCoins(COINS_PER_ROUND);
     }
 
     public void OnGameWon()
     {
-        CoinsManager.Instance?.AddCoins(COINS_WIN_GAME);
+        PlayerDataManager.Instance?.AddCoins(COINS_WIN_GAME);
     }
 
     private bool IsLocalPlayerAlive()
