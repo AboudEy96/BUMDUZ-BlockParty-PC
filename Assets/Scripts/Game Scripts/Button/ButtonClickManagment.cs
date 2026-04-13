@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class ButtonClickManagment : MonoBehaviourPunCallbacks
 {
@@ -15,6 +17,18 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
     public Canvas LoadingCanvas;
     
     [SerializeField] Camera spectateCamera;
+    [SerializeField] private Button Pause;
+    [SerializeField] private GameObject LeaveUI;
+
+
+    private void Start()
+    {
+        Pause.onClick.AddListener(() =>
+        {
+            LeaveUI.gameObject.SetActive(true);
+        });
+    }
+
     public void SendLoading()
     {
         foreach (Canvas canvas in MainCanvas)

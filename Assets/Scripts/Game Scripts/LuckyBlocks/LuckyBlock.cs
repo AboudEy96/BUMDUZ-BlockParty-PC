@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class LuckyBlock : LuckyBlockManager
 {
     private PhotonView _pv;
-
+    
     private void Awake()
     {
         _pv = GetComponent<PhotonView>();

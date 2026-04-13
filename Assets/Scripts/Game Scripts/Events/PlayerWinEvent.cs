@@ -63,6 +63,15 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         CheckIfPlayerWin();
     }
 
+    [PunRPC]
+    public void PlayerDiedRPC()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (gameEnded) return;
+
+        CheckIfPlayerWin();
+    }
+
     public void CheckIfPlayerWin()
     {
         if (!PhotonNetwork.IsMasterClient) return;
