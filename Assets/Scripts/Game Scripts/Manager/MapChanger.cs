@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Pun;
 
 public class MapChanger : MonoBehaviour
 {
     [Header("Maps")]
     public GameObject[] maps;
-
+    public GameObject mapsFather;
+    
     [Header("UI")]
     public Transform scoreboard;
 
     private List<int> _availableMaps = new List<int>();
     private int _currentMapIndex = 0;
+    private GameObject _spawnedMapInstance;
 
     private void Awake()
     {
@@ -22,16 +25,30 @@ public class MapChanger : MonoBehaviour
     {
         if (index < 0 || index >= maps.Length) return;
 
+        if (_spawnedMapInstance != null && _spawnedMapInstance.GetComponent<PhotonView>().IsMine)
+            PhotonNetwork.Destroy(_spawnedMapInstance);
+
         _currentMapIndex = index;
         _availableMaps.Remove(index);
 
         if (_availableMaps.Count == 0)
             InitializePool();
 
-        for (int i = 0; i < maps.Length; i++)
-            maps[i].SetActive(i == _currentMapIndex);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _spawnedMapInstance = PhotonNetwork.Instantiate(
+                $"MapsPrefabs/{maps[_currentMapIndex].name}",
+                mapsFather.transform.position,
+                mapsFather.transform.rotation
+            );
+        }
 
         ShowScoreboard(GetCurrentMapName());
+    }
+
+    public void SetSpawnedMap(GameObject map)
+    {
+        _spawnedMapInstance = map;
     }
 
     public int PickNextMapIndex()
@@ -43,7 +60,7 @@ public class MapChanger : MonoBehaviour
         return _availableMaps[randomIndex];
     }
 
-    public GameObject GetCurrentMap()      => maps[_currentMapIndex];
+    public GameObject GetCurrentMap()      => _spawnedMapInstance;
     public string GetCurrentMapName()      => maps[_currentMapIndex].name;
     public int GetCurrentMapIndex()        => _currentMapIndex;
 

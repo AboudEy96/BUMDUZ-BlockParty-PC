@@ -25,6 +25,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private NextMapCommand _nextMapCommand;
 
     public static Action OnNextMapStarted;
+
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
@@ -57,7 +58,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void SyncFirstMap(int mapIndex)
     {
         mapChanger.ActivateMap(mapIndex);
-        ColorChangeEvent.SetUpColors(mapChanger.GetCurrentMap().transform);
+        StartCoroutine(WaitForMapThenSetup());
     }
 
     [PunRPC]
@@ -97,8 +98,18 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void SyncNextMap(int mapIndex)
     {
         mapChanger.ActivateMap(mapIndex);
-        foreach (Transform cube in mapChanger.GetCurrentMap().transform)
-            cube.gameObject.SetActive(true);
+        StartCoroutine(WaitForMapThenContinue());
+    }
+
+    private IEnumerator WaitForMapThenSetup()
+    {
+        yield return new WaitUntil(() => mapChanger.GetCurrentMap() != null);
+        ColorChangeEvent.SetUpColors(mapChanger.GetCurrentMap().transform);
+    }
+
+    private IEnumerator WaitForMapThenContinue()
+    {
+        yield return new WaitUntil(() => mapChanger.GetCurrentMap() != null);
 
         Score++;
         ColorChangeEvent.SetUpColors(mapChanger.GetCurrentMap().transform);
@@ -106,6 +117,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
         RandomAudioPlayer.PausedOfBlocksDestroy = false;
         RandomAudioPlayer.PauseResumeAudio();
         OnNextMapStarted?.Invoke();
+
         if (PhotonNetwork.IsMasterClient)
             StartCoroutine(DelayThenExecute(4.5f, _selectColorCommand));
     }
