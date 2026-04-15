@@ -5298,7 +5298,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 30.55
   m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9090,6 +9090,9 @@ MonoBehaviour:
   - {fileID: 8367595558165485047, guid: db866cb3f6f738b499a3a8bd41f951c2, type: 3}
   - {fileID: 7773660725928879057, guid: 1c6e9e94f932f4940a511e320e480675, type: 3}
   - {fileID: 1106482191124505668, guid: f7d166c7f65c992428ff94345249385d, type: 3}
+  - {fileID: 1143916711347766865, guid: da4563c0ee7531947bd7148738c495c2, type: 3}
+  - {fileID: 8496249442643562007, guid: 787cf56130bc42e41896f8d545599d70, type: 3}
+  - {fileID: 4249899124474054779, guid: 2752fca846e21874eb483e436ac6be68, type: 3}
   mapsFather: {fileID: 1407381402231898826}
   scoreboard: {fileID: 92661317579243269}
 --- !u!114 &9083801611081293698
