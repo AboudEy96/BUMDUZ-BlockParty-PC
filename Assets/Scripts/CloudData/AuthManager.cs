@@ -12,7 +12,9 @@ public class AuthManager : MonoBehaviour
     public static Action<string> OnLoginFailed;
     public static Action OnRegisterSuccess;
     public static Action<string> OnRegisterFailed;
+    public static Action OnLogOut;
 
+    public static AuthManager instance;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,6 +24,11 @@ public class AuthManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private string TransformPassword(string rawPassword)
+    {
+        return rawPassword + "Zx9!";
     }
 
     private async void Start()
@@ -56,10 +63,14 @@ public class AuthManager : MonoBehaviour
     {
         try
         {
-            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
+            string transformedPassword = TransformPassword(password);
+
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, transformedPassword);
             PlayerDataManager.Instance.SetPlayerName(username);
             await CloudSaveManager.Instance.SaveData();
             OnRegisterSuccess?.Invoke();
+            PlayerDataManager.Instance.UnlockSkinFree("BUMDUZ[Colorful]");
+            PlayerDataManager.Instance.UnlockSkinFree("MUMDUZ[Purple]");
             Debug.Log("Register success: " + username);
         }
         catch (Exception e)
@@ -73,7 +84,9 @@ public class AuthManager : MonoBehaviour
     {
         try
         {
-            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
+            string transformedPassword = TransformPassword(password);
+
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, transformedPassword);
             await CloudSaveManager.Instance.LoadData();
             OnLoginSuccess?.Invoke();
             Debug.Log("Login success: " + username);
@@ -88,6 +101,7 @@ public class AuthManager : MonoBehaviour
     public void Logout()
     {
         AuthenticationService.Instance.SignOut();
+        OnLogOut?.Invoke();
     }
 
     public bool IsLoggedIn() => AuthenticationService.Instance.IsSignedIn;

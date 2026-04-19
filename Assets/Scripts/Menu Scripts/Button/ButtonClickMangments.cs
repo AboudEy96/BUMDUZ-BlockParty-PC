@@ -194,7 +194,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     {
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
         if (clicked == null) return;
-
+ 
         Transform parent = clicked.transform.parent;
         if (parent != null)
             parent.gameObject.SetActive(false);

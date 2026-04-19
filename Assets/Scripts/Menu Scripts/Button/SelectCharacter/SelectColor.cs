@@ -1,18 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectColor : MonoBehaviour
 {
     [SerializeField] private Transform BUTTON_PARENT;
+    [SerializeField] private Transform PANEL_OF_COLORS;
     [SerializeField] private GameObject[] Characters;
-
+    public static SelectColor Instance;
+    
     private SkinnedMeshRenderer _sms;
     private int _selectedCharacter;
 
     private void Start()
     {
-
+        Instance = this;
         Button[] buttons = BUTTON_PARENT.GetComponentsInChildren<Button>();
         foreach (Button bt in buttons)
         {
@@ -25,8 +29,37 @@ public class SelectColor : MonoBehaviour
     {
         RefreshCharacterSelection();
         SyncCharacterColor();
+        SortUnlockedSkins();
     }
-    
+
+      public void SortUnlockedSkins()
+    {
+        var buttons = PANEL_OF_COLORS.GetComponentsInChildren<Button>().ToList();
+
+        var sorted = buttons.OrderBy(b =>
+            !PlayerDataManager.Instance.IsSkinUnlocked($"{Characters[_selectedCharacter].name}[{b.name}]")
+        ).ToList();
+
+        for (int i = 0; i < sorted.Count; i++)
+        {
+            var button = sorted[i];
+
+            bool unlocked = PlayerDataManager.Instance.IsSkinUnlocked(
+                $"{Characters[_selectedCharacter].name}[{button.name}]"
+            );
+
+            button.transform.SetSiblingIndex(i);
+//            button.interactable = unlocked;
+            var img = button.image;
+            Color c = img.color;
+            c.a = unlocked ? 1f : 0.4f; 
+            img.color = c;
+            
+            var lockImage = button.transform.Find("Image");
+            if (lockImage != null)
+                lockImage.gameObject.SetActive(!unlocked);
+        }
+    }
     public void RefreshCharacterSelection()
     {
         _selectedCharacter = PlayerPrefs.GetInt("CharacterType", 0);
@@ -51,9 +84,16 @@ public class SelectColor : MonoBehaviour
 
     public void ButtonClick(Button button)
     {
-        PlayerPrefs.SetString("Skin", button.name);
-        SyncCharacterColor();
-        Debug.Log("Skin selected: " + PlayerPrefs.GetString("Skin"));
+        // BUMDUZ[RED] Example
+        if (PlayerDataManager.Instance.IsSkinUnlocked($"{Characters[_selectedCharacter].name}[{button.name}]"))
+        {
+            PlayerPrefs.SetString("Skin", button.name);
+            SyncCharacterColor();
+            Debug.Log("Skin selected: " + PlayerPrefs.GetString("Skin"));
+            return;
+        }
+        Debug.Log("Skin is not available.");
+        
     }
 
     public void SyncCharacterColor()

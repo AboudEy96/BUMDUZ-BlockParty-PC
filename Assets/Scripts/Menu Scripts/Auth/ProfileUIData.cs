@@ -10,7 +10,10 @@ using Image = UnityEngine.UI.Image;
 
 public class ProfileUIData : MonoBehaviour
 {
+    [Header("Canvas")]
+    [SerializeField] private Canvas _profileCanvas;
     
+    [Header("Player Variables")]
     [SerializeField] private TMP_Text _playerLevel;
     [SerializeField] private TMP_Text _playerName;
     [SerializeField] private TMP_Text _playerUUID;
@@ -21,6 +24,10 @@ public class ProfileUIData : MonoBehaviour
     [Header("The Image, and Images")] 
     [SerializeField]private Image _currentImage;
     [SerializeField]private Sprite[] _profileImages;
+
+    [Header("Logout button X Button")]
+    [SerializeField] private Button _logoutButton;
+    [SerializeField] private Button _closeButton;
     async void OnEnable()
     {
         await CloudSaveManager.Instance.LoadData();
@@ -33,9 +40,24 @@ public class ProfileUIData : MonoBehaviour
         _playerCoins.text = $"{coins}";
         _playerUUID.text = $"UUID: {AuthenticationService.Instance.PlayerId}";
         _currentImage.sprite = GetImage();
-        
+        _logoutButton.onClick.AddListener(() =>
+        {
+            AuthManager.Instance.Logout();
+            AuthUIManager.Instance.ShowAuth();
+            CloseProfile();
+        });
+        _closeButton.onClick.AddListener(CloseProfile);
     }
 
+    private void OnDisable()
+    {
+        _logoutButton.onClick.RemoveAllListeners();
+    }
+
+    void CloseProfile()
+    {
+        _profileCanvas.gameObject.SetActive(false);
+    }
     private Sprite GetImage()
     {
         int char_id = PlayerPrefs.GetInt("CharacterType");

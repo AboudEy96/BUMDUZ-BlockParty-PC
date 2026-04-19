@@ -4,6 +4,8 @@ using TMPro;
 
 public class AuthUIManager : MonoBehaviour
 {
+    public static AuthUIManager Instance;
+    
     [Header("Panels")]
     public GameObject authPanel;
 
@@ -21,13 +23,20 @@ public class AuthUIManager : MonoBehaviour
     public TextMeshProUGUI confirmButtonText;
 
     private bool _isLoginMode = true;
-
+    
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+    
     private void OnEnable()
     {
         AuthManager.OnLoginSuccess    += OnLoginSuccess;
         AuthManager.OnLoginFailed     += OnLoginFailed;
         AuthManager.OnRegisterSuccess += OnRegisterSuccess;
         AuthManager.OnRegisterFailed  += OnRegisterFailed;
+        AuthManager.OnLogOut += OnLogoutClick;
     }
 
     private void OnDisable()
@@ -36,6 +45,7 @@ public class AuthUIManager : MonoBehaviour
         AuthManager.OnLoginFailed     -= OnLoginFailed;
         AuthManager.OnRegisterSuccess -= OnRegisterSuccess;
         AuthManager.OnRegisterFailed  -= OnRegisterFailed;
+        AuthManager.OnLogOut -= OnLogoutClick;
     }
 
     private void Start()
@@ -117,14 +127,14 @@ public class AuthUIManager : MonoBehaviour
         authPanel.SetActive(false);
     }
 
-    private void ShowAuth()
+    public void ShowAuth()
     {
         authPanel.SetActive(true);
     }
 
     public void OnLogoutClick()
     {
-        AuthManager.Instance.Logout();
+      //  AuthManager.Instance.Logout();
         ShowAuth();
         SetLoginMode();
     }
