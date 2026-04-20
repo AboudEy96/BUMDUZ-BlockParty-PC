@@ -1881,7 +1881,8 @@ MonoBehaviour:
   _profileImages:
   - {fileID: 21300000, guid: 19ab11fd18ee14140a99ca65c4dcc60e, type: 3}
   - {fileID: 21300000, guid: fdf07c21459f7cc419156cc5e8a081b4, type: 3}
-  LogoutButton: {fileID: 1203207033}
+  _logoutButton: {fileID: 1203207033}
+  _closeButton: {fileID: 1435585326}
 --- !u!1 &234261045
 GameObject:
   m_ObjectHideFlags: 0

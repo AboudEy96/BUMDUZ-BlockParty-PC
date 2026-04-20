@@ -111,4 +111,15 @@ public class PlayerDataManager : MonoBehaviour
     }
 
     #endregion
+    
+    public void ResetData()
+    {
+        _coins       = 0;
+        _playerName  = "Player";
+        _playedGames = 0;
+        _wins        = 0;
+        _unlockedSkins = new List<string>();
+        Debug.Log("PlayerData: reset complete");
+    }
+
 }

@@ -100,6 +100,8 @@ public class AuthManager : MonoBehaviour
 
     public void Logout()
     {
+        PlayerDataManager.Instance.ResetData();
+
         AuthenticationService.Instance.SignOut();
         OnLogOut?.Invoke();
     }
