@@ -22,7 +22,8 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject joinButtonPrefab;
     [SerializeField] private Transform roomListContainer;
     [SerializeField] private GameObject startGameButton;
-
+    [SerializeField] private TextMeshProUGUI startGameButtonText;
+    [SerializeField] private GameObject createRoomButton;
     [Header("Canvasess")] [SerializeField] private GameObject RoomsListCanvas;
     [SerializeField] private GameObject CreateCanvas;
 
@@ -39,8 +40,12 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     private readonly Dictionary<string, RoomInfo> cachedRooms = new Dictionary<string, RoomInfo>();
     private readonly Dictionary<string, GameObject> roomButtons = new Dictionary<string, GameObject>();
 
+    private const int MIN_PLAYERS_TO_START = 2;
+
     private void Start()
     {
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
+
         if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
@@ -67,7 +72,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.OfflineMode)
         {
-            SceneManager.LoadScene("Lobby");
+            if (SceneManager.GetActiveScene().name != "Lobby")
+                SceneManager.LoadScene("Lobby");
+            else
+                StartCoroutine(JoinLobbyAfterUIReady());
         }
     }
 
@@ -123,7 +131,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         }
     }
 
-
     public override void OnJoinedRoom()
     {
         HandleJoinedRoom();
@@ -166,6 +173,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         RoomsListCanvas.SetActive(!RoomsListCanvas.activeSelf);
         CreateCanvas.SetActive(!CreateCanvas.activeSelf);
         cameras[0].gameObject.SetActive(!cameras[0].gameObject.activeSelf);
+        createRoomButton.SetActive(!createRoomButton.activeSelf);
     }
 
     public void JoinRoom()
@@ -191,36 +199,34 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             startGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
         }
 
+        UpdateStartButton();
+
         string skinName = PlayerPrefs.GetString("Skin");
         int spawnIndex = (PhotonNetwork.LocalPlayer.ActorNumber - 1) % 4;
         int character = PlayerPrefs.GetInt("CharacterType");
         Hashtable props = new Hashtable
         {
             { "SkinName", skinName },
-            {"CharacterType", character},
+            { "CharacterType", character },
             { "SpawnIndex", spawnIndex }
         };
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        
         var pl = PlayerCharacterSingletoon.instance.LOBBY_CHARACTER[character];
         Material playerMaterial = SyncPlayerMaterial.instance.GetMaterialByName(skinName, pl.name);
         try
         {
-            playerFactory.CreatePlayer(
-                spawnIndex,
-                pl,
-                playerMaterial);
+            playerFactory.CreatePlayer(spawnIndex, pl, playerMaterial);
         }
         catch (System.Exception e)
         {
-            string[] skins = { "Colorful", "Yellow", "Aqua", };
+            Debug.LogError("Failed to create player: " + e.Message);
+            string[] skins = { "Colorful", "Yellow", "Aqua" };
             int ind = Random.Range(0, skins.Length - 1);
             PlayerPrefs.SetString("Skin", skins[ind]);
-        };
-        
-}
+        }
+    }
 
     private void SetPlayerName()
     {
@@ -231,9 +237,38 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.NickName = playerNameInLobby;
     }
 
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        UpdateStartButton();
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        UpdateStartButton();
+    }
+
+    private void UpdateStartButton()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        int playerCount = PhotonNetwork.CurrentRoom?.PlayerCount ?? 0;
+        bool canStart = playerCount >= MIN_PLAYERS_TO_START;
+
+        var btn = startGameButton.GetComponent<Button>();
+        btn.interactable = canStart;
+
+        if (startGameButtonText != null)
+            startGameButtonText.text = canStart
+                ? "Start Game"
+                : $"Waiting ({playerCount}/{MIN_PLAYERS_TO_START})";
+    }
+
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount < MIN_PLAYERS_TO_START)
             return;
 
         StartCoroutine(DelayedStartGame());
@@ -248,15 +283,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
 
         PhotonNetwork.LoadLevel("Game");
-
-        if (SceneManager.GetActiveScene().name != "Game")
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-            PhotonNetwork.LoadLevel("Game");
-            Debug.LogWarning("Photon load canceled, forcing local scene load...");
-            SceneManager.LoadScene("Game");
-        }
     }
 
     public void LeaveRoom()
@@ -277,11 +303,11 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.LogError(message);
+        Debug.LogError("Create room failed: " + message);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogError(message);
+        Debug.LogError("Join room failed: " + message);
     }
 }

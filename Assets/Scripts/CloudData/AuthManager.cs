@@ -14,7 +14,6 @@ public class AuthManager : MonoBehaviour
     public static Action<string> OnRegisterFailed;
     public static Action OnLogOut;
 
-    public static AuthManager instance;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -67,10 +66,10 @@ public class AuthManager : MonoBehaviour
 
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, transformedPassword);
             PlayerDataManager.Instance.SetPlayerName(username);
-            await CloudSaveManager.Instance.SaveData();
-            OnRegisterSuccess?.Invoke();
             PlayerDataManager.Instance.UnlockSkinFree("BUMDUZ[Colorful]");
             PlayerDataManager.Instance.UnlockSkinFree("MUMDUZ[Purple]");
+            await CloudSaveManager.Instance.SaveData();
+            OnRegisterSuccess?.Invoke();
             Debug.Log("Register success: " + username);
         }
         catch (Exception e)

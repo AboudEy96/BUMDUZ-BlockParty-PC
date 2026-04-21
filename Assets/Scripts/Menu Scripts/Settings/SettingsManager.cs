@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Rendering.PostProcessing;
@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
     [Header("Settings Panel")]
     public GameObject settingsPanel;
     public Button settingsButton;
-    
+
     [Header("Mouse Speed")]
     public Slider mouseSpeedSlider;
     public TextMeshProUGUI mouseSpeedValueText;
@@ -23,12 +23,17 @@ public class SettingsManager : MonoBehaviour
     [Header("Music Volume")]
     public Slider musicVolumeSlider;
     public TextMeshProUGUI musicVolumeValueText;
+    public AudioSource musicMainMenu;
 
     [Header("Graphics Quality Buttons")]
     public Button buttonLow;
     public Button buttonMedium;
     public Button buttonHigh;
     public List<PostProcessProfile> graphicsProfiles;
+
+    [Header("Camera Pitch")]
+    public Button buttonPitchToggle;
+    public TextMeshProUGUI pitchToggleText;
 
     [Header("Save, Close BUTTONS")]
     public Button buttonClose;
@@ -39,8 +44,9 @@ public class SettingsManager : MonoBehaviour
     private const string KEY_MOUSE  = "Settings_MouseSpeed";
     private const string KEY_VOLUME = "Settings_MusicVolume";
     private const string KEY_GFX    = "Settings_Graphics";
+    private const string KEY_PITCH  = "Settings_CameraPitch";
 
-    private readonly string[] graphicsLabels = { "Low", "Medium", "High" };
+    private const string MAIN_SCENE_NAME = "MainScene";
 
     private void Awake()
     {
@@ -57,12 +63,11 @@ public class SettingsManager : MonoBehaviour
     {
         SetupSliders();
         SetupGraphicsButtons();
-        SetUpButtonsListeners();
+        SetupPitchButton();
         LoadSettings();
         ApplyAll();
     }
 
-    #region OnEnable, OnDisable
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -84,54 +89,207 @@ public class SettingsManager : MonoBehaviour
                 _runtimeProfiles.Add(Instantiate(profile));
         }
 
+        if (scene.name == MAIN_SCENE_NAME)
+            RebindUIReferences();
+
         ApplyGraphics(PlayerPrefs.GetInt(KEY_GFX, 1));
+        ApplyMusicVolume(PlayerPrefs.GetFloat(KEY_VOLUME, 0.8f));
     }
-    #endregion
 
-    #region Buttons Setup
-    void SetUpButtonsListeners()
+    private void RebindUIReferences()
     {
-        settingsButton.onClick.AddListener(() => settingsPanel.SetActive(!settingsPanel.activeSelf));
-        buttonClose.onClick.AddListener(() => settingsPanel.SetActive(false));
-    }
-    #endregion
+        var sliders = FindObjectsOfType<Slider>(true);
+        foreach (var s in sliders)
+        {
+            if (s.name == "MouseSpeedSlider")
+            {
+                mouseSpeedSlider = s;
+                mouseSpeedSlider.minValue = MOUSE_SPEED_MIN;
+                mouseSpeedSlider.maxValue = MOUSE_SPEED_MAX;
+                mouseSpeedSlider.onValueChanged.RemoveAllListeners();
+                mouseSpeedSlider.onValueChanged.AddListener(OnMouseSpeedChanged);
+                mouseSpeedSlider.value = PlayerPrefs.GetFloat(KEY_MOUSE, 100f);
+            }
+            if (s.name == "MusicVolumeSlider")
+            {
+                musicVolumeSlider = s;
+                musicVolumeSlider.minValue = 0f;
+                musicVolumeSlider.maxValue = 1f;
+                musicVolumeSlider.onValueChanged.RemoveAllListeners();
+                musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+                musicVolumeSlider.value = PlayerPrefs.GetFloat(KEY_VOLUME, 0.8f);
+            }
+        }
 
-    #region Setup
+        var texts = FindObjectsOfType<TextMeshProUGUI>(true);
+        foreach (var t in texts)
+        {
+            if (t.name == "MouseSpeedValueText")  mouseSpeedValueText  = t;
+            if (t.name == "MusicVolumeValueText") musicVolumeValueText = t;
+            if (t.name == "PitchToggleText")      pitchToggleText      = t;
+        }
+
+        var buttons = FindObjectsOfType<Button>(true);
+        foreach (var b in buttons)
+        {
+            switch (b.name)
+            {
+                case "SettingsButton":
+                    settingsButton = b;
+                    settingsButton.onClick.RemoveAllListeners();
+                    settingsButton.onClick.AddListener(ToggleSettingsPanel);
+                    break;
+                case "CloseButton":
+                    buttonClose = b;
+                    buttonClose.onClick.RemoveAllListeners();
+                    buttonClose.onClick.AddListener(CloseSettingsPanel);
+                    break;
+                case "LowButton":
+                    buttonLow = b;
+                    buttonLow.onClick.RemoveAllListeners();
+                    buttonLow.onClick.AddListener(() => OnGraphicsChanged(0));
+                    break;
+                case "MediumButton":
+                    buttonMedium = b;
+                    buttonMedium.onClick.RemoveAllListeners();
+                    buttonMedium.onClick.AddListener(() => OnGraphicsChanged(1));
+                    break;
+                case "HighButton":
+                    buttonHigh = b;
+                    buttonHigh.onClick.RemoveAllListeners();
+                    buttonHigh.onClick.AddListener(() => OnGraphicsChanged(2));
+                    break;
+                case "PitchToggleButton":
+                    buttonPitchToggle = b;
+                    buttonPitchToggle.onClick.RemoveAllListeners();
+                    buttonPitchToggle.onClick.AddListener(OnPitchToggleClicked);
+                    break;
+            }
+        }
+
+        settingsPanel = FindInactiveObjectByName("SettingsPanel");
+        if (settingsPanel == null)
+        {
+            var obj = GameObject.Find("SettingsPanel");
+            if (obj != null) settingsPanel = obj;
+        }
+
+        var audioSource = FindObjectOfType<AudioSource>();
+        if (audioSource != null) musicMainMenu = audioSource;
+
+        ApplyAll();
+    }
+
+    private GameObject FindInactiveObjectByName(string name)
+    {
+        foreach (GameObject root in SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            var result = FindInChildren(root.transform, name);
+            if (result != null) return result;
+        }
+        return null;
+    }
+
+    private GameObject FindInChildren(Transform parent, string name)
+    {
+        if (parent.name == name) return parent.gameObject;
+        foreach (Transform child in parent)
+        {
+            var result = FindInChildren(child, name);
+            if (result != null) return result;
+        }
+        return null;
+    }
+
     private void SetupSliders()
     {
-        mouseSpeedSlider.minValue = MOUSE_SPEED_MIN;
-        mouseSpeedSlider.maxValue = MOUSE_SPEED_MAX;
-        mouseSpeedSlider.onValueChanged.AddListener(OnMouseSpeedChanged);
+        if (mouseSpeedSlider != null)
+        {
+            mouseSpeedSlider.minValue = MOUSE_SPEED_MIN;
+            mouseSpeedSlider.maxValue = MOUSE_SPEED_MAX;
+            mouseSpeedSlider.onValueChanged.AddListener(OnMouseSpeedChanged);
+        }
 
-        musicVolumeSlider.minValue = 0f;
-        musicVolumeSlider.maxValue = 1f;
-        musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+        if (musicVolumeSlider != null)
+        {
+            musicVolumeSlider.minValue = 0f;
+            musicVolumeSlider.maxValue = 1f;
+            musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+        }
     }
 
     private void SetupGraphicsButtons()
     {
-        buttonLow.onClick.AddListener(()    => OnGraphicsChanged(0));
-        buttonMedium.onClick.AddListener(() => OnGraphicsChanged(1));
-        buttonHigh.onClick.AddListener(()   => OnGraphicsChanged(2));
+        if (buttonLow    != null) buttonLow.onClick.AddListener(()    => OnGraphicsChanged(0));
+        if (buttonMedium != null) buttonMedium.onClick.AddListener(() => OnGraphicsChanged(1));
+        if (buttonHigh   != null) buttonHigh.onClick.AddListener(()   => OnGraphicsChanged(2));
     }
-    #endregion
 
-    #region Load, Apply Settings
+    private void SetupPitchButton()
+    {
+        if (buttonPitchToggle != null)
+        {
+            buttonPitchToggle.onClick.RemoveAllListeners();
+            buttonPitchToggle.onClick.AddListener(OnPitchToggleClicked);
+        }
+        ApplyPitch(PlayerPrefs.GetInt(KEY_PITCH, 0) == 1);
+    }
+
+    private void OnPitchToggleClicked()
+    {
+        bool current = PlayerPrefs.GetInt(KEY_PITCH, 0) == 1;
+        bool next    = !current;
+
+        PlayerPrefs.SetInt(KEY_PITCH, next ? 1 : 0);
+        PlayerPrefs.Save();
+
+        ApplyPitch(next);
+        CameraFollow cam = FindObjectOfType<CameraFollow>();
+        if (cam != null) cam.SetPitchEnabled(next);
+    }
+
+    private void ApplyPitch(bool enabled)
+    {
+        if (pitchToggleText == null) return;
+        pitchToggleText.text = enabled ? "T" : "X";
+    }
+
     private void LoadSettings()
     {
-        mouseSpeedSlider.value  = PlayerPrefs.GetFloat(KEY_MOUSE,  100f);
-        musicVolumeSlider.value = PlayerPrefs.GetFloat(KEY_VOLUME, 0.8f);
+        if (mouseSpeedSlider  != null) mouseSpeedSlider.value  = PlayerPrefs.GetFloat(KEY_MOUSE,  100f);
+        if (musicVolumeSlider != null) musicVolumeSlider.value = PlayerPrefs.GetFloat(KEY_VOLUME, 0.8f);
     }
 
     private void ApplyAll()
     {
-        ApplyMouseSpeed(mouseSpeedSlider.value);
-        ApplyMusicVolume(musicVolumeSlider.value);
+        ApplyMouseSpeed(PlayerPrefs.GetFloat(KEY_MOUSE, 100f));
+        ApplyMusicVolume(PlayerPrefs.GetFloat(KEY_VOLUME, 0.8f));
         ApplyGraphics(PlayerPrefs.GetInt(KEY_GFX, 1));
+        ApplyPitch(PlayerPrefs.GetInt(KEY_PITCH, 0) == 1);
     }
-    #endregion
 
-    #region Mouse Control
+    public void ToggleSettingsPanel()
+    {
+        if (settingsPanel == null)
+        {
+            Debug.LogError("SettingsManager: settingsPanel is NULL!");
+            return;
+        }
+        settingsPanel.SetActive(!settingsPanel.activeSelf);
+    }
+
+    public void CloseSettingsPanel()
+    {
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+    }
+
+    public void OpenSettingsPanel()
+    {
+        if (settingsPanel != null)
+            settingsPanel.SetActive(true);
+    }
+
     private void OnMouseSpeedChanged(float value)
     {
         ApplyMouseSpeed(value);
@@ -143,9 +301,7 @@ public class SettingsManager : MonoBehaviour
     {
         UpdateText(mouseSpeedValueText, Mathf.RoundToInt(value).ToString());
     }
-    #endregion
 
-    #region Volume
     private void OnMusicVolumeChanged(float value)
     {
         ApplyMusicVolume(value);
@@ -155,14 +311,12 @@ public class SettingsManager : MonoBehaviour
 
     private void ApplyMusicVolume(float value)
     {
-        if (RandomAudioPlayer.Instance != null)
-            RandomAudioPlayer.Instance.setVolume(value);
+        if (musicMainMenu != null)
+            musicMainMenu.volume = value;
 
         UpdateText(musicVolumeValueText, $"{Mathf.RoundToInt(value * 100)}%");
     }
-    #endregion
 
-    #region GFX
     private void OnGraphicsChanged(int index)
     {
         ApplyGraphics(index);
@@ -193,7 +347,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         if (postProcessVolume != null &&
-            _runtimeProfiles != null &&
+            _runtimeProfiles  != null &&
             index < _runtimeProfiles.Count &&
             _runtimeProfiles[index] != null)
         {
@@ -220,11 +374,10 @@ public class SettingsManager : MonoBehaviour
 
     private void HighlightActiveButton(int index)
     {
-        buttonLow.interactable    = index != 0;
-        buttonMedium.interactable = index != 1;
-        buttonHigh.interactable   = index != 2;
+        if (buttonLow    != null) buttonLow.interactable    = index != 0;
+        if (buttonMedium != null) buttonMedium.interactable = index != 1;
+        if (buttonHigh   != null) buttonHigh.interactable   = index != 2;
     }
-    #endregion
 
     private void UpdateText(TextMeshProUGUI text, string value)
     {

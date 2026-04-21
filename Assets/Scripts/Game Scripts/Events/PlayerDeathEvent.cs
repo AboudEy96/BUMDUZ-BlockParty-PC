@@ -41,11 +41,7 @@ public class PlayerDeathEvent : MonoBehaviourPunCallbacks
         {
             { "isDead", true }
         });
-
-        if (PhotonNetwork.IsMasterClient && PlayerWinEvent.Instance != null)
-        {
-            PlayerWinEvent.Instance.CheckIfPlayerWin();
-        }
+        
     }
 
     public void HidePlayer(GameObject player)

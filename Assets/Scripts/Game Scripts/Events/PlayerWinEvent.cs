@@ -11,6 +11,11 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     [Header("Alive Players UI")]
     public TextMeshProUGUI alivePlayersText;
 
+    [Header("Winner Canvas")]
+    public Canvas winnerCanvas;
+    public TextMeshProUGUI winnerNameText;
+    public TextMeshProUGUI winnerRoundsText;
+
     private bool gameEnded;
 
     private void Awake()
@@ -21,6 +26,10 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             return;
         }
         Instance = this;
+
+        // Hide winner canvas at start
+        if (winnerCanvas != null)
+            winnerCanvas.gameObject.SetActive(false);
     }
 
     private void OnEnable() => gameEnded = false;
@@ -62,15 +71,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
         CheckIfPlayerWin();
     }
-
-    [PunRPC]
-    public void PlayerDiedRPC()
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (gameEnded) return;
-
-        CheckIfPlayerWin();
-    }
+    
 
     public void CheckIfPlayerWin()
     {
@@ -101,6 +102,14 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             gameEnded = true;
             WhoWon(lastAlivePlayer);
         }
+
+        if (survivedPlayers == 0)
+        {
+            gameEnded = true;
+            photonView.RPC(nameof(RPC_ShowDraw), RpcTarget.All);
+            photonView.RPC(nameof(RemoteGameEnd), RpcTarget.All);
+            photonView.RPC(nameof(LeaveRoom), RpcTarget.All);
+        }
     }
 
     private void UpdateAlivePlayersText()
@@ -124,10 +133,42 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
 
     private void WhoWon(Photon.Realtime.Player winner)
     {
-        photonView.RPC(nameof(PrintWinner), RpcTarget.All, winner.NickName);
+     //   int roundsWon = RoundRewardManager.Instance != null ? RoundRewardManager.Instance : 0;
+
+        photonView.RPC(nameof(RPC_ShowWinner), RpcTarget.All, winner.NickName, winner.ActorNumber);
         photonView.RPC(nameof(RPC_RewardWinner), RpcTarget.All, winner.ActorNumber);
         photonView.RPC(nameof(RemoteGameEnd), RpcTarget.All);
         photonView.RPC(nameof(LeaveRoom), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_ShowWinner(string winnerName, int winnerActorNumber, int rounds)
+    {
+        Debug.Log("Winner: " + winnerName + " | Rounds: " + rounds);
+
+        if (winnerCanvas != null)
+            winnerCanvas.gameObject.SetActive(true);
+
+        if (winnerNameText != null)
+            winnerNameText.text = winnerName;
+
+        if (winnerRoundsText != null)
+            winnerRoundsText.text = $"Rounds Won: {rounds}";
+    }
+
+    [PunRPC]
+    private void RPC_ShowDraw()
+    {
+        Debug.Log("Draw - all players died!");
+
+        if (winnerCanvas != null)
+            winnerCanvas.gameObject.SetActive(true);
+
+        if (winnerNameText != null)
+            winnerNameText.text = "Draw!";
+
+        if (winnerRoundsText != null)
+            winnerRoundsText.text = "";
     }
 
     [PunRPC]
@@ -148,11 +189,5 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(7f);
         if (PhotonNetwork.InRoom)
             PhotonNetwork.LeaveRoom();
-    }
-
-    [PunRPC]
-    private void PrintWinner(string winnerName)
-    {
-        Debug.Log("Winner: " + winnerName);
     }
 }

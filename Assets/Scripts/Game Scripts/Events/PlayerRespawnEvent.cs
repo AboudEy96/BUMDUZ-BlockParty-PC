@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Photon.Pun;
 using TMPro;
-using Unity.ProjectAuditor.Editor;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using Hashtable = ExitGames.Client.Photon.Hashtable;

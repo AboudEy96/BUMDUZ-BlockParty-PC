@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -10,7 +9,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     [Header("The Loading Images")]
     public List<Sprite> images = new List<Sprite>();
-    
+
     public Canvas MainCanvas;
     public Canvas LoadingCanvas;
 
@@ -22,10 +21,12 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         im.sprite = images[randomIndex];
         LoadingCanvas.gameObject.SetActive(true);
     }
+
     public void ConnectUsingSettings()
     {
         SendLoading();
-       PhotonNetwork.ConnectUsingSettings();    
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
@@ -33,20 +34,11 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.OfflineMode)
         {
             SceneManager.LoadScene("Lobby");
-
-            //  PhotonNetwork.JoinLobby();
-         //   PhotonNetwork.JoinLobby(TypedLobby.Default);
         }
-
     }
+
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Lobby");
     }
-
-  /*  public override void OnJoinedLobby()
-    {
-        SceneManager.LoadScene("Lobby");
-    }*/
-
 }
