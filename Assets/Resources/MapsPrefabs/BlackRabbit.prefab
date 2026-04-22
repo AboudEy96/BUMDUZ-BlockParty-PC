@@ -331330,6 +331330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3912103798391256385}
   - component: {fileID: 351821469494472180}
+  - component: {fileID: 6245361522219214667}
   m_Layer: 3
   m_Name: BlackRabbit
   m_TagString: Grey
@@ -333534,6 +333535,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6245361522219214667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249899124474054779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &4254357572382430368
 GameObject:
   m_ObjectHideFlags: 0

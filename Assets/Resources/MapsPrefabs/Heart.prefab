@@ -75580,6 +75580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2469323037102957686}
   - component: {fileID: 235345411173612263}
+  - component: {fileID: 7090809942942057384}
   m_Layer: 3
   m_Name: Heart
   m_TagString: Grey
@@ -77784,6 +77785,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7090809942942057384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911847574767796376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &912429441562258251
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,6 +52,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
             return;
         }
 
+        playerNameInput.text = PlayerDataManager.Instance.GetPlayerName();
         StartCoroutine(JoinLobbyAfterUIReady());
     }
 
@@ -271,6 +272,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount < MIN_PLAYERS_TO_START)
             return;
 
+      //  AssignRandomPositions();
+
+      
+      
         StartCoroutine(DelayedStartGame());
     }
 
@@ -283,6 +288,15 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
 
         PhotonNetwork.LoadLevel("Game");
+        
+        if (SceneManager.GetActiveScene().name != "Game")
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            PhotonNetwork.LoadLevel("Game");
+            Debug.LogWarning("Photon load canceled, forcing local scene load...");
+            SceneManager.LoadScene("Game");
+        }
     }
 
     public void LeaveRoom()
@@ -295,9 +309,9 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void LeaveLobby()
     {
-        PhotonNetwork.Disconnect();
         PhotonNetwork.LoadLevel("MainScene");
         PhotonNetwork.OfflineMode = true;
+        PhotonNetwork.Disconnect();
         Debug.Log("Leave Lobby");
     }
 

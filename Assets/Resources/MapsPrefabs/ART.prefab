@@ -323410,6 +323410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9122321689356299452}
   - component: {fileID: 2936393582059694625}
+  - component: {fileID: 147510726119584765}
   m_Layer: 3
   m_Name: ART
   m_TagString: Grey
@@ -325614,6 +325615,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &147510726119584765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4256013128008204340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &4258123586699924335
 GameObject:
   m_ObjectHideFlags: 0

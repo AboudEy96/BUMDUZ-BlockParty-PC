@@ -54,7 +54,14 @@ public class SelectCharacter : MonoBehaviour
 
         _selectColor.RefreshCharacterSelection();
         _selectColor.SyncCharacterColor();
-        SelectColor.Instance.SortUnlockedSkins();
+        try
+        {
+            SelectColor.Instance.SortUnlockedSkins();
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.Log("Not enabled yet : +" + e.Message);
+        }
     }
     
 }

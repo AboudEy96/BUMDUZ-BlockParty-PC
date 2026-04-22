@@ -514480,6 +514480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1302645224242285884}
   - component: {fileID: 5292577884994723764}
+  - component: {fileID: -2405519894065162203}
   m_Layer: 3
   m_Name: Waterfall
   m_TagString: Grey
@@ -516684,6 +516685,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-2405519894065162203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611888126963173585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &6614227241999368119
 GameObject:
   m_ObjectHideFlags: 0

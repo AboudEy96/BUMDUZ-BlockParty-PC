@@ -375880,6 +375880,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1463234611207060867}
   - component: {fileID: -1339298325182742360}
+  - component: {fileID: 6283965554265742577}
   m_Layer: 3
   m_Name: Flying_Cat
   m_TagString: Grey
@@ -378084,6 +378085,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6283965554265742577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835581163279964487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &4836760043945905214
 GameObject:
   m_ObjectHideFlags: 0

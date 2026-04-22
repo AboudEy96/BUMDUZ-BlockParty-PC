@@ -650110,6 +650110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3643150636037504025}
   - component: {fileID: 2776692344950440260}
+  - component: {fileID: -6997027921435666662}
   m_Layer: 3
   m_Name: HotCoffee
   m_TagString: Grey
@@ -652314,6 +652315,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-6997027921435666662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8496249442643562007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &8497048983379952424
 GameObject:
   m_ObjectHideFlags: 0

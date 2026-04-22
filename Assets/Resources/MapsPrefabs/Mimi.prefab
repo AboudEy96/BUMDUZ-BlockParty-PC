@@ -217850,6 +217850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3281816929565127400}
   - component: {fileID: 3019836475561316863}
+  - component: {fileID: 7426515607197214019}
   m_Layer: 3
   m_Name: Mimi
   m_TagString: Grey
@@ -220054,6 +220055,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7426515607197214019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367595558165485047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &8373130716568297016
 GameObject:
   m_ObjectHideFlags: 0

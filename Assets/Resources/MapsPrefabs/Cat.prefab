@@ -536590,6 +536590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1787108804967596261}
   - component: {fileID: -2864987909783193486}
+  - component: {fileID: -4084548892052269478}
   m_Layer: 3
   m_Name: Cat
   m_TagString: Grey
@@ -538794,6 +538795,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-4084548892052269478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7005561067052712466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &7006602756547098164
 GameObject:
   m_ObjectHideFlags: 0

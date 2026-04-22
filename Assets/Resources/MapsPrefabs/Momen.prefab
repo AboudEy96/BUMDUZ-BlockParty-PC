@@ -82180,6 +82180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383017768624629301}
   - component: {fileID: -660967546506230960}
+  - component: {fileID: -1107134618177856420}
   m_Layer: 3
   m_Name: Momen
   m_TagString: Grey
@@ -84384,6 +84385,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-1107134618177856420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143916711347766865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &1144494721412934457
 GameObject:
   m_ObjectHideFlags: 0

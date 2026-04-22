@@ -50,9 +50,20 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         startButton.gameObject.SetActive(false);
         GameStateManager.SetState(GameState.Playing);
-        StartCoroutine(DelayThenExecute(2f, _selectColorCommand));
-    }
+        photonView.RPC(nameof(RPC_ResetDeadStatus), RpcTarget.All);
 
+        AssignRandomPositions();
+        StartCoroutine(DelayThenExecute(2f, _selectColorCommand));
+        
+    }
+    [PunRPC]
+    private void RPC_ResetDeadStatus()
+    {
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        {
+            { "isDead", false }
+        });
+    }
     [PunRPC]
     private void SyncFirstMap(int mapIndex)
     {
@@ -65,32 +76,35 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         ChosenTag = selectedTag;
         colorIndicator.Show(selectedTag);
+    
+        StartCoroutine(WaitThenGetCubesAndDestroy(selectedTag));
+    }
+
+    private IEnumerator WaitThenGetCubesAndDestroy(string selectedTag)
+    {
+        yield return new WaitUntil(() => mapChanger.GetCurrentMap() != null 
+                                         && mapChanger.GetCurrentMap().activeInHierarchy);
+    
         _currentCubes = mapChanger.GetCubesFromCurrentMap();
 
-        StartCoroutine(DelayThenRun(5f, () =>
-        {
-            if (PhotonNetwork.IsMasterClient)
-                new DestroyCubesCommand(_photonView, ChosenTag).Execute();
-        }));
+        yield return new WaitForSeconds(5f);
+
+        if (PhotonNetwork.IsMasterClient)
+            new DestroyCubesCommand(_photonView, selectedTag).Execute();
     }
 
     [PunRPC]
     private void SyncDestroyCubes(string selectedTag)
     {
-        foreach (Transform cube in _currentCubes)
+        Debug.Log("SyncDestroyCubes CALLED on: " + PhotonNetwork.NickName);
+
+        var cubes = mapChanger.GetCubesFromCurrentMap();
+
+        foreach (Transform cube in cubes)
         {
             if (cube != null && cube.tag != selectedTag)
                 cube.gameObject.SetActive(false);
         }
-        _currentCubes.Clear();
-
-        colorIndicator.Hide();
-
-        RandomAudioPlayer.PausedOfBlocksDestroy = true;
-        RandomAudioPlayer.PauseResumeAudio();
-
-        if (PhotonNetwork.IsMasterClient)
-            StartCoroutine(DelayThenExecute(3f, _nextMapCommand));
     }
 
     [PunRPC]
@@ -98,6 +112,31 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         mapChanger.ActivateMap(mapIndex);
         StartCoroutine(WaitForMapThenContinue());
+    }
+    void AssignRandomPositions()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            float x = Random.Range(-16f, 14f);
+            float z = Random.Range(-15f, 14f);
+            Vector3 randomPos = new Vector3(x, 1f, z);
+
+            photonView.RPC("SetPlayerPosition", player, randomPos);
+        }
+    }
+
+    [PunRPC]
+    void SetPlayerPosition(Vector3 pos)
+    {
+        PhotonView[] allPlayers = FindObjectsOfType<PhotonView>();
+        foreach (var pv in allPlayers)
+        {
+            if (pv.IsMine && pv.gameObject.CompareTag("Player"))
+            {
+                pv.transform.position = pos;
+                return;
+            }
+        }
     }
 
     private IEnumerator WaitForMapThenSetup()

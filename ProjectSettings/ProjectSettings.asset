@@ -297,7 +297,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 0416ac5acb78b8c4499d25c19460eafa, type: 3}
+      m_Icon: {fileID: 2800000, guid: e034212d23ddde54b9a621843467dd2b, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -790,7 +790,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
-    Standalone: 1
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}

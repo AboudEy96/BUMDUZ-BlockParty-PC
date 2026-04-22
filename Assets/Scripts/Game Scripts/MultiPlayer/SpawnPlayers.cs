@@ -30,8 +30,8 @@ public class SpawnPlayers : MonoBehaviourPun
     void Start()
     {
 
-        int x = Random.Range(-18, width);
-        int z = Random.Range(-15, height);
+        int x = Random.Range(20, -20);
+        int z = Random.Range(-27, -27);
         Vector3 location = new Vector3(x, yAXIS, z);
         //  PhotonNetwork.Instantiate(player.name, location, Quaternion.identity);
 

@@ -37300,6 +37300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7800974371058911677}
   - component: {fileID: 2008625254083490834}
+  - component: {fileID: 9214592828248661333}
   m_Layer: 3
   m_Name: BUMDUZ
   m_TagString: Grey
@@ -39504,6 +39505,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &9214592828248661333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539730800201460772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756f07bc4b7447c847781786ac19ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapInitializer
 --- !u!1 &550534650238064282
 GameObject:
   m_ObjectHideFlags: 0
