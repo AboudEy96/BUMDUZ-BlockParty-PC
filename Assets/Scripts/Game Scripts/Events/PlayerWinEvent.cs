@@ -27,12 +27,20 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         }
         Instance = this;
 
-        // Hide winner canvas at start
         if (winnerCanvas != null)
             winnerCanvas.gameObject.SetActive(false);
     }
 
-    private void OnEnable() => gameEnded = false;
+    public override void OnEnable()
+    {
+        base.OnEnable(); 
+        gameEnded = false;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable(); 
+    }
 
     public override void OnJoinedRoom()
     {
@@ -71,13 +79,12 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
         CheckIfPlayerWin();
     }
-    
 
     public void CheckIfPlayerWin()
     {
         if (!PhotonNetwork.IsMasterClient) return;
         if (gameEnded) return;
-        if (!GameStateManager.IsPlaying()) return;
+        
 
         int survivedPlayers = 0;
         Photon.Realtime.Player lastAlivePlayer = null;
@@ -96,6 +103,10 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
                 lastAlivePlayer = player;
             }
         }
+
+        int totalPlayers = PhotonNetwork.PlayerList.Length;
+        int deadPlayers = totalPlayers - survivedPlayers;
+        if (deadPlayers == 0) return; 
 
         if (survivedPlayers == 1 && lastAlivePlayer != null)
         {
@@ -128,14 +139,14 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
             if (!isDead) alive++;
         }
 
-        alivePlayersText.text = $"Alive: {alive}";
+        alivePlayersText.text = $"Players Alive: <color=green>({alive})</color>";
     }
 
     private void WhoWon(Photon.Realtime.Player winner)
     {
-     //   int roundsWon = RoundRewardManager.Instance != null ? RoundRewardManager.Instance : 0;
+        int rounds = GameRoundManager.Score;
 
-        photonView.RPC(nameof(RPC_ShowWinner), RpcTarget.All, winner.NickName, winner.ActorNumber);
+        photonView.RPC(nameof(RPC_ShowWinner), RpcTarget.All, winner.NickName, winner.ActorNumber, rounds);
         photonView.RPC(nameof(RPC_RewardWinner), RpcTarget.All, winner.ActorNumber);
         photonView.RPC(nameof(RemoteGameEnd), RpcTarget.All);
         photonView.RPC(nameof(LeaveRoom), RpcTarget.All);

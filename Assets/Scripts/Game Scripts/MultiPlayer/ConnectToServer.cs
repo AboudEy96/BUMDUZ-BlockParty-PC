@@ -25,7 +25,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public void ConnectUsingSettings()
     {
         SendLoading();
-        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
+      //  PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
         PhotonNetwork.ConnectUsingSettings();
     }
 

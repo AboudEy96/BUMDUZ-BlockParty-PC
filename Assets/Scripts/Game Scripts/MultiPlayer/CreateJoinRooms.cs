@@ -44,7 +44,7 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
+  //      PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
 
         if (!PhotonNetwork.IsConnected)
         {

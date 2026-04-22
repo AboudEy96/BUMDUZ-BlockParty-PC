@@ -109,7 +109,8 @@ public class Player : MonoBehaviour
         }
 
         IsRunning = characterController.IsMoving;
-    //    animator.SetBool("RUN", IsRunning);
+    // this only to share the run animatinos between photon players
+        animator.SetBool("RUN", IsRunning);
     }
 
     bool hasEffect(string childName)

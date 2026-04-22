@@ -49,21 +49,57 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void OnStartClick()
     {
         startButton.gameObject.SetActive(false);
-        GameStateManager.SetState(GameState.Playing);
-        photonView.RPC(nameof(RPC_ResetDeadStatus), RpcTarget.All);
-
+        photonView.RPC(nameof(RPC_StartGame), RpcTarget.All);
+        
+        StartCoroutine(DelayThenAssignAndStart());
+    }
+    private IEnumerator DelayThenAssignAndStart()
+    {
+        yield return new WaitForSeconds(0.5f);
         AssignRandomPositions();
         StartCoroutine(DelayThenExecute(2f, _selectColorCommand));
-        
     }
     [PunRPC]
-    private void RPC_ResetDeadStatus()
+    void SetPlayerPosition(Vector3 pos)
     {
+        StartCoroutine(WaitForPlayerThenMove(pos));
+    }
+    
+    private IEnumerator WaitForPlayerThenMove(Vector3 pos)
+    {
+        PhotonView targetPV = null;
+        float timeout = 3f;
+        float elapsed = 0f;
+
+        while (targetPV == null && elapsed < timeout)
+        {
+            foreach (var pv in FindObjectsOfType<PhotonView>())
+            {
+                if (pv.IsMine && pv.gameObject.CompareTag("Player"))
+                {
+                    targetPV = pv;
+                    break;
+                }
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (targetPV != null)
+            targetPV.transform.position = pos;
+        else
+            Debug.LogWarning("SetPlayerPosition: local player not found after timeout");
+    }
+    [PunRPC]
+    private void RPC_StartGame()
+    {
+        GameStateManager.SetState(GameState.Playing);
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
         {
             { "isDead", false }
         });
     }
+
     [PunRPC]
     private void SyncFirstMap(int mapIndex)
     {
@@ -76,21 +112,26 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         ChosenTag = selectedTag;
         colorIndicator.Show(selectedTag);
-    
+
         StartCoroutine(WaitThenGetCubesAndDestroy(selectedTag));
     }
 
     private IEnumerator WaitThenGetCubesAndDestroy(string selectedTag)
     {
-        yield return new WaitUntil(() => mapChanger.GetCurrentMap() != null 
+        yield return new WaitUntil(() => mapChanger.GetCurrentMap() != null
                                          && mapChanger.GetCurrentMap().activeInHierarchy);
-    
+
         _currentCubes = mapChanger.GetCubesFromCurrentMap();
 
         yield return new WaitForSeconds(5f);
 
         if (PhotonNetwork.IsMasterClient)
+        {
             new DestroyCubesCommand(_photonView, selectedTag).Execute();
+            
+            yield return new WaitForSeconds(3f);
+            _nextMapCommand.Execute();
+        }
     }
 
     [PunRPC]
@@ -113,6 +154,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
         mapChanger.ActivateMap(mapIndex);
         StartCoroutine(WaitForMapThenContinue());
     }
+
     void AssignRandomPositions()
     {
         foreach (var player in PhotonNetwork.PlayerList)
@@ -122,20 +164,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
             Vector3 randomPos = new Vector3(x, 1f, z);
 
             photonView.RPC("SetPlayerPosition", player, randomPos);
-        }
-    }
-
-    [PunRPC]
-    void SetPlayerPosition(Vector3 pos)
-    {
-        PhotonView[] allPlayers = FindObjectsOfType<PhotonView>();
-        foreach (var pv in allPlayers)
-        {
-            if (pv.IsMine && pv.gameObject.CompareTag("Player"))
-            {
-                pv.transform.position = pos;
-                return;
-            }
         }
     }
 
