@@ -363,13 +363,16 @@ public class SettingsManager : MonoBehaviour
         if (postProcessVolume == null) return;
 
         if (postProcessVolume.profile.TryGetSettings(out AmbientOcclusion ao))
-            ao.active = index == 2;
+            ao.enabled.value = index == 2;
 
         if (postProcessVolume.profile.TryGetSettings(out Bloom bloom))
-            bloom.active = index != 0;
+        {
+            bloom.enabled.value = index != 0;
+            bloom.intensity.value = index == 1 ? 0.5f : 1f;
+        }
 
         if (postProcessVolume.profile.TryGetSettings(out Vignette vignette))
-            vignette.active = index != 0;
+            vignette.enabled.value = index != 0;
     }
 
     private void HighlightActiveButton(int index)

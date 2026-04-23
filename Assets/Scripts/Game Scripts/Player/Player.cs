@@ -72,6 +72,14 @@ public class Player : MonoBehaviour
                 playerName.text = "Player 1";
             }
         }
+        if (!_photonView.IsMine)
+        {
+            CharacterController cc = GetComponent<CharacterController>();
+            if (cc != null)
+            {
+                cc.enabled = false;
+            }
+        }
     }
 
     private void Update()

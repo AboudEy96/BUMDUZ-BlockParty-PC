@@ -13,6 +13,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
 
     [Header("Winner Canvas")]
     public Canvas winnerCanvas;
+    [SerializeField] private Canvas deathCanvas;
     public TextMeshProUGUI winnerNameText;
     public TextMeshProUGUI winnerRoundsText;
 
@@ -156,15 +157,30 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     private void RPC_ShowWinner(string winnerName, int winnerActorNumber, int rounds)
     {
         Debug.Log("Winner: " + winnerName + " | Rounds: " + rounds);
-
+         deathCanvas?.gameObject.SetActive(false);
         if (winnerCanvas != null)
             winnerCanvas.gameObject.SetActive(true);
 
         if (winnerNameText != null)
-            winnerNameText.text = winnerName;
+        {
+            winnerNameText.text = $"{winnerName} HAS WIN THE GAME!";
+            StartCoroutine(RainbowText(winnerNameText));
+        }
 
         if (winnerRoundsText != null)
             winnerRoundsText.text = $"Rounds Won: {rounds}";
+    }
+
+    private System.Collections.IEnumerator RainbowText(TextMeshProUGUI tmp)
+    {
+        float hue = 0f;
+        while (true)
+        {
+            hue += Time.deltaTime * 0.8f;
+            if (hue > 1f) hue -= 1f;
+            tmp.color = Color.HSVToRGB(hue, 1f, 1f);
+            yield return null;
+        }
     }
 
     [PunRPC]
@@ -187,10 +203,15 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
             RoundRewardManager.Instance?.OnGameWon();
+            PlayerDataManager.Instance.AddWin();
     }
 
     [PunRPC]
-    private void RemoteGameEnd() => GameStateManager.SetState(GameState.GameOver);
+    private void RemoteGameEnd()
+    {
+        GameStateManager.SetState(GameState.GameOver);
+        PlayerDataManager.Instance.AddPlayedGame();
+    }
 
     [PunRPC]
     private void LeaveRoom() => StartCoroutine(LeaveRoomCoroutine());

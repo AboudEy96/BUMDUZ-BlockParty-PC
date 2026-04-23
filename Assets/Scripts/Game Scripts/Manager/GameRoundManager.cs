@@ -50,34 +50,36 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         startButton.gameObject.SetActive(false);
         photonView.RPC(nameof(RPC_StartGame), RpcTarget.All);
-        
-        StartCoroutine(DelayThenAssignAndStart());
     }
-    private IEnumerator DelayThenAssignAndStart()
-    {
-        yield return new WaitForSeconds(0.5f);
-        AssignRandomPositions();
-        StartCoroutine(DelayThenExecute(2f, _selectColorCommand));
-    }
+
     [PunRPC]
-    void SetPlayerPosition(Vector3 pos)
+    private void RPC_StartGame()
     {
-        StartCoroutine(WaitForPlayerThenMove(pos));
+        GameStateManager.SetState(GameState.Playing);
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        {
+            { "isDead", false }
+        });
+
+        StartCoroutine(MoveLocalPlayerToRandomPosition());
+
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(DelayThenExecute(2f, _selectColorCommand));
     }
-    
-    private IEnumerator WaitForPlayerThenMove(Vector3 pos)
+
+    private IEnumerator MoveLocalPlayerToRandomPosition()
     {
-        PhotonView targetPV = null;
-        float timeout = 3f;
+        PhotonView localPlayer = null;
         float elapsed = 0f;
 
-        while (targetPV == null && elapsed < timeout)
+        while (localPlayer == null && elapsed < 3f)
         {
             foreach (var pv in FindObjectsOfType<PhotonView>())
             {
                 if (pv.IsMine && pv.gameObject.CompareTag("Player"))
                 {
-                    targetPV = pv;
+                    localPlayer = pv;
                     break;
                 }
             }
@@ -85,19 +87,16 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
             yield return null;
         }
 
-        if (targetPV != null)
-            targetPV.transform.position = pos;
-        else
-            Debug.LogWarning("SetPlayerPosition: local player not found after timeout");
-    }
-    [PunRPC]
-    private void RPC_StartGame()
-    {
-        GameStateManager.SetState(GameState.Playing);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        if (localPlayer != null)
         {
-            { "isDead", false }
-        });
+            float x = Random.Range(-16f, 14f);
+            float z = Random.Range(-15f, 14f);
+            localPlayer.transform.position = new Vector3(x, 1f, z);
+        }
+        else
+        {
+            Debug.LogWarning("player not found to move");
+        }
     }
 
     [PunRPC]
@@ -112,7 +111,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         ChosenTag = selectedTag;
         colorIndicator.Show(selectedTag);
-
         StartCoroutine(WaitThenGetCubesAndDestroy(selectedTag));
     }
 
@@ -128,7 +126,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             new DestroyCubesCommand(_photonView, selectedTag).Execute();
-            
             yield return new WaitForSeconds(3f);
             _nextMapCommand.Execute();
         }
@@ -137,8 +134,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SyncDestroyCubes(string selectedTag)
     {
-        Debug.Log("SyncDestroyCubes CALLED on: " + PhotonNetwork.NickName);
-
         var cubes = mapChanger.GetCubesFromCurrentMap();
 
         foreach (Transform cube in cubes)
@@ -153,18 +148,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     {
         mapChanger.ActivateMap(mapIndex);
         StartCoroutine(WaitForMapThenContinue());
-    }
-
-    void AssignRandomPositions()
-    {
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            float x = Random.Range(-16f, 14f);
-            float z = Random.Range(-15f, 14f);
-            Vector3 randomPos = new Vector3(x, 1f, z);
-
-            photonView.RPC("SetPlayerPosition", player, randomPos);
-        }
     }
 
     private IEnumerator WaitForMapThenSetup()

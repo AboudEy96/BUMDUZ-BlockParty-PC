@@ -309,9 +309,9 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public void LeaveLobby()
     {
-        PhotonNetwork.LoadLevel("MainScene");
-        PhotonNetwork.OfflineMode = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainScene");
         Debug.Log("Leave Lobby");
     }
 

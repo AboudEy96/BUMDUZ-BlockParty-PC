@@ -11,8 +11,8 @@ public class Events : MonoBehaviour
     
     void Awake()
     {
-        PhotonNetwork.SendRate = 60;
-        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SendRate = 45;
+        PhotonNetwork.SerializationRate = 45;
    //    PhotonNetwork.ConnectUsingSettings();
     }
     

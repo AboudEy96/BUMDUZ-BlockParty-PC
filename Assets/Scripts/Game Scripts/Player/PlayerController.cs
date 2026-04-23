@@ -69,15 +69,13 @@ public class PlayerController : IPlayerController
     {
         speed = moveSpeed;
         IsMoving = direction.magnitude > 0.1f;
-
-        _controller.Move(direction * speed * Time.deltaTime);
-
+        
         ResetVerticalVelocity();
         ApplyGravity();
-
-        _controller.Move(_velocity * Time.deltaTime);
+        Vector3 finalMove = (direction * speed + _velocity) * Time.deltaTime;
+        _controller.Move(finalMove);
+//        _controller.Move(_velocity * Time.deltaTime);
     }
-
     private void ApplyGravity()
     {
         _velocity.y += Physics.gravity.y * Time.deltaTime;
