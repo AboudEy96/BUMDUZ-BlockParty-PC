@@ -1,0 +1,224 @@
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{0}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{1}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{2}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{3}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{4}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{5}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{6}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{7}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/HEAD@{8}: remote set-head
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/remotes/origin/main@{0}: update by push
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refs/heads/main@{0}: commit: edit winner UI, fix smooth movements
+[33m4e67641[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: commit: edit winner UI, fix smooth movements
+[33m508bd2c[m refs/remotes/origin/HEAD@{9}: remote set-head
+[33m508bd2c[m refs/remotes/origin/HEAD@{10}: remote set-head
+[33m508bd2c[m refs/remotes/origin/HEAD@{11}: remote set-head
+[33m508bd2c[m refs/remotes/origin/main@{1}: update by push
+[33m508bd2c[m refs/heads/main@{1}: commit: fix player win event set the base of photon
+[33m508bd2c[m HEAD@{1}: commit: fix player win event set the base of photon
+[33m79ce4fd[m refs/remotes/origin/HEAD@{12}: remote set-head
+[33m79ce4fd[m refs/remotes/origin/HEAD@{13}: remote set-head
+[33m79ce4fd[m refs/remotes/origin/main@{2}: update by push
+[33m79ce4fd[m refs/heads/main@{2}: commit: destroy cubes for players, change to windows settings
+[33m79ce4fd[m HEAD@{2}: commit: destroy cubes for players, change to windows settings
+[33m7f14c7f[m refs/remotes/origin/HEAD@{14}: remote set-head
+[33m7f14c7f[m refs/remotes/origin/HEAD@{15}: remote set-head
+[33m7f14c7f[m refs/remotes/origin/HEAD@{16}: remote set-head
+[33m7f14c7f[m refs/remotes/origin/HEAD@{17}: remote set-head
+[33m7f14c7f[m refs/remotes/origin/HEAD@{18}: remote set-head
+[33m7f14c7f[m refs/remotes/origin/main@{3}: update by push
+[33m7f14c7f[m refs/heads/main@{3}: commit: fix player win & settings
+[33m7f14c7f[m HEAD@{3}: commit: fix player win & settings
+[33me33cc6e[m refs/remotes/origin/HEAD@{19}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{20}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{21}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{22}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{23}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{24}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{25}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{26}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{27}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{28}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{29}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{30}: remote set-head
+[33me33cc6e[m refs/remotes/origin/HEAD@{31}: remote set-head
+[33me33cc6e[m refs/remotes/origin/main@{4}: update by push
+[33me33cc6e[m refs/heads/main@{4}: commit: Reset data while register
+[33me33cc6e[m HEAD@{4}: commit: Reset data while register
+[33me67fd95[m refs/remotes/origin/HEAD@{32}: remote set-head
+[33me67fd95[m refs/remotes/origin/main@{5}: fetch --progress --prune --recurse-submodules=on-demand origin: fast-forward
+[33m38331e8[m refs/remotes/origin/HEAD@{33}: remote set-head
+[33m38331e8[m refs/remotes/origin/main@{6}: update by push
+[33m38331e8[m refs/heads/main@{5}: commit: Sort Buttons, Fix Log-in, Edit Profile Menu
+[33m38331e8[m HEAD@{5}: commit: Sort Buttons, Fix Log-in, Edit Profile Menu
+[33mbff76c5[m refs/remotes/origin/HEAD@{34}: remote set-head
+[33mbff76c5[m refs/remotes/origin/HEAD@{35}: remote set-head
+[33mbff76c5[m refs/remotes/origin/main@{7}: update by push
+[33mbff76c5[m refs/heads/main@{6}: commit: NewMaps
+[33mbff76c5[m HEAD@{6}: commit: NewMaps
+[33mf27baef[m refs/remotes/origin/HEAD@{36}: remote set-head
+[33mf27baef[m refs/remotes/origin/HEAD@{37}: remote set-head
+[33mf27baef[m refs/remotes/origin/HEAD@{38}: remote set-head
+[33mf27baef[m refs/remotes/origin/main@{8}: update by push
+[33mf27baef[m refs/heads/main@{7}: commit: game scene
+[33mf27baef[m HEAD@{7}: commit: game scene
+[33m4c06cc8[m refs/remotes/origin/HEAD@{39}: remote set-head
+[33m4c06cc8[m refs/remotes/origin/HEAD@{40}: remote set-head
+[33m4c06cc8[m refs/remotes/origin/main@{9}: update by push
+[33mfb80494[m refs/remotes/origin/HEAD@{41}: remote set-head
+[33mfb80494[m refs/remotes/origin/HEAD@{42}: remote set-head
+[33m4c06cc8[m refs/heads/main@{8}: filter-branch: rewrite
+[33m1209cf8[m refs/heads/main@{9}: commit: Maps Handler
+[33m4c06cc8[m HEAD@{8}: filter-branch: rewrite
+[33m1209cf8[m HEAD@{9}: commit: Maps Handler
+[33m31635cd[m refs/heads/main@{10}: commit: NewMaps, LeaveUI, Images To Cubes, Fix Win
+[33m31635cd[m HEAD@{10}: commit: NewMaps, LeaveUI, Images To Cubes, Fix Win
+[33mfb80494[m refs/remotes/origin/main@{10}: update by push
+[33mfb80494[m refs/heads/main@{11}: commit: DataSaver on Cloud, Auth, Profile
+[33mfb80494[m HEAD@{11}: commit: DataSaver on Cloud, Auth, Profile
+[33m3748027[m refs/remotes/origin/main@{11}: update by push
+[33m3748027[m refs/heads/main@{12}: commit: Coins, Rounds, Spectate, Rewards
+[33m3748027[m HEAD@{12}: commit: Coins, Rounds, Spectate, Rewards
+[33m78063f4[m refs/remotes/origin/main@{12}: update by push
+[33m78063f4[m refs/heads/main@{13}: commit: Player Respawn
+[33m78063f4[m HEAD@{13}: commit: Player Respawn
+[33m0a57f07[m refs/remotes/origin/main@{13}: update by push
+[33m0a57f07[m refs/heads/main@{14}: commit: Mobile Animatons
+[33m0a57f07[m HEAD@{14}: commit: Mobile Animatons
+[33m7651f72[m refs/remotes/origin/main@{14}: update by push
+[33m7651f72[m refs/heads/main@{15}: commit: Joystick
+[33m7651f72[m HEAD@{15}: commit: Joystick
+[33md503741[m refs/heads/main@{16}: commit: GFX Edit, Mobile SelectedColor UI
+[33md503741[m HEAD@{16}: commit: GFX Edit, Mobile SelectedColor UI
+[33ma4ceb9a[m refs/remotes/origin/HEAD@{43}: remote set-head
+[33ma4ceb9a[m refs/remotes/origin/HEAD@{44}: remote set-head
+[33ma4ceb9a[m refs/remotes/origin/main@{15}: update by push
+[33mc081911[m refs/remotes/origin/HEAD@{45}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{46}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{47}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{48}: remote set-head
+[33ma4ceb9a[m refs/heads/main@{17}: commit: Setup Ads
+[33ma4ceb9a[m HEAD@{17}: commit: Setup Ads
+[33mc081911[m refs/remotes/origin/HEAD@{49}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{50}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{51}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{52}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{53}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{54}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{55}: remote set-head
+[33mc081911[m refs/remotes/origin/HEAD@{56}: remote set-head
+[33mc081911[m refs/remotes/origin/main@{16}: update by push
+[33mc081911[m refs/heads/main@{18}: commit: cursor, settings
+[33mc081911[m HEAD@{18}: commit: cursor, settings
+[33mee600c2[m refs/remotes/origin/HEAD@{57}: remote set-head
+[33mee600c2[m refs/remotes/origin/HEAD@{58}: remote set-head
+[33mee600c2[m refs/remotes/origin/HEAD@{59}: remote set-head
+[33mee600c2[m refs/remotes/origin/HEAD@{60}: remote set-head
+[33mee600c2[m refs/remotes/origin/HEAD@{61}: remote set-head
+[33mee600c2[m refs/remotes/origin/main@{17}: update by push
+[33mee600c2[m refs/heads/main@{19}: commit: settings
+[33mee600c2[m HEAD@{19}: commit: settings
+[33m2206d49[m refs/remotes/origin/HEAD@{62}: remote set-head
+[33m2206d49[m refs/remotes/origin/HEAD@{63}: remote set-head
+[33m2206d49[m refs/remotes/origin/main@{18}: update by push
+[33m2206d49[m refs/heads/main@{20}: commit: Made the code SOLID
+[33m2206d49[m HEAD@{20}: commit: Made the code SOLID
+[33m516f073[m refs/remotes/origin/HEAD@{64}: remote set-head
+[33m516f073[m refs/remotes/origin/HEAD@{65}: remote set-head
+[33m516f073[m refs/remotes/origin/main@{19}: update by push
+[33mcc0a35a[m refs/remotes/origin/HEAD@{66}: remote set-head
+[33m516f073[m refs/heads/main@{21}: commit: to laptop
+[33m516f073[m HEAD@{21}: commit: to laptop
+[33mcc0a35a[m refs/remotes/origin/HEAD@{67}: remote set-head
+[33mcc0a35a[m refs/remotes/origin/main@{20}: update by push
+[33mcc0a35a[m refs/heads/main@{22}: commit: Fix somany bugs , map changes, colors, blocksdestroyer, some animations, settings ui
+[33mcc0a35a[m HEAD@{22}: commit: Fix somany bugs , map changes, colors, blocksdestroyer, some animations, settings ui
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{68}: remote set-head
+[33mc95dd82[m refs/heads/main@{23}: commit: Fix Materials for MUMDUZ in Main Menu, Fix Player Win Time
+[33mc95dd82[m HEAD@{23}: commit: Fix Materials for MUMDUZ in Main Menu, Fix Player Win Time
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{69}: remote set-head
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{70}: remote set-head
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{71}: remote set-head
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{72}: remote set-head
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{73}: remote set-head
+[33mfc6f2ee[m refs/remotes/origin/HEAD@{74}: remote set-head
+[33mfc6f2ee[m refs/remotes/origin/main@{21}: update by push
+[33mfc6f2ee[m refs/heads/main@{24}: commit: MUMDUZ Character Playable
+[33mfc6f2ee[m HEAD@{24}: commit: MUMDUZ Character Playable
+[33m552d172[m refs/heads/main@{25}: commit: New MUMDUZ Animations, Edit Materials, fix default cubes to white
+[33m552d172[m HEAD@{25}: commit: New MUMDUZ Animations, Edit Materials, fix default cubes to white
+[33m5857daf[m refs/remotes/origin/HEAD@{75}: remote set-head
+[33m5857daf[m refs/remotes/origin/HEAD@{76}: remote set-head
+[33m5857daf[m refs/remotes/origin/HEAD@{77}: remote set-head
+[33m5857daf[m refs/remotes/origin/HEAD@{78}: remote set-head
+[33m5857daf[m refs/remotes/origin/HEAD@{79}: remote set-head
+[33m5857daf[m refs/remotes/origin/HEAD@{80}: remote set-head
+[33m5857daf[m refs/heads/main@{26}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m5857daf[m HEAD@{26}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m5857daf[m refs/remotes/origin/HEAD@{81}: remote set-head
+[33m5857daf[m refs/remotes/origin/main@{22}: fetch --progress --prune --recurse-submodules=on-demand origin: fast-forward
+[33mfaca967[m refs/remotes/origin/HEAD@{82}: remote set-head
+[33mfaca967[m refs/remotes/origin/HEAD@{83}: remote set-head
+[33mfaca967[m refs/remotes/origin/main@{23}: update by push
+[33mfaca967[m refs/heads/main@{27}: commit: fix
+[33mfaca967[m HEAD@{27}: commit: fix
+[33mc9581e0[m refs/remotes/origin/HEAD@{84}: remote set-head
+[33mc9581e0[m refs/remotes/origin/HEAD@{85}: remote set-head
+[33mc9581e0[m refs/heads/main@{28}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33mc9581e0[m HEAD@{28}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33mc9581e0[m refs/remotes/origin/HEAD@{86}: remote set-head
+[33mc9581e0[m refs/remotes/origin/main@{24}: fetch --progress --prune --recurse-submodules=on-demand origin: fast-forward
+[33ma6ee7a3[m refs/remotes/origin/HEAD@{87}: remote set-head
+[33ma6ee7a3[m refs/remotes/origin/HEAD@{88}: remote set-head
+[33ma6ee7a3[m refs/remotes/origin/HEAD@{89}: remote set-head
+[33ma6ee7a3[m refs/remotes/origin/HEAD@{90}: remote set-head
+[33ma6ee7a3[m refs/remotes/origin/main@{25}: update by push
+[33ma6ee7a3[m refs/heads/main@{29}: commit: add logo
+[33ma6ee7a3[m HEAD@{29}: commit: add logo
+[33m3bfaa8b[m refs/remotes/origin/HEAD@{91}: remote set-head
+[33m3bfaa8b[m refs/remotes/origin/HEAD@{92}: remote set-head
+[33m3bfaa8b[m refs/remotes/origin/main@{26}: update by push
+[33m3bfaa8b[m refs/heads/main@{30}: commit: fix buttons
+[33m3b9f389[m refs/remotes/origin/HEAD@{93}: remote set-head
+[33m3bfaa8b[m HEAD@{30}: commit: fix buttons
+[33m3b9f389[m refs/remotes/origin/HEAD@{94}: remote set-head
+[33m3b9f389[m refs/remotes/origin/HEAD@{95}: remote set-head
+[33m3b9f389[m refs/heads/main@{31}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m3b9f389[m HEAD@{31}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m3b9f389[m refs/remotes/origin/HEAD@{96}: remote set-head
+[33m3b9f389[m refs/remotes/origin/main@{27}: fetch --progress --prune --recurse-submodules=on-demand origin: fast-forward
+[33m8a853dc[m refs/remotes/origin/HEAD@{97}: remote set-head
+[33m8a853dc[m refs/remotes/origin/main@{28}: update by push
+[33m8a853dc[m refs/heads/main@{32}: commit: fix tags
+[33m8a853dc[m HEAD@{32}: commit: fix tags
+[33md55d455[m refs/remotes/origin/HEAD@{98}: remote set-head
+[33md55d455[m refs/remotes/origin/HEAD@{99}: remote set-head
+[33md55d455[m refs/remotes/origin/main@{29}: update by push
+[33md55d455[m refs/heads/main@{33}: commit: new colors
+[33md55d455[m HEAD@{33}: commit: new colors
+[33ma8a495b[m refs/remotes/origin/HEAD@{100}: remote set-head
+[33ma8a495b[m refs/remotes/origin/HEAD@{101}: remote set-head
+[33ma8a495b[m refs/remotes/origin/HEAD@{102}: remote set-head
+[33ma8a495b[m refs/remotes/origin/HEAD@{103}: remote set-head
+[33ma8a495b[m refs/remotes/origin/HEAD@{104}: remote set-head
+[33ma8a495b[m refs/heads/main@{34}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33ma8a495b[m HEAD@{34}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m762512c[m refs/heads/main@{35}: reset: moving to 762512cf71f73ede9be9733d20b36c9ee6a537e6
+[33m762512c[m HEAD@{35}: reset: moving to 762512cf71f73ede9be9733d20b36c9ee6a537e6
+[33ma8a495b[m refs/remotes/origin/HEAD@{105}: remote set-head
+[33ma8a495b[m refs/remotes/origin/HEAD@{106}: remote set-head
+[33ma8a495b[m refs/heads/main@{36}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33ma8a495b[m HEAD@{36}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33ma8a495b[m refs/remotes/origin/HEAD@{107}: remote set-head
+[33ma8a495b[m refs/remotes/origin/main@{30}: fetch --progress --prune --recurse-submodules=on-demand origin: fast-forward
+[33me829082[m refs/remotes/origin/HEAD@{108}: remote set-head
+[33me829082[m refs/remotes/origin/main@{31}: update by push
+[33me829082[m refs/heads/main@{37}: commit: edit character menu
+[33me829082[m HEAD@{37}: commit: edit character menu
+[33m762512c[m refs/remotes/origin/HEAD@{109}: remote set-head
+[33m762512c[m refs/remotes/origin/HEAD@{110}: remote set-head
+[33m762512c[m refs/remotes/origin/HEAD@{111}: remote set-head
+[33m762512c[m refs/remotes/origin/main@{32}: update by push
+[33m762512c[m refs/heads/main@{38}: commit: SelectionAnimation, UI Lobby Buttons
+[33m762512c[m HEAD@{38}: commit: SelectionAnimation, UI Lobby Buttons
+[33m
