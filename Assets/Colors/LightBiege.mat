@@ -8,13 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LightBiege
-  m_Shader: {fileID: 4800000, guid: 72ba7bcd3422958418b421a47e8b7c49, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5970e26d024a9394c8e667913c6d6273, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -100,7 +100,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _LightIntensity: 0.5
+    - _LightIntensity: 1.486
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1

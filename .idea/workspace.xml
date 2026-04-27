@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2939ab26-0f5a-43b0-86a5-35cd64342906" name="Changes" comment="" />
+    <list default="true" id="2939ab26-0f5a-43b0-86a5-35cd64342906" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/MapsPrefabs/ART.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/MapsPrefabs/ART.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/MapsPrefabs/Cat.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/MapsPrefabs/Cat.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Ads Managements/LevelPlayAds.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Ads Managements/LevelPlayAds.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +16,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AboudEy96"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AboudEy96/BUMDUZ-BlockParty-PC.git",
+    "accountId": "f8656058-3b6a-4a94-a613-8faee4680c7f"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -24,6 +42,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm",
     "show.migrate.to.gradle.popup": "false",
