@@ -12,7 +12,7 @@ public static RandomAudioPlayer Instance;
 private List<AudioClip> audioBackup = new List<AudioClip>();
 
 public static bool PausedOfBlocksDestroy = false;
-
+private bool isPaused;
 private void Start()
 {
     
@@ -51,19 +51,24 @@ public void setVolume(float value)
 {
     _audioSource.volume = value;
 }
+
 public static void PauseResumeAudio()
 {
     if (Instance == null) return;
-    
-    bool aa = Instance._audioSource.isPlaying;
-    if (aa)
+
+    if (PausedOfBlocksDestroy)
     {
-        Instance._audioSource.Pause();
+        if (Instance._audioSource.isPlaying)
+        {
+            Instance._audioSource.Pause();
+        }
     }
     else
     {
-        Instance._audioSource.UnPause();
+        if (!Instance._audioSource.isPlaying)
+        {
+            Instance._audioSource.UnPause();
+        }
     }
-    
 }
 }

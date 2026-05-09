@@ -6215,6 +6215,8 @@ GameObject:
   - component: {fileID: 1998919709991209671}
   - component: {fileID: 5132460335867990189}
   - component: {fileID: 7894237645510789703}
+  - component: {fileID: 7715691341055784913}
+  - component: {fileID: 8038358191870409969}
   m_Layer: 6
   m_Name: MUMDUZ
   m_TagString: Player
@@ -6515,6 +6517,30 @@ MonoBehaviour:
   m_DefaultActionMap: movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7715691341055784913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619831017513192647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ed4301f4474995b77bb39d906cb628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRigidbodyController
+--- !u!114 &8038358191870409969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619831017513192647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e233d83eef4edd96982250b539b413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacterController
 --- !u!1 &7715968877879774348
 GameObject:
   m_ObjectHideFlags: 0

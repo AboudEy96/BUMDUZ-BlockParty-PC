@@ -2,50 +2,35 @@ using UnityEngine;
 
 public class RagdollTest : MonoBehaviour
 {
-    Animator animator;
-    Rigidbody[] ragdollRigidbodies;
-    Collider mainCollider;
-    CharacterController characterController;
-
+    private Animator animator;
+    private Rigidbody[] allRigidbodies;
+    public  GameObject map;
     void Awake()
     {
+
         animator = GetComponent<Animator>();
-        mainCollider = GetComponent<Collider>();
-        characterController = GetComponent<CharacterController>();
-
-        ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
-
-        SetRagdoll(false);
+        allRigidbodies = GetComponentsInChildren<Rigidbody>();
+        
+        ToggleRagdoll(false);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            SetRagdoll(true);
+            ToggleRagdoll(true);
+            Destroy(map);
         }
     }
 
-    public void SetRagdoll(bool enable)
+    public void ToggleRagdoll(bool isRagdoll)
     {
-        if (animator)
-            animator.enabled = !enable;
-
-        if (mainCollider)
-            mainCollider.enabled = !enable;
-
-        if (characterController)
-            characterController.enabled = !enable;
-
-        if (enable)
-            transform.position = ragdollRigidbodies[0].transform.position;
-
-        foreach (var rb in ragdollRigidbodies)
+        if (animator != null)
+            animator.enabled = !isRagdoll;
+        
+        foreach (Rigidbody rb in allRigidbodies)
         {
-            rb.isKinematic = !enable;
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = !isRagdoll;
         }
     }
-
 }

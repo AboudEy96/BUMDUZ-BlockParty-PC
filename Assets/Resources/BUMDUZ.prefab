@@ -212,6 +212,8 @@ GameObject:
   - component: {fileID: 6618082461473876225}
   - component: {fileID: 8790337354982082911}
   - component: {fileID: -5998744508762061502}
+  - component: {fileID: 525456921911540731}
+  - component: {fileID: 3684489562864359329}
   m_Layer: 6
   m_Name: BUMDUZ
   m_TagString: Player
@@ -512,6 +514,30 @@ MonoBehaviour:
   m_DefaultActionMap: movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &525456921911540731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005521441754725502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ed4301f4474995b77bb39d906cb628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRigidbodyController
+--- !u!114 &3684489562864359329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005521441754725502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e233d83eef4edd96982250b539b413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacterController
 --- !u!1 &1079628303052221438
 GameObject:
   m_ObjectHideFlags: 0

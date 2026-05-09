@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 using UnityEngine.UI;
 using Action = System.Action;
 
@@ -24,6 +25,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private NextMapCommand _nextMapCommand;
 
     public static Action OnNextMapStarted;
+    
 
     private void Start()
     {
@@ -44,24 +46,35 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
         {
             startButton.gameObject.SetActive(false);
         }
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        {
+            { "isDead", false }
+        });
     }
 
     private void OnStartClick()
     {
         startButton.gameObject.SetActive(false);
-        photonView.RPC(nameof(RPC_StartGame), RpcTarget.All);
+        MoveController.SetActiveAll(false);
+        StartCoroutine(DelayStartGame());
     }
 
+    IEnumerator DelayStartGame()
+    {
+        for (int i = 3; i > 0; i--)
+        {
+            Debug.Log($"game starting in : {i}");
+            Title.Instance.SetTitle( $"Game Starting in:<color=red>{i}</color>");
+            yield return new WaitForSeconds(1f);
+        }
+        Title.Instance.SetTitle($"<color=red>RUN!</color>", true);
+        photonView.RPC(nameof(RPC_StartGame), RpcTarget.All);
+    }
     [PunRPC]
     private void RPC_StartGame()
     {
         GameStateManager.SetState(GameState.Playing);
-
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
-        {
-            { "isDead", false }
-        });
-
+        
         StartCoroutine(MoveLocalPlayerToRandomPosition());
 
         if (PhotonNetwork.IsMasterClient)
@@ -97,6 +110,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
         {
             Debug.LogWarning("player not found to move");
         }
+        MoveController.SetActiveAll(true);
     }
 
     [PunRPC]
@@ -134,6 +148,8 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SyncDestroyCubes(string selectedTag)
     {
+        RandomAudioPlayer.PausedOfBlocksDestroy = true;
+        RandomAudioPlayer.PauseResumeAudio();
         var cubes = mapChanger.GetCubesFromCurrentMap();
 
         foreach (Transform cube in cubes)
@@ -147,6 +163,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void SyncNextMap(int mapIndex)
     {
         mapChanger.ActivateMap(mapIndex);
+        colorIndicator.Hide();
         StartCoroutine(WaitForMapThenContinue());
     }
 

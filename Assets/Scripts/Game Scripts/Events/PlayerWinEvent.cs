@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
@@ -35,7 +36,12 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable(); 
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        {
+            { "isDead", false }
+        });
         gameEnded = false;
+        
     }
 
     public override void OnDisable()
@@ -48,7 +54,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         gameEnded = false;
         UpdateAlivePlayersText();
     }
-
+    
     public override void OnLeftRoom() => gameEnded = false;
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)

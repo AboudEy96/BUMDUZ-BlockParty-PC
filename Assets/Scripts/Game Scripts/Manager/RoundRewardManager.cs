@@ -58,6 +58,11 @@ public class RoundRewardManager : MonoBehaviourPunCallbacks
         PlayerDataManager.Instance?.AddCoins(COINS_WIN_GAME);
     }
 
+    public int GetRound()
+    {
+        return _roundsWon;
+    }
+    
     private bool IsLocalPlayerAlive()
     {
         var localPlayer = PhotonNetwork.LocalPlayer;
@@ -68,4 +73,5 @@ public class RoundRewardManager : MonoBehaviourPunCallbacks
 
         return true;
     }
+    
 }

@@ -86,6 +86,8 @@ public class Player : MonoBehaviour
     {
         if (_photonView.IsMine)
         {
+            if (!GetComponent<CharacterController>().enabled) return;
+
             HandleMovement();
         }
     }

@@ -19,14 +19,21 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
     [SerializeField] Camera spectateCamera;
     [SerializeField] private Button Pause;
     [SerializeField] private GameObject LeaveUI;
-
-
+    [SerializeField] private Button[] CloseButton;
     private void Start()
     {
         Pause.onClick.AddListener(() =>
         {
             LeaveUI.gameObject.SetActive(true);
         });
+        CloseButton[0].onClick.AddListener((() =>
+        {
+            LeaveUI.gameObject.SetActive(false);
+        }));
+        CloseButton[1].onClick.AddListener((() =>
+        {
+            LeaveUI.gameObject.SetActive(false);
+        }));
     }
 
     public void SendLoading()
@@ -55,6 +62,7 @@ public class ButtonClickManagment : MonoBehaviourPunCallbacks
             PhotonNetwork.LeaveRoom();
         }
     }
+    
 
     public void OnPlayButtonClicked()
     {
