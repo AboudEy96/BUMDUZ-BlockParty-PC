@@ -55,7 +55,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void OnStartClick()
     {
         startButton.gameObject.SetActive(false);
-        MoveController.SetActiveAll(false);
         StartCoroutine(DelayStartGame());
     }
 
@@ -74,7 +73,7 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
     private void RPC_StartGame()
     {
         GameStateManager.SetState(GameState.Playing);
-        
+        MoveController.SetActiveAll(false);
         StartCoroutine(MoveLocalPlayerToRandomPosition());
 
         if (PhotonNetwork.IsMasterClient)

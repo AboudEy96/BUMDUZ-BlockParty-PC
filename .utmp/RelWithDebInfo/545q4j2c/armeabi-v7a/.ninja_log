@@ -1,3 +1,5 @@
 # ninja log v5
 1	491	7984910956640834	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9adfe481c47e3339
 492	876	7984910959899668	F:/BUMDUZ-BlockParty/BUMDUZ-BlockParty-PC/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/545q4j2c/obj/armeabi-v7a/libswappywrapper.so	fb6ae5548ada28ca
+30	515	8002210539242562	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9adfe481c47e3339
+515	1081	8002210544804504	F:/BUMDUZ-BlockParty/BUMDUZ-BlockParty-PC/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/545q4j2c/obj/armeabi-v7a/libswappywrapper.so	fb6ae5548ada28ca

@@ -208,8 +208,10 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     private void RPC_RewardWinner(int winnerActorNumber)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
+        {
             RoundRewardManager.Instance?.OnGameWon();
             PlayerDataManager.Instance.AddWin();
+        }
     }
 
     [PunRPC]

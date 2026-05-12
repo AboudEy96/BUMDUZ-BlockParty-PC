@@ -1,6 +1,4 @@
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using ColorUtility = UnityEngine.ColorUtility;
 
@@ -8,50 +6,53 @@ public class ColorIndicatorUI : MonoBehaviour
 {
     [SerializeField] private Transform imagesContainer;
     [SerializeField] private GameObject mobileColors;
-    [SerializeField] private  GameObject cubeLabelUI;
-    [SerializeField] private TextMeshPro selectedColorText; 
-    
-    private ColorByName _colorByName = ColorByName.Instance;
-    
-public void Show(string tag)
-{
-    imagesContainer.gameObject.SetActive(false);
-    mobileColors.SetActive(true);
-    SpriteRenderer cubeColor = cubeLabelUI.GetComponent<SpriteRenderer>();
-    if (_colorByName.UICubeColor.TryGetValue(tag, out string hex))
+    [SerializeField] private GameObject cubeLabelUI;
+    [SerializeField] private TextMeshPro selectedColorText;
+
+    private ColorByName _colorByName;
+
+    private string CurrentPlatform;
+
+    private void Awake()
     {
-        Color color;
-        if (ColorUtility.TryParseHtmlString(hex, out color))
-        {
-            cubeColor.color = color; 
-            selectedColorText.color = color;
-        }
+        _colorByName = ColorByName.Instance;
     }
 
-    selectedColorText.text = tag;
-/*#else
-        foreach (Transform color in imagesContainer)
+    private void Start()
+    {
+#if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
+        CurrentPlatform = "mobile";
+#else
+        CurrentPlatform = "windows";
+#endif
+    }
+
+    public void Show(string tag)
+    {
+        imagesContainer.gameObject.SetActive(false);
+        mobileColors.SetActive(true);
+
+        SpriteRenderer cubeColor = cubeLabelUI.GetComponent<SpriteRenderer>();
+
+        if (_colorByName.Colors.TryGetValue(tag, out var colorData))
         {
-            if (color.CompareTag("Text") || color.CompareTag("LightON")) continue;
-            color.gameObject.SetActive(color.CompareTag(tag));
-        } 
+            string hex =
+                CurrentPlatform == "mobile"
+                    ? colorData.Mobile
+                    : colorData.Windows;
 
-    #endif*/
-}
+            if (ColorUtility.TryParseHtmlString(hex, out Color color))
+            {
+                cubeColor.color = color;
+                selectedColorText.color = color;
+            }
+        }
 
+        selectedColorText.text = tag;
+    }
 
     public void Hide()
     {
-#if UNITY_ANDROID || UNITY_IOS
         mobileColors.SetActive(false);
-     #else
-        mobileColors.SetActive(false);
-      /*  foreach (Transform color in imagesContainer)
-        {
-            if (color.CompareTag("Text") || color.CompareTag("LightON")) continue;
-            color.gameObject.SetActive(false);
-        }*/
-    #endif
-}
-    
+    }
 }

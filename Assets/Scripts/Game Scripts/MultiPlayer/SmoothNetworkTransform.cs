@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using Photon.Pun;
 
 public class SmoothNetworkTransform : MonoBehaviourPun, IPunObservable
@@ -38,13 +38,27 @@ public class SmoothNetworkTransform : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(transform.position.x);
+            stream.SendNext(transform.position.y);
+            stream.SendNext(transform.position.z);
+
+            stream.SendNext(transform.rotation.x);
+            stream.SendNext(transform.rotation.y);
+            stream.SendNext(transform.rotation.z);
+            stream.SendNext(transform.rotation.w);
         }
         else
         {
-            networkPosition = (Vector3)stream.ReceiveNext();
-            networkRotation = (Quaternion)stream.ReceiveNext();
+            float px = (float)stream.ReceiveNext();
+            float py = (float)stream.ReceiveNext();
+            float pz = (float)stream.ReceiveNext();
+            networkPosition = new Vector3(px, py, pz);
+
+            float rx = (float)stream.ReceiveNext();
+            float ry = (float)stream.ReceiveNext();
+            float rz = (float)stream.ReceiveNext();
+            float rw = (float)stream.ReceiveNext();
+            networkRotation = new Quaternion(rx, ry, rz, rw);
         }
     }
-}
+}*/
