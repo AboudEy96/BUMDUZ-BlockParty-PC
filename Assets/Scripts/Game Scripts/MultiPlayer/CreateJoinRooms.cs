@@ -134,6 +134,10 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        {
+            { "isDead", false }
+        });
         HandleJoinedRoom();
         ChangeScreen();
     }

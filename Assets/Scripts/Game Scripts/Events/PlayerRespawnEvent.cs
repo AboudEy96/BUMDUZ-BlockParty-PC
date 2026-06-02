@@ -22,6 +22,7 @@ public class PlayerRespawnEvent : MonoBehaviour
     private ColorGrading colorGrading;
 
     private PhotonView view;
+
     private void Start()
     {
         if (!effect.profile.TryGetSettings(out colorGrading))
@@ -31,15 +32,16 @@ public class PlayerRespawnEvent : MonoBehaviour
         FindLocalPlayer();
         view = player.GetComponent<PhotonView>();
     }
+
     private void FindLocalPlayer()
     {
         PhotonView[] players = FindObjectsOfType<PhotonView>();
 
-        foreach (PhotonView view in players)
+        foreach (PhotonView v in players)
         {
-            if (view.CompareTag("Player") && view.IsMine)
+            if (v.CompareTag("Player") && v.IsMine)
             {
-                player = view.gameObject;
+                player = v.gameObject;
                 Debug.Log("Local player found: " + player.name);
                 return;
             }
@@ -61,19 +63,9 @@ public class PlayerRespawnEvent : MonoBehaviour
 
     public void OnPlayerRespawn()
     {
-        var pl = view.Owner;
         if (!IsPlayerRespawning()) return;
-        
-        ShowPlayer();
-        RespawnPlayerPosition();
-        title.text = " ";
-        StartCoroutine(RestoreGfx());
-        pl.SetCustomProperties(new Hashtable
-        {
-            { "isDead", false }, 
-            {"Respawning", false} 
-        });
-        respawnCam.gameObject.SetActive(false);
+
+        DoRespawn();
     }
 
     public void OnPlayerQueueRespawn(RewardType type)
@@ -81,23 +73,55 @@ public class PlayerRespawnEvent : MonoBehaviour
         if (type != RewardType.Respawn) return;
         if (!IsPlayerDead()) return;
 
+        Debug.Log("PlayerQueueRespawn");
+        
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Debug.Log("Single player: respawning immediately after ad.");
+            view.Owner.SetCustomProperties(new Hashtable
+            {
+                { "isDead", false },
+                { "Respawning", false }
+            });
+            DoRespawn();
+            return;
+        }
+
         view.Owner.SetCustomProperties(new Hashtable
         {
             { "Respawning", true }
         });
-        Debug.Log("PlayerQueueRespawn");
         respawnCam.gameObject.SetActive(true);
         deathScreen.gameObject.SetActive(false);
         title.text = "RESPAWNING ON NEXT ROUND..";
     }
     
+    private void DoRespawn()
+    {
+        ShowPlayer();
+        RespawnPlayerPosition();
+        title.text = " ";
+        StartCoroutine(RestoreGfx());
+        
+        if (view != null)
+        {
+            view.Owner.SetCustomProperties(new Hashtable
+            {
+                { "isDead", false },
+                { "Respawning", false }
+            });
+        }
+
+        respawnCam.gameObject.SetActive(false);
+        deathScreen.gameObject.SetActive(false);
+    }
+
     private bool IsPlayerDead()
     {
         if (view != null && view.Owner.CustomProperties.TryGetValue("isDead", out var value))
         {
             return (bool)value;
         }
-
         return false;
     }
 
@@ -107,9 +131,9 @@ public class PlayerRespawnEvent : MonoBehaviour
         {
             return (bool)value;
         }
-
         return false;
     }
+
     private void ShowPlayer()
     {
         foreach (Transform child in player.transform)
@@ -128,7 +152,7 @@ public class PlayerRespawnEvent : MonoBehaviour
         int x = Random.Range(-18, 13);
         int z = Random.Range(-15, 17);
 
-        player.transform.position = new Vector3(x,1,z);
+        player.transform.position = new Vector3(x, 1, z);
     }
 
     private IEnumerator RestoreGfx()

@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         float vertical;
         bool jumpPressed;
 
-        #if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
+        #if UNITY_ANDROID || UNITY_IOS 
             Vector2 moveInput = _moveAction != null ? _moveAction.ReadValue<Vector2>() : Vector2.zero;
             horizontal  = moveInput.x;
             vertical    = moveInput.y;

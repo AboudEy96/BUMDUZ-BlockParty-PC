@@ -5,6 +5,7 @@ public class RagdollTest : MonoBehaviour
     private Animator animator;
     private Rigidbody[] allRigidbodies;
     public  GameObject map;
+    public GameObject circle;
     void Awake()
     {
 
@@ -20,6 +21,13 @@ public class RagdollTest : MonoBehaviour
         {
             ToggleRagdoll(true);
             Destroy(map);
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            ToggleRagdoll(false);
+            Vector3 loc = transform.position + Vector3.down * 2f;
+            Instantiate(circle, loc, Quaternion.identity);
         }
     }
 

@@ -12,13 +12,37 @@ public class PlayerDeathEvent : MonoBehaviourPunCallbacks
     [Header("Death Canvas")]
     public Canvas DeathScreen;
 
+    [Header("Single Player Settings")]
+    [SerializeField] private float singlePlayerLeaveDelay = 10f;
+
     private ColorGrading colorGrading;
+    private Coroutine _singlePlayerLeaveCoroutine;
 
     private void Start()
     {
         if (!EFFECT.profile.TryGetSettings(out colorGrading))
         {
             Debug.LogError("ColorGrading not found in the PostProcessVolume!");
+        }
+    }
+
+    private void OnEnable()
+    {
+        LevelPlayAds.onAdRewardAction += OnAdRewarded;
+    }
+
+    private void OnDisable()
+    {
+        LevelPlayAds.onAdRewardAction -= OnAdRewarded;
+    }
+
+    private void OnAdRewarded(RewardType type)
+    {
+        if (type != RewardType.Respawn) return;
+        if (_singlePlayerLeaveCoroutine != null)
+        {
+            StopCoroutine(_singlePlayerLeaveCoroutine);
+            _singlePlayerLeaveCoroutine = null;
         }
     }
 
@@ -36,12 +60,39 @@ public class PlayerDeathEvent : MonoBehaviourPunCallbacks
 
         if (owner.CustomProperties.TryGetValue("isDead", out var value) && value is bool isDead && isDead)
             return;
+        
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Debug.Log("Single player marking isDead");
+
+            owner.SetCustomProperties(new Hashtable
+            {
+                { "isDead", true }
+            });
+            
+            _singlePlayerLeaveCoroutine = StartCoroutine(SinglePlayerLeaveAfterDelay());
+            return;
+        }
 
         owner.SetCustomProperties(new Hashtable
         {
             { "isDead", true }
         });
-        
+
+        if (PhotonNetwork.IsMasterClient && PlayerWinEvent.Instance != null)
+        {
+            PlayerWinEvent.Instance.CheckIfPlayerWin();
+        }
+    }
+
+    private IEnumerator SinglePlayerLeaveAfterDelay()
+    {
+        yield return new WaitForSeconds(singlePlayerLeaveDelay);
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log("Single player: no respawn chosen, leaving room.");
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     public void HidePlayer(GameObject player)

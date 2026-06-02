@@ -35,18 +35,17 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
 
     public override void OnEnable()
     {
-        base.OnEnable(); 
+        base.OnEnable();
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
         {
             { "isDead", false }
         });
         gameEnded = false;
-        
     }
 
     public override void OnDisable()
     {
-        base.OnDisable(); 
+        base.OnDisable();
     }
 
     public override void OnJoinedRoom()
@@ -54,7 +53,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         gameEnded = false;
         UpdateAlivePlayersText();
     }
-    
+
     public override void OnLeftRoom() => gameEnded = false;
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
@@ -66,6 +65,8 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsMasterClient) return;
         if (gameEnded) return;
+        
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1) return;
 
         if (changedProps != null && changedProps.ContainsKey("isDead"))
             CheckIfPlayerWin();
@@ -92,6 +93,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
         if (gameEnded) return;
         
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1) return;
 
         int survivedPlayers = 0;
         Photon.Realtime.Player lastAlivePlayer = null;
@@ -113,7 +115,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
 
         int totalPlayers = PhotonNetwork.PlayerList.Length;
         int deadPlayers = totalPlayers - survivedPlayers;
-        if (deadPlayers == 0) return; 
+        if (deadPlayers == 0) return;
 
         if (survivedPlayers == 1 && lastAlivePlayer != null)
         {
@@ -163,7 +165,7 @@ public class PlayerWinEvent : MonoBehaviourPunCallbacks
     private void RPC_ShowWinner(string winnerName, int winnerActorNumber, int rounds)
     {
         Debug.Log("Winner: " + winnerName + " | Rounds: " + rounds);
-         deathCanvas?.gameObject.SetActive(false);
+        deathCanvas?.gameObject.SetActive(false);
         if (winnerCanvas != null)
             winnerCanvas.gameObject.SetActive(true);
 

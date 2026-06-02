@@ -20,8 +20,8 @@ public Dictionary<string, ColorData> Colors = new Dictionary<string, ColorData>(
     { "Black", new ColorData() { Windows = "#2b2931", Mobile = "#201E24" } },
     { "Blue", new ColorData() { Windows = "#445AD7", Mobile = "#526CF7" } },
     { "DarkBlue", new ColorData() { Windows = "#4837AC", Mobile = "#4D3BB5" } },
-    { "Green", new ColorData() { Windows = "#B7C22B", Mobile = "#B1A1E2" } },
-    { "Gray", new ColorData() { Windows = "#9789c2", Mobile = "#BCC62E" } },
+    { "Green", new ColorData() { Windows = "#B7C22B", Mobile = "#BCC62E" } }, // 
+    { "Gray", new ColorData() { Windows = "#9789c2", Mobile = "#B1A1E2" } }, // B1A1E1
     { "LightBiege", new ColorData() { Windows = "#e2c694", Mobile = "#EBCE9B" } },
     { "LightGray", new ColorData() { Windows = "#989db2", Mobile = "#C4CBE6" } },
     { "LightPurple", new ColorData() { Windows = "#e550fa", Mobile = "#ED53FF" } },
