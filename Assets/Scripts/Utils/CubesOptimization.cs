@@ -27,6 +27,7 @@ public List<GameObject> ObjectColors = new List<GameObject>();
     
    }
   }
+  // add color to object parent
   for (int i = 0; i < map.childCount; i++)
   {
    for (int j = 0; j < ObjectColors.Count; j++)
