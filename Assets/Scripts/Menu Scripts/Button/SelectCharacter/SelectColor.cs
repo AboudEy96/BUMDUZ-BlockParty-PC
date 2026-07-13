@@ -114,7 +114,7 @@ public class SelectColor : MonoBehaviour
         }
  
         string characterName = Characters[_selectedCharacter].name;
-        string targetSkin    = PlayerPrefs.GetString("Skin", "");
+        string targetSkin    = PlayerPrefs.GetString($"Skin", "");
  
         List<Material> materials = SyncPlayerMaterial.instance.getCurrentMaterial(characterName);
  

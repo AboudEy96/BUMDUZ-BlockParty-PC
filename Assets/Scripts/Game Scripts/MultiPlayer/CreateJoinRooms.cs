@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -134,10 +135,6 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
-        {
-            { "isDead", false }
-        });
         HandleJoinedRoom();
         ChangeScreen();
     }
@@ -278,8 +275,14 @@ public class CreateJoinRooms : MonoBehaviourPunCallbacks
 
       //  AssignRandomPositions();
 
-      
-      
+      foreach (var plys in PhotonNetwork.PlayerList)
+      {
+          plys.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+          {
+              {"isDead", false} ,
+              {"Respawning", false}
+          });
+      }
         StartCoroutine(DelayedStartGame());
     }
 

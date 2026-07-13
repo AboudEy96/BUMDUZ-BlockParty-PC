@@ -46,10 +46,6 @@ public class GameRoundManager : MonoBehaviourPunCallbacks
         {
             startButton.gameObject.SetActive(false);
         }
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
-        {
-            { "isDead", false }
-        });
     }
 
     private void OnStartClick()

@@ -61,7 +61,6 @@ QualitySettings:
     excludedTargetPlatforms:
     - Standalone
     - Server
-    - Android
   - serializedVersion: 5
     name: Low
     pixelLightCount: 0
@@ -173,6 +172,7 @@ QualitySettings:
     excludedTargetPlatforms:
     - Standalone
     - Server
+    - Android
   - serializedVersion: 5
     name: High
     pixelLightCount: 2

@@ -8,6 +8,7 @@ public class SelectCharacter : MonoBehaviour
     private int _type;
 
     private string CHAR_KEY = "CharacterType";
+    private string SKIN_KEY = "Skin";
     [SerializeField] private GameObject[] _character;
     [SerializeField] private Transform _spawnPoints;
     [SerializeField] private Button[] _buttons;
@@ -32,6 +33,7 @@ public class SelectCharacter : MonoBehaviour
         // set the id to 0
         _type = 0;
         PlayerPrefs.SetInt(CHAR_KEY, 0);
+        PlayerPrefs.SetString(SKIN_KEY, "Colorful");
         PlayerPrefs.Save();
         Debug.Log("Changed to BUMDUZ");
     }
@@ -40,6 +42,8 @@ public class SelectCharacter : MonoBehaviour
     {
         _type = 1;
         PlayerPrefs.SetInt(CHAR_KEY, 1);
+        PlayerPrefs.SetString(SKIN_KEY, "Purple");
+
         PlayerPrefs.Save();
         Debug.Log("Changed to MUMDUZ");
         //set the id to 1

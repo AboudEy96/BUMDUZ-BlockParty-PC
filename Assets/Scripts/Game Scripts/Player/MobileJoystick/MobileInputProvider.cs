@@ -17,6 +17,19 @@ public class MobileInputProvider : MonoBehaviour
         Instance = this;
     }
 
+    
     public void SetMoveInput(Vector2 input)  => MoveInput   = input;
-    public void SetJumpPressed(bool value)   => JumpPressed = value;
+    
+    public void SetJumpPressed() => JumpPressed = true;
+    
+
+    public bool CancelRepeatJump()
+    {
+        // if not pressed then return false to press if pressed return to press
+        if (!JumpPressed) 
+            return false;
+
+        JumpPressed = false;
+        return true;
+    }
 }

@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
             Vector2 moveInput = _moveAction != null ? _moveAction.ReadValue<Vector2>() : Vector2.zero;
             horizontal  = moveInput.x;
             vertical    = moveInput.y;
-            jumpPressed = MobileInputProvider.Instance != null && MobileInputProvider.Instance.JumpPressed;
+            jumpPressed = MobileInputProvider.Instance != null && MobileInputProvider.Instance.CancelRepeatJump();
         #else
             horizontal  = Input.GetAxisRaw("Horizontal");
             vertical    = Input.GetAxisRaw("Vertical");
