@@ -35,7 +35,7 @@ public class ApplySkin : MonoBehaviourPun
 
     private void ApplyLocalSkin()
     {
-        string skinName = PlayerPrefs.GetString("Skin", "");
+        string skinName = PlayerPrefs.GetString("Skin", "Colorful");
         ApplySkinByName(skinName);
     }
 

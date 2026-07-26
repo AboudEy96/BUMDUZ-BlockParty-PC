@@ -37,7 +37,7 @@ public class MapChanger : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             _spawnedMapInstance = PhotonNetwork.Instantiate(
-                $"MapsPrefabs/{maps[_currentMapIndex].name}",
+                $"MapsPrefabs/Baked/{maps[_currentMapIndex].name}",
                 mapsFather.transform.position,
                 mapsFather.transform.rotation
             );
