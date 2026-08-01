@@ -3904,7 +3904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: d42d7b48f69e13140b7da3edd58348d9, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 252dc6b6bf4c64f409eb3d425b48218f, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -13733,7 +13733,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.45
+  m_fontSize: 12.05
   m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 1

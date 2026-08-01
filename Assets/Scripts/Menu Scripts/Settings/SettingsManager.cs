@@ -167,7 +167,7 @@ public class SettingsManager : MonoBehaviour
             }
         }
 
-        settingsPanel = FindInactiveObjectByName("SettingsPanel");
+        settingsPanel = FindInactiveObjectByName("Canavs [ UI - Settings ]");
         if (settingsPanel == null)
         {
             var obj = GameObject.Find("SettingsPanel");
@@ -251,7 +251,7 @@ public class SettingsManager : MonoBehaviour
     private void ApplyPitch(bool enabled)
     {
         if (pitchToggleText == null) return;
-        pitchToggleText.text = enabled ? "T" : "X";
+        pitchToggleText.text = enabled ? "ON" : "OFF";
     }
 
     private void LoadSettings()
@@ -280,10 +280,34 @@ public class SettingsManager : MonoBehaviour
 
     public void CloseSettingsPanel()
     {
-        if (settingsPanel != null)
+        if (settingsPanel == null) return;
+
+        Animator anim = settingsPanel.GetComponentInChildren<Animator>();
+        
+        if (anim != null)
+        {
+            anim.SetBool("CloseSettings", true);
+            StartCoroutine(WaitAndCloseRoutine(anim));
+        }
+        else
+        {
             settingsPanel.SetActive(false);
+        }
     }
 
+    private IEnumerator WaitAndCloseRoutine(Animator anim)
+    {
+        yield return null;
+        float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSecondsRealtime(animationLength);
+        
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+            anim.SetBool("CloseSettings", false);
+        }
+    }
+    
     public void OpenSettingsPanel()
     {
         if (settingsPanel != null)

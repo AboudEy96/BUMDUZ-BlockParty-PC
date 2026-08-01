@@ -16,7 +16,7 @@ using Image = UnityEngine.UI.Image;
 public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 {
     public List<Transform> characters = new List<Transform>();
-     public List<Sprite> images = new List<Sprite>();
+     public List<GameObject> Canvases = new List<GameObject>();
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
      public GameObject lightFade;
@@ -33,7 +33,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     // public GameObject PREFAB_PLAYER = PlayerCharacterSingletoon.Instance.CHARACTER;
     // public Material PLAYER_SKIN = PlayerCharacterSingletoon.Instance.SKIN;
     
-     private string currentMode;
+     private string CurrentMode;
      [Header("The Menu of choose object")] public GameObject chooseModeObject;
      
      [Header("For Main Canvas and Loading Menu")] public Canvas MainCanvas;
@@ -45,8 +45,10 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 
         [Header("SkyBox Hex To change")] public Material TheSkyBox;
 
+
         public void Awake()
      {
+         SetCurrentMode("Map");
          ActiveButtons();
          Color a;
          string hexColor = "#808080";
@@ -89,19 +91,19 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     
     public void Other(GameObject button)
     {
-        Image img = theImage.GetComponent<Image>();
 
-        foreach (Sprite image in images)
+        foreach (GameObject canvas in Canvases)
         {
             if (demoMENU.Contains(button.name))
             {
                 demoMenuImage.GameObject().SetActive(true);
                 break;
             }
-
-            if (button.name == image.name)
+            canvas.gameObject.SetActive(false);
+            if (button.name.Contains(canvas.name))
             {
-                img.sprite = image;
+                canvas.gameObject.SetActive(true);
+                //SetCurrentMode();
                 ActiveCamera();
                 ActiveButtons();
                 ActiveCharacter();
@@ -121,9 +123,12 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     }
     public string GetCurrentMode()
     {
-        Image img = theImage.GetComponent<Image>();
-        currentMode = img.sprite.name;
-        return currentMode;
+        return this.CurrentMode;
+    }
+
+    public void SetCurrentMode(string mode)
+    {
+        this.CurrentMode = mode; 
     }
 
     public void ActiveCamera()
