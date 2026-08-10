@@ -201,5 +201,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         if (clicked == null) return;
  
         ToClose.SetActive(false);
+        CanvasManager.CloseClick(); // observe to show canvas
     }
 }

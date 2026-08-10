@@ -2093,6 +2093,7 @@ GameObject:
   - component: {fileID: 186427049}
   - component: {fileID: 186427050}
   - component: {fileID: 186427051}
+  - component: {fileID: 186427052}
   m_Layer: 0
   m_Name: onButtonClickEvents
   m_TagString: Untagged
@@ -2267,6 +2268,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fdf07c21459f7cc419156cc5e8a081b4, type: 3}
   _logoutButton: {fileID: 1203207033}
   _closeButton: {fileID: 1435585326}
+--- !u!114 &186427052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186427043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b30b8f3ac76279d4dac2046d26afadfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CanvasManager
+  Canvases:
+  - {fileID: 364858132}
+  - {fileID: 169154801}
+  - {fileID: 1992745519}
+  - {fileID: 1813979876}
+  - {fileID: 835253962}
 --- !u!1 &186666394
 GameObject:
   m_ObjectHideFlags: 0
