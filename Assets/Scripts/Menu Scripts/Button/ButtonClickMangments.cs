@@ -100,14 +100,14 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 break;
             }
             canvas.gameObject.SetActive(false);
-            if (button.name.Contains(canvas.name))
+            if (canvas.name.Contains(button.name))
             {
                 canvas.gameObject.SetActive(true);
                 //SetCurrentMode();
                 ActiveCamera();
                 ActiveButtons();
                 ActiveCharacter();
-                HideShowFade();
+              //  HideShowFade();
                 ChangeSkyBoxHex();
 
             break;
@@ -195,13 +195,11 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         }
     }
 
-    public void onCloseButtonClick()
+    public void onCloseButtonClick(GameObject ToClose)
     {
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
         if (clicked == null) return;
  
-        Transform parent = clicked.transform.parent;
-        if (parent != null)
-            parent.gameObject.SetActive(false);
+        ToClose.SetActive(false);
     }
 }
