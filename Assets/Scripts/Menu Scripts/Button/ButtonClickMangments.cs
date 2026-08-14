@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
 using ColorUtility = UnityEngine.ColorUtility;
 using Image = UnityEngine.UI.Image;
 
@@ -57,7 +53,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      }
      public void SendLoading()
      {
-         MainCanvas.gameObject.SetActive(false);
+         CanvasManager.CloseClick(); // close all canvas and show loading UI
          Image im = LoadingCanvas.GetComponentInChildren<Image>();
          int randomIndex = Random.Range(0, loadingImg.Count);
          im.sprite = loadingImg[randomIndex];
@@ -66,11 +62,16 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
      
     public void Play(GameObject button)
     {
+        StartCoroutine(PlayAfterLoading(button));
+    }
+    public IEnumerator PlayAfterLoading(GameObject button)
+    {
         string buttonName = button.transform.name;
         switch (buttonName)
         {
             case "Singleplayer":
                 SendLoading();
+                yield return new WaitForSeconds(0.4f);
                 PhotonNetwork.Disconnect();
                 PhotonNetwork.OfflineMode = true;
                 PhotonNetwork.CreateRoom("OfflineRoom");
@@ -83,7 +84,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         }
         
     }
-
     public void ShowProfile()
     {
         ProfileCanvas.gameObject.SetActive(true);

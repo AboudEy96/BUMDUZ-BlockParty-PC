@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
             }
             catch (System.Exception e)
             {
-                playerName.text = "Player 1";
+             Debug.Log("No player name found in inspector.");
             }
         }
         if (!_photonView.IsMine)
