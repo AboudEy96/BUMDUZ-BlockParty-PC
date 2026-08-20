@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Image = UnityEngine.UI.Image;
@@ -15,7 +15,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public void SendLoading()
     {
-        MainCanvas.gameObject.SetActive(false);
+        CanvasManager.CloseClick();
         Image im = LoadingCanvas.GetComponentInChildren<Image>();
         int randomIndex = Random.Range(0, images.Count);
         im.sprite = images[randomIndex];
@@ -23,12 +23,19 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     }
 
     public void ConnectUsingSettings()
-    {
-        SendLoading();
-      //  PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
-        PhotonNetwork.ConnectUsingSettings();
+    { 
+        StartCoroutine(ConnectAfterLoading());
     }
 
+    public IEnumerator ConnectAfterLoading()
+    {
+        SendLoading();
+        yield return new WaitForSeconds(0.4f);
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
+        PhotonNetwork.ConnectUsingSettings();
+
+        
+    }
     public override void OnConnectedToMaster()
     {
         if (!PhotonNetwork.OfflineMode)

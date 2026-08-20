@@ -94,14 +94,10 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 
         foreach (GameObject canvas in Canvases)
         {
-            if (demoMENU.Contains(button.name))
-            {
-                demoMenuImage.GameObject().SetActive(true);
-                break;
-            }
             canvas.gameObject.SetActive(false);
             if (canvas.name.Contains(button.name))
             {
+                Debug.Log($"Canvas: {canvas.name}, Button: {button.name}");
                 canvas.gameObject.SetActive(true);
                 //SetCurrentMode();
                 ActiveCamera();
@@ -109,9 +105,12 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 ActiveCharacter();
               //  HideShowFade();
                 ChangeSkyBoxHex();
+                Debug.Log($"CANVAS FOUND FOUND FOUND");
 
             break;
             }
+            Debug.Log($"Canvas = '{canvas.name}' | Button = '{button.name}'");
+
         }
     }
     
