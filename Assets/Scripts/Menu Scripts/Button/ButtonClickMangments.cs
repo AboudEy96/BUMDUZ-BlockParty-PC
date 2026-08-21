@@ -44,7 +44,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         public void Awake()
      {
          SetCurrentMode("Map");
-         ActiveButtons();
          Color a;
          string hexColor = "#808080";
          ColorUtility.TryParseHtmlString(hexColor, out a);
@@ -77,9 +76,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
                 SceneManager.LoadScene("Game");
                 Debug.Log("Singleplayer Mode ------");
                 break;
-            default:
-                chooseModeObject.SetActive(true);
-                break;
+            
         }
         
     }
@@ -98,15 +95,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
             {
                 Debug.Log($"Canvas: {canvas.name}, Button: {button.name}");
                 canvas.gameObject.SetActive(true);
-                //SetCurrentMode();
-                ActiveCamera();
-                ActiveButtons();
-                ActiveCharacter();
-              //  HideShowFade();
-                ChangeSkyBoxHex();
                 Debug.Log($"CANVAS FOUND FOUND FOUND");
-
-            break;
             }
             Debug.Log($"Canvas = '{canvas.name}' | Button = '{button.name}'");
 
@@ -134,14 +123,6 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
         bool characterMode = GetCurrentMode().Equals("Character") ? true : false;
         characterCamera.gameObject.SetActive(characterMode);
         mainCamera.enabled = !characterMode;
-    }
-
-    public void ActiveButtons()
-    {
-        foreach (GameObject button in buttons)
-        {
-            button.SetActive(button.name.Contains(GetCurrentMode()));
-        }   
     }
 
     public void ChangeSkyBoxHex()
@@ -176,22 +157,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
             yield return null;
         }
     }
-
-    public void ActiveCharacter()
-    {
-        foreach (Transform character in characters)
-        {
-         //   character.gameObject.SetActive(character.name.Contains(GetCurrentMode()));
-                //   Vector3 location = new Vector3(2.349438f, -0.5281435f, 2.576072f);
-          /*  PlayerUser player = new PlayerUserBuilder(PREFAB_PLAYER)
-                .SetId(1)
-                .SetName("Your Skin")
-                .SetSkinMaterial(PLAYER_SKIN)
-                .Build(location);*/
-            
-            
-        }
-    }
+    
 
     public void onCloseButtonClick(GameObject ToClose)
     {

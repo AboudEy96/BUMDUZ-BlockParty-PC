@@ -17010,7 +17010,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 186427044}
         m_TargetAssemblyTypeName: ButtonClickMangments, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: Other
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1384934806}

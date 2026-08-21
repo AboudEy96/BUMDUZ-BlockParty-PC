@@ -636,7 +636,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &105826413
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -693,6 +693,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &105867100
 GameObject:
   m_ObjectHideFlags: 0
@@ -4371,6 +4372,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+    m_Priority: 0
   m_PointerMoveAction:
     m_Name: 
     m_Type: 0
@@ -4380,6 +4382,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+    m_Priority: 0
 --- !u!114 &607946641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4755,6 +4758,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+    m_Priority: 0
   m_PointerMoveAction:
     m_Name: 
     m_Type: 0
@@ -4764,6 +4768,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+    m_Priority: 0
 --- !u!114 &657422027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6112,7 +6117,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &900659564
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6169,6 +6174,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &904751904
 GameObject:
   m_ObjectHideFlags: 0
@@ -13733,7 +13739,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.05
+  m_fontSize: 11.4
   m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15834,7 +15840,7 @@ Transform:
   m_GameObject: {fileID: 1407381402231898826}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.68, y: 0, z: 26.4}
+  m_LocalPosition: {x: -1.8, y: -4.15, z: -8.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18003,8 +18009,18 @@ MonoBehaviour:
   maps:
   - {fileID: 1169476110226968072, guid: 2c470500c7a822143ad37edb38b12a28, type: 3}
   - {fileID: 6942694185350969613, guid: 228ebce5ba69fa541b465e954e1a1226, type: 3}
+  - {fileID: 1748457992538911523, guid: f9a0210e92cdc3f44b96c8e5ae4ff5a0, type: 3}
+  - {fileID: 5202318879864122689, guid: e8c3a0c56c4ac74479e9f9327a8cf318, type: 3}
+  - {fileID: 1227684458515282877, guid: 3a4383aa04ac76c47ad3dfdb198a617a, type: 3}
   - {fileID: 8330391789371759323, guid: a5f13d74f009d5f4ca6faa040450982c, type: 3}
+  - {fileID: 3663078374503455612, guid: d5c74424d55ba6f4b834fc2f49f8e3de, type: 3}
+  - {fileID: 6572380793662341251, guid: 96321b6cd3d134d4bb4eeb0ab9ef7d55, type: 3}
+  - {fileID: 5065740805324222036, guid: d6b4e4ed6e2786149a0b355909bf3c32, type: 3}
+  - {fileID: 7377549852279132766, guid: 8e133d2ba30a9e445bf7b9aa96cb685a, type: 3}
+  - {fileID: 6278964182359837619, guid: 300c472798b2bd143a1815f57a62af2c, type: 3}
+  - {fileID: 3495557642972801618, guid: 35a6ff6939f775847aa159a89d824841, type: 3}
   - {fileID: 1219306424545550231, guid: 92aabe65dc4a5814a996e31d4f1586b8, type: 3}
+  - {fileID: 4002568745308944384, guid: d2f53d694aa31f941a99389df8abc0e1, type: 3}
   mapsFather: {fileID: 1407381402231898826}
   scoreboard: {fileID: 92661317579243269}
 --- !u!222 &9158435114597449242

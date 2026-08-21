@@ -37,7 +37,7 @@ public class CanvasManager : MonoBehaviour
             }
         }
     }
-    public static void CloseClick(string canvasName = null)
+    public static void CloseClick(string canvasName = null) // which canvas we should show after cloese all canvases ( UI - MAIN ) by default.
     {
         OnCloseClick?.Invoke(canvasName);
     }

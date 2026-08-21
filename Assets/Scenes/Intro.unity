@@ -625,22 +625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f139eb4ff11445dab498f01a5d639dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skinMaterials:
-  - {fileID: 2100000, guid: 386e5b9819883f04da699b90742a3acc, type: 2}
-  - {fileID: 2100000, guid: 255ee29c39c5c1041931af01ac8826a2, type: 2}
-  - {fileID: 2100000, guid: acbdec5e12e569346b6106a26ed9b507, type: 2}
-  - {fileID: 2100000, guid: dbb960f3373680041a3283fdfb1e23b6, type: 2}
-  - {fileID: 2100000, guid: f5b56a9be64030943b650fa61c295340, type: 2}
-  - {fileID: 2100000, guid: b92412b3b9c3c2940800e95b777038e6, type: 2}
-  - {fileID: 2100000, guid: 560e04e20ec5ced4b864e1a8c6cda888, type: 2}
-  _MUMDUZMaterials:
-  - {fileID: 2100000, guid: 9fd7f90b94b67384098adf1314011c80, type: 2}
-  - {fileID: 2100000, guid: f7b83e04b502dc047bcd85d691f7c1ea, type: 2}
-  - {fileID: 2100000, guid: fb6e59a57d7e94e4f952e42c2a158ee5, type: 2}
-  - {fileID: 2100000, guid: e77ff0ef38b579546b7ea0347f7c3348, type: 2}
-  - {fileID: 2100000, guid: ea569d9d05a69de488c18e3b1959f5cf, type: 2}
-  - {fileID: 2100000, guid: 76537a610afcaeb47962672076f05e00, type: 2}
-  - {fileID: 2100000, guid: ce35ce30a1c6dbc4bad29677a5dfbe36, type: 2}
+  _skinMaterials: []
+  _MUMDUZMaterials: []
 --- !u!4 &1405803255
 Transform:
   m_ObjectHideFlags: 0
@@ -698,7 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc3d0e05ec6065a4f9b3d2bddcf07671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CursorManager
-  curosImg: {fileID: 2800000, guid: a813f548cbd380e46abf3ad9c648c5c4, type: 3}
+  curosImg: {fileID: 0}
   clickPos: {x: 0, y: 0}
 --- !u!114 &1405803259
 MonoBehaviour:
@@ -712,25 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4dc4bc55e914240abfe08d3783837d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorByName
-  MaterialColors:
-  - {fileID: 2100000, guid: 2fb47e8ebc9b7514e894c42ddfda34ae, type: 2}
-  - {fileID: 2100000, guid: 9542a68d4f3b6f54ca2d0ad935114091, type: 2}
-  - {fileID: 2100000, guid: 70897a416d02fbc4d8811662be468130, type: 2}
-  - {fileID: 2100000, guid: ca24fe173ef91944f90f70a45ce2f4dc, type: 2}
-  - {fileID: 2100000, guid: b010b0e31415f7441a4bcd3b1484d282, type: 2}
-  - {fileID: 2100000, guid: ced381668a581b24d99dbffcf4f6f68e, type: 2}
-  - {fileID: 2100000, guid: 56ce76855a4d0c14798b1704260f473f, type: 2}
-  - {fileID: 2100000, guid: 8af37a285ae6be944a109f43eb2fe6a5, type: 2}
-  - {fileID: 2100000, guid: d615237abf083aa4a9c0ac4eaf8c0390, type: 2}
-  - {fileID: 2100000, guid: 7e5c3ae2e6b656249853c865ef6cf3a2, type: 2}
-  - {fileID: 2100000, guid: 7c6a6fc7f71cf5c4aa4f06fc1549a6fa, type: 2}
-  - {fileID: 2100000, guid: f7991e5666ee6d044a404c174d384872, type: 2}
-  - {fileID: 2100000, guid: 933907cd8645e2f419036db0b572cf22, type: 2}
-  - {fileID: 2100000, guid: 01ee1a1e57d9e604a8044d5e07594b4f, type: 2}
-  - {fileID: 2100000, guid: 5211917955420f648b42d1b42d13ab6e, type: 2}
-  - {fileID: 2100000, guid: 9a9373b75c544a54eb95ad1af0d1d49a, type: 2}
-  - {fileID: 2100000, guid: 18946e3abe107e04abbbfde1744f4c49, type: 2}
-  - {fileID: 2100000, guid: 71296f2dc2758654ca0f06cd7fa44c72, type: 2}
+  MaterialColors: []
 --- !u!114 &1405803260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55432a582ab4d7dace636aaacd132bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  director: {fileID: 1619561577}
+  director: {fileID: 901152426}
 --- !u!1 &2082796761
 GameObject:
   m_ObjectHideFlags: 0
