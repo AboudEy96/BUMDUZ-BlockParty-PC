@@ -4,9 +4,15 @@ using UnityEngine;
 public class CanvasManager : MonoBehaviour
 {
     public static event Action<string> OnCloseClick;
-
+    public static CanvasManager instance;
     [Header("Main Menu Canvases")] [SerializeField]
     private GameObject[] Canvases;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
 
     public void OnEnable()
     {
@@ -34,5 +40,10 @@ public class CanvasManager : MonoBehaviour
     public static void CloseClick(string canvasName = null)
     {
         OnCloseClick?.Invoke(canvasName);
+    }
+
+    public GameObject[] GetCanvases()
+    {
+        return Canvases;
     }
 }

@@ -28,6 +28,22 @@ public class SelectCharacter : MonoBehaviour
         this._type = PlayerPrefs.GetInt(CHAR_KEY, 0);
         ChangeCharacter();
     }
+
+    public void NextPrevClick()
+    {
+        // if 0 go to 1 if 1 go to 0
+        switch (_type)
+        {
+            case 0:
+                MUMDUZ();
+                break;
+            case 1:
+                BUMDUZ();
+                break;
+        }
+
+        ChangeCharacter();
+    }
     public void BUMDUZ()
     {
         // set the id to 0

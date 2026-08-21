@@ -12,7 +12,6 @@ using Image = UnityEngine.UI.Image;
 public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
 {
     public List<Transform> characters = new List<Transform>();
-     public List<GameObject> Canvases = new List<GameObject>();
      public List<GameObject> buttons = new List<GameObject>();
      public Transform theImage;
      public GameObject lightFade;
@@ -92,7 +91,7 @@ public class ButtonClickMangments : MonoBehaviour,IButtonClickMangment
     public void Other(GameObject button)
     {
 
-        foreach (GameObject canvas in Canvases)
+        foreach (GameObject canvas in CanvasManager.instance.GetCanvases())
         {
             canvas.gameObject.SetActive(false);
             if (canvas.name.Contains(button.name))
