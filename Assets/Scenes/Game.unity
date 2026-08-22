@@ -5431,6 +5431,81 @@ Transform:
   - {fileID: 963500880}
   m_Father: {fileID: 64627196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &801976401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801976402}
+  - component: {fileID: 801976404}
+  - component: {fileID: 801976403}
+  m_Layer: 5
+  m_Name: BUMDUZ
+  m_TagString: MapScoreboard
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &801976402
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801976401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92661317579243269}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.94200003, y: 0.52000004}
+  m_AnchorMax: {x: 0.97400004, y: 0.569}
+  m_AnchoredPosition: {x: -0.028198242, y: 0.14250183}
+  m_SizeDelta: {x: 0.70379996, y: -0.26020002}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &801976403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801976401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 32cdfdd15f8abf04c8cc28d01bff5e6a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &801976404
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801976401}
+  m_CullTransparentMesh: 1
 --- !u!1 &811591030
 GameObject:
   m_ObjectHideFlags: 0
@@ -13522,6 +13597,7 @@ RectTransform:
   - {fileID: 1989623956}
   - {fileID: 304044303}
   - {fileID: 1121186144}
+  - {fileID: 801976402}
   - {fileID: 742681689}
   - {fileID: 1301622586}
   - {fileID: 1228307016}
@@ -13739,7 +13815,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.4
+  m_fontSize: 11.55
   m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15840,7 +15916,7 @@ Transform:
   m_GameObject: {fileID: 1407381402231898826}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8, y: -4.15, z: -8.5}
+  m_LocalPosition: {x: 19, y: 0, z: 26.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17851,7 +17927,6 @@ GameObject:
   - component: {fileID: 7955958901830331799}
   - component: {fileID: 9083801611081293692}
   - component: {fileID: 9083801611081293694}
-  - component: {fileID: 9083801611081293697}
   - component: {fileID: 9083801611081293696}
   - component: {fileID: 9083801611081293695}
   - component: {fileID: 9083801611081293698}
@@ -17928,35 +18003,6 @@ MonoBehaviour:
   mapChanger: {fileID: 9083801611081293701}
   startButton: {fileID: 1228307017}
   colorIndicator: {fileID: 9083801611081293695}
---- !u!114 &9083801611081293697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9083801611081293691}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9062200944264a769aa8a62d3c08b5af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapChanger
-  maps:
-  - {fileID: 4256013128008204340, guid: 5a5eca6b759b4d64dae7360ceb89e39c, type: 3}
-  - {fileID: 7005561067052712466, guid: e46f94539fe4b1d418d6eb381ba5e670, type: 3}
-  - {fileID: 4835581163279964487, guid: 7a1051915f41ba743ad66578f5634e7c, type: 3}
-  - {fileID: 911847574767796376, guid: dbba352e034665446a8ea8a48bf0d4a7, type: 3}
-  - {fileID: 6230451687436541260, guid: bbb9148227719d544b282cf1fb6fc1ff, type: 3}
-  - {fileID: 8367595558165485047, guid: db866cb3f6f738b499a3a8bd41f951c2, type: 3}
-  - {fileID: 7773660725928879057, guid: 1c6e9e94f932f4940a511e320e480675, type: 3}
-  - {fileID: 1106482191124505668, guid: f7d166c7f65c992428ff94345249385d, type: 3}
-  - {fileID: 1143916711347766865, guid: da4563c0ee7531947bd7148738c495c2, type: 3}
-  - {fileID: 8496249442643562007, guid: 787cf56130bc42e41896f8d545599d70, type: 3}
-  - {fileID: 4249899124474054779, guid: 2752fca846e21874eb483e436ac6be68, type: 3}
-  - {fileID: 539730800201460772, guid: e5e29fe1d8561724bb2af655f2ccff15, type: 3}
-  - {fileID: 9163699028661594728, guid: 654e5ddaa2f9c2746aaef56336d39889, type: 3}
-  - {fileID: 6611888126963173585, guid: 42de7342c58d1324ca23de6f5ae31dcf, type: 3}
-  mapsFather: {fileID: 1407381402231898826}
-  scoreboard: {fileID: 92661317579243269}
 --- !u!114 &9083801611081293698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18009,9 +18055,9 @@ MonoBehaviour:
   maps:
   - {fileID: 1169476110226968072, guid: 2c470500c7a822143ad37edb38b12a28, type: 3}
   - {fileID: 6942694185350969613, guid: 228ebce5ba69fa541b465e954e1a1226, type: 3}
-  - {fileID: 1748457992538911523, guid: f9a0210e92cdc3f44b96c8e5ae4ff5a0, type: 3}
-  - {fileID: 5202318879864122689, guid: e8c3a0c56c4ac74479e9f9327a8cf318, type: 3}
-  - {fileID: 1227684458515282877, guid: 3a4383aa04ac76c47ad3dfdb198a617a, type: 3}
+  - {fileID: 1649715158088704284, guid: f9a0210e92cdc3f44b96c8e5ae4ff5a0, type: 3}
+  - {fileID: 2847064640591737381, guid: e8c3a0c56c4ac74479e9f9327a8cf318, type: 3}
+  - {fileID: 5592339701460643733, guid: 3a4383aa04ac76c47ad3dfdb198a617a, type: 3}
   - {fileID: 8330391789371759323, guid: a5f13d74f009d5f4ca6faa040450982c, type: 3}
   - {fileID: 3663078374503455612, guid: d5c74424d55ba6f4b834fc2f49f8e3de, type: 3}
   - {fileID: 6572380793662341251, guid: 96321b6cd3d134d4bb4eeb0ab9ef7d55, type: 3}

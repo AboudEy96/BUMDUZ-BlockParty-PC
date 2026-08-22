@@ -42,6 +42,7 @@ public class MapChanger : MonoBehaviour
                 mapsFather.transform.rotation
             );
         }
+        Debug.Log($"MAP: {maps[_currentMapIndex].name}\n" + $"World: {maps[_currentMapIndex].transform.position},\n Local: {maps[_currentMapIndex].transform.localPosition}]");
 
         ShowScoreboard(GetCurrentMapName());
     }
